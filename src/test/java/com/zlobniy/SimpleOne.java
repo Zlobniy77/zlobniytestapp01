@@ -9,7 +9,7 @@ public class SimpleOne {
 
 
     @Test
-    public void test() throws DecoderException, EncoderException{
+    public void simpleOne() throws DecoderException, EncoderException{
 
         String checksum = "1,demo";
 
