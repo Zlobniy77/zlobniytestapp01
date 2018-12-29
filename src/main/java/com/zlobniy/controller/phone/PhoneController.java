@@ -8,12 +8,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
 public class PhoneController {
 
 
     @RequestMapping( value = "/call", method = RequestMethod.GET )
-    public String call(){
+    public String myCall( HttpServletRequest request ){
 
         Dial.Builder dialBuilder = new Dial.Builder();
 
