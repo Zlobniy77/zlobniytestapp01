@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class PhoneController {
 
 
-    @RequestMapping( value = "/call.xml", method = RequestMethod.GET )
+    @RequestMapping( value = "/call", method = RequestMethod.GET )
     public String call(){
 
         Dial.Builder dialBuilder = new Dial.Builder();
