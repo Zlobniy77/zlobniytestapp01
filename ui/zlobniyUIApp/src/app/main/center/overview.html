@@ -4,6 +4,7 @@
 
   <div>${title}</div>
   <div class="text-white font-weight-bold overview-table overview-table-header">
+    <div class="overview-table-cell">Type</div>
     <div class="overview-table-cell">Title</div>
     <div class="overview-table-cell">Id</div>
     <div class="overview-table-cell">Creation date</div>
@@ -11,7 +12,7 @@
 
   <table-row repeat.for="data of surveyInfoList"
              class="overview-table overview-table-body ${$even ? 'even-row' : ''}"
-             click.delegate="contextMenu(data.id, $event)"
+             click.delegate="contextMenu(data.id, data.type, $event)"
              data.one-way="data">
   </table-row>
 

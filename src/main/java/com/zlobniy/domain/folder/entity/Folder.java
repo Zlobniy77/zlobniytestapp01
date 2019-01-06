@@ -1,6 +1,7 @@
 package com.zlobniy.domain.folder.entity;
 
 import com.zlobniy.domain.client.entity.Client;
+import com.zlobniy.domain.panel.entity.Panel;
 import com.zlobniy.domain.survey.entity.Survey;
 
 import javax.persistence.*;
@@ -41,6 +42,9 @@ public class Folder {
      * */
     @OneToMany( mappedBy = "folder", fetch = FetchType.LAZY )
     private List<Survey> surveys = new ArrayList<>();
+
+    @OneToMany( mappedBy = "folder", fetch = FetchType.LAZY )
+    private List<Panel> panels = new ArrayList<>(  );
 
 
     public Long getId() {
@@ -113,5 +117,13 @@ public class Folder {
 
     public void setSelected( boolean selected ) {
         this.selected = selected;
+    }
+
+    public List<Panel> getPanels() {
+        return panels;
+    }
+
+    public void setPanels( List<Panel> panels ) {
+        this.panels = panels;
     }
 }

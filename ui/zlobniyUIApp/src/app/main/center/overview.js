@@ -32,15 +32,20 @@ export class Overview extends Ui {
 
 
 
-  contextMenu( id, event ){
-    let contextMenu = this.getContextMenu( id, event );
-    // show context menu
-    this.dialogService.open({
-      viewModel: ContextMenu,
-      model: contextMenu,
-      lock: false
-    })
-    .whenClosed( data => {}  );
+  contextMenu( id, type, event ){
+    let contextMenu = this.getContextMenu( id, type, event );
+
+    // show context menu if available
+    if( contextMenu ){
+
+      this.dialogService.open({
+        viewModel: ContextMenu,
+        model: contextMenu,
+        lock: false
+      })
+        .whenClosed( data => {}  );
+    }
+
   }
 
   attached() {
@@ -70,20 +75,23 @@ export class Overview extends Ui {
     }
   }
 
-  getContextMenu( id, event ){
+  getContextMenu( id, type, event ){
 
-    // get mouse position
-    let position = {x:(event.clientX-30)+"px", y:(event.clientY-30)+"px"};
+    if( type === 'Survey' ){
+      // get mouse position
+      let position = {x:(event.clientX-30)+"px", y:(event.clientY-30)+"px"};
 
-    let edit = this.editItem( id );
-    let open = this.openItem( id );
-    let showLinks = this.showLinksItem( id );
+      let edit = this.editItem( id );
+      let open = this.openItem( id );
+      let showLinks = this.showLinksItem( id );
 
-    let contextMenu = {id:'contextMenu', position: position, elements:[
-      edit, open, showLinks,
-    ]};
+      let contextMenu = {id:'contextMenu', position: position, elements:[
+          edit, open, showLinks,
+        ]};
 
-    return contextMenu;
+      return contextMenu;
+    }
+
   }
 
   editItem( id ){

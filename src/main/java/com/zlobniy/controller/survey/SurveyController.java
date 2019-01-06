@@ -4,6 +4,7 @@ import com.zlobniy.domain.answer.entity.Answer;
 import com.zlobniy.domain.answer.entity.AnswerSession;
 import com.zlobniy.domain.answer.service.AnswerService;
 import com.zlobniy.domain.answer.view.AnswerView;
+import com.zlobniy.domain.client.entity.Client;
 import com.zlobniy.domain.client.service.ClientService;
 import com.zlobniy.domain.client.view.ClientView;
 import com.zlobniy.domain.folder.entity.Folder;
@@ -126,27 +127,19 @@ public class SurveyController {
         return link;
     }
 
-//    @RequestMapping( value = "/api/surveys/{folderId}", method = RequestMethod.GET )
-//    public List<SurveyInfoView> loadSurveys( @PathVariable Long folderId, HttpServletRequest request ) {
-//
-//        Folder folder = getFolder( folderId );
-//        List<SurveyInfoView> surveys = folder.getSurveys().stream()
-//          .map( SurveyInfoView::new ).collect( Collectors.toList() );
-//
-//        return surveys;
-//    }
-
     @RequestMapping( value = "/api/saveSurvey/{folderId}", method = RequestMethod.POST )
     public SurveyView saveSurvey(
             @RequestBody SurveyView surveyView,
             @PathVariable Long folderId ) {
 
         Folder folder = getFolder( folderId );
+        Client client = findClient();
 
         surveyView.setCreationDate( new Date() );
 
         Survey survey = new Survey( surveyView );
         survey.setFolder( folder );
+        survey.setClient( client );
 
         SurveyView savedSurveyView = new SurveyView( surveyService.save( survey ) );
 
@@ -170,7 +163,7 @@ public class SurveyController {
     }
 
     private Folder getFolder( Long folderId ) {
-        ClientView clientView = (ClientView) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
         Folder folder = folderService.findById( folderId );
         // todo check owner of folder.
 
@@ -179,5 +172,12 @@ public class SurveyController {
 
         return folder;
     }
+
+    private Client findClient(){
+        ClientView clientView = (ClientView) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        return new Client( clientView );
+    }
+
 
 }

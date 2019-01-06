@@ -69,21 +69,6 @@ export class SurveyService {
     return this.http.post( 'api/saveSurvey/' + folderId, this.surveyTransformer.serialize( surveyModel ) );
   }
 
-  /*loadSurveys( surveyInfoList ){
-    let promis = this.http.get( 'api/surveys' );
-    promis.then(function(response) {
-      console.log('response', response)
-      return response.json()
-    }).then(function(json) {
-      console.log('parsed json', json)
-      for ( let obj of json ) {
-        surveyInfoList.push( obj );
-      }
-    }).catch(function(ex) {
-      console.log('parsing failed', ex)
-    });
-  }*/
-
   loadSurveysInFolder( folderId, surveyInfoList ){
     let promis = this.http.get( 'api/folder/load/' + folderId );
 

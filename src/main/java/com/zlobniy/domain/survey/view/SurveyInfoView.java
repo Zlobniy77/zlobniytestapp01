@@ -2,10 +2,11 @@ package com.zlobniy.domain.survey.view;
 
 import com.zlobniy.domain.survey.entity.Survey;
 import com.zlobniy.util.DateFormatUtil;
+import com.zlobniy.view.InfoView;
 
 import java.util.Date;
 
-public class SurveyInfoView {
+public class SurveyInfoView implements InfoView {
 
     private Long id;
     private String title;
@@ -39,6 +40,11 @@ public class SurveyInfoView {
 
     public String getCreationDate(){
         return DateFormatUtil.dateToString( this.creationDate );
+    }
+
+    @Override
+    public String getType() {
+        return "Survey";
     }
 
     public void setCreationDate( Date creationDate ){

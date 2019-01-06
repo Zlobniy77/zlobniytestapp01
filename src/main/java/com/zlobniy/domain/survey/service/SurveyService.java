@@ -54,6 +54,13 @@ public class SurveyService {
         return surveys;
     }
 
+    public List<Survey> findByClientId( Long clientId ){
+
+        List<Survey> surveys = surveyDao.findByClientId( clientId );
+
+        return surveys;
+    }
+
     @Transactional
     public List<SurveyInfoView> findLightSurveysByFolder( Long folderId ){
 

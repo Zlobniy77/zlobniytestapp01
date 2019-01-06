@@ -1,10 +1,12 @@
 package com.zlobniy.domain.survey.entity;
 
+import com.zlobniy.domain.client.entity.Client;
 import com.zlobniy.domain.folder.entity.Folder;
 import com.zlobniy.domain.survey.entity.questionnaire.Questionnaire;
 import com.zlobniy.domain.survey.view.SurveyView;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
@@ -26,6 +28,11 @@ public class Survey {
     @ManyToOne( fetch = FetchType.LAZY, optional = false )
     @JoinColumn( name = "folder_id" )
     private Folder folder;
+
+    @ManyToOne( fetch = FetchType.LAZY, optional = false )
+    @JoinColumn( name = "client_id" )
+    @NotNull
+    private Client client;
 
     @Column
     private Date creationDate;
@@ -88,5 +95,13 @@ public class Survey {
 
     public void setFolder( Folder folder ) {
         this.folder = folder;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient( Client client ) {
+        this.client = client;
     }
 }

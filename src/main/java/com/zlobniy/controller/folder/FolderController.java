@@ -4,8 +4,9 @@ import com.zlobniy.domain.client.view.ClientView;
 import com.zlobniy.domain.folder.entity.Folder;
 import com.zlobniy.domain.folder.service.FolderService;
 import com.zlobniy.domain.folder.view.FolderView;
+import com.zlobniy.domain.panel.service.PanelService;
 import com.zlobniy.domain.survey.service.SurveyService;
-import com.zlobniy.domain.survey.view.SurveyInfoView;
+import com.zlobniy.view.InfoView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,11 +24,15 @@ public class FolderController {
 
     private FolderService folderService;
     private SurveyService surveyService;
+    private PanelService panelService;
 
     @Autowired
-    public FolderController( FolderService folderService, SurveyService surveyService ) {
+    public FolderController( FolderService folderService,
+                             SurveyService surveyService,
+                             PanelService panelService ) {
         this.folderService = folderService;
         this.surveyService = surveyService;
+        this.panelService = panelService;
     }
 
     @RequestMapping( value = "/api/folder/loadAll", method = RequestMethod.GET )
@@ -41,11 +47,14 @@ public class FolderController {
 
     // load all data in folder, currently only surveys but then...
     @RequestMapping( value = "/api/folder/load/{id}", method = RequestMethod.GET )
-    public List<SurveyInfoView> loadData( @PathVariable Long id ) {
+    public List<InfoView> loadData( @PathVariable Long id ) {
 
-        List<SurveyInfoView> surveysData = surveyService.findLightSurveysByFolder( id );
+        List<InfoView> data = new ArrayList<>(  );
 
-        return surveysData;
+        data.addAll( surveyService.findLightSurveysByFolder( id ) );
+        data.addAll( panelService.findLightByFolder( id ) );
+
+        return data;
     }
 
     @RequestMapping( value = "/api/folder/{id}/{param}/{value}", method = RequestMethod.PUT )

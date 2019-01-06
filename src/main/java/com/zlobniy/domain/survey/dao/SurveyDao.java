@@ -21,5 +21,8 @@ public interface SurveyDao extends JpaRepository<Survey, Long> {
     @Query( "select s from Survey s where folder_id = :id" )
     List<Survey> findAllInFolderLight( @Param( "id" ) Long id );
 
+    @Query( "select s from Survey s JOIN FETCH s.client c where c.id = :clientId" )
+    List<Survey> findByClientId( @Param ( "clientId" ) Long clientId );
+
 
 }

@@ -22,10 +22,15 @@ export class Dashboard extends Ui {
     let that = this;
     let buttons = [
       {
-        title: 'createSurvey', action: function () {
-        that.navigationService.goTo( that.navigationService.NAV_SURVEY );
-      }, css: 'fa fa-file-invoice'
-      }
+        title: 'Create survey', action: function () {
+          that.navigationService.goTo( that.navigationService.NAV_SURVEY );
+        }, css: 'fa fa-file-invoice'
+      },
+      // {
+      //   title: 'Create panel', action: function () {
+      //     that.navigationService.goTo( that.navigationService.NAV_PANEL );
+      //   }, css: 'fa fa-file-invoice'
+      // }
     ];
 
     this.navigationService.setButtons( buttons );
