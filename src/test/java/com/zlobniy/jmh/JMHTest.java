@@ -1,11 +1,11 @@
-package com.zlobniy.jmh;
-
-import org.openjdk.jmh.runner.RunnerException;
-
-public class JMHTest {
-
-    public static void main( String[] args ) throws RunnerException {
-
+//package com.zlobniy.jmh;
+//
+//import org.openjdk.jmh.runner.RunnerException;
+//
+//public class JMHTest {
+//
+//    public static void main( String[] args ) throws RunnerException {
+//
 //        Options opt = new OptionsBuilder()
 //                .include( SurveysCase.class.getSimpleName() )
 //                .forks( 1 )
@@ -16,6 +16,6 @@ public class JMHTest {
 //                .build();
 //
 //        new Runner( opt ).run();
-    }
-
-}
+//    }
+//
+//}

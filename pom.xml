@@ -134,13 +134,6 @@
       <version>${joda-time.version}</version>
     </dependency>
 
-    <dependency>
-      <groupId>com.twilio.sdk</groupId>
-      <artifactId>twilio</artifactId>
-      <version>7.33.0</version>
-    </dependency>
-
-
     <!-- Testing -->
 
     <dependency>
