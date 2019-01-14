@@ -1,8 +1,23 @@
 package com.zlobniy;
 
-/**
- * Integration tests with database.
- * */
+//import com.zlobniy.domain.folder.entity.Folder;
+//import com.zlobniy.domain.folder.service.FolderService;
+//import com.zlobniy.domain.folder.view.FolderView;
+//import com.zlobniy.domain.survey.entity.Survey;
+//import org.junit.Assert;
+//import org.junit.Test;
+//import org.junit.runner.RunWith;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.boot.test.context.SpringBootTest;
+//import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+//
+//import javax.transaction.Transactional;
+//import java.util.List;
+//import java.util.stream.Collectors;
+//
+///**
+// * Integration tests with database.
+// * */
 //@RunWith( SpringJUnit4ClassRunner.class )
 //@Transactional
 //@SpringBootTest
