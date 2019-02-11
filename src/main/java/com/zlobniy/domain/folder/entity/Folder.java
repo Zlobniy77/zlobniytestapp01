@@ -1,12 +1,14 @@
 package com.zlobniy.domain.folder.entity;
 
 import com.zlobniy.domain.client.entity.Client;
+import com.zlobniy.domain.folder.view.FolderView;
 import com.zlobniy.domain.panel.entity.Panel;
 import com.zlobniy.domain.survey.entity.Survey;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class Folder {
@@ -22,7 +24,7 @@ public class Folder {
     private Folder parent;
 
     @OneToMany( mappedBy = "parent" ,fetch = FetchType.LAZY )
-    private List<Folder> children;
+    private List<Folder> children = new ArrayList<>(  );
 
     @ManyToOne( fetch = FetchType.LAZY, optional = false )
     @JoinColumn( name = "client_id" )
@@ -45,6 +47,19 @@ public class Folder {
 
     @OneToMany( mappedBy = "folder", fetch = FetchType.LAZY )
     private List<Panel> panels = new ArrayList<>(  );
+
+    public Folder( FolderView folderView ){
+        this.id = folderView.getId();
+        this.title = folderView.getTitle();
+        this.expanded = folderView.isExpanded();
+        this.selected = folderView.isSelected();
+        this.isRoot = false;
+        this.children = folderView.getChildren().stream().map( Folder::new ).collect( Collectors.toList() );
+    }
+
+    public Folder(){
+
+    }
 
 
     public Long getId() {

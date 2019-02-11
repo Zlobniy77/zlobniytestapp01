@@ -125,3 +125,8 @@ ul:focus{
   background-color: #f8f9fa !important;
   border: none !important;
 }
+
+.popup-header{
+  height: 60px;
+  background-color: #7ec2fa;
+}

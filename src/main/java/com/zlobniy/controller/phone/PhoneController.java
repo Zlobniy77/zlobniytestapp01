@@ -60,4 +60,13 @@ public class PhoneController {
 
     }
 
+    @RequestMapping( value = "/sendSms2", method = RequestMethod.POST )
+    public String sendSms2( HttpServletRequest request ){
+
+
+
+        return "call me baby";
+
+    }
+
 }

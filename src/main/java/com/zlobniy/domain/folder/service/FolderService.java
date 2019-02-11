@@ -18,8 +18,8 @@ public class FolderService  {
         this.folderDao = folderDao;
     }
 
-    public void saveFolder( Folder folder ){
-        folderDao.save( folder );
+    public Folder save( Folder folder ){
+        return folderDao.save( folder );
     }
 
     public List<Folder> findAll(){

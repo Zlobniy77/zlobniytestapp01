@@ -2,7 +2,7 @@ import 'css/main.css';
 
 import {inject} from 'aurelia-framework';
 import 'jquery.fancytree/dist/skin-lion/ui.fancytree.css'; // CSS or LESS
-import {createTree} from 'jquery.fancytree';
+import {createTree, getTree} from 'jquery.fancytree';
 import 'jquery.fancytree/dist/modules/jquery.fancytree.edit';
 import 'jquery.fancytree/dist/modules/jquery.fancytree.filter';
 import 'jquery.fancytree/dist/modules/jquery.fancytree.dnd5';
@@ -28,7 +28,7 @@ export class FolderTree {
 
     let data = [];
 
-    const tree = createTree( '#tree', {
+    this.tree = createTree( '#tree', {
       extensions: ['dnd5', 'edit', 'filter'],
       source: data,
       dnd5: {
@@ -152,9 +152,15 @@ export class FolderTree {
 
     } );
 
-    let rootNode = tree.rootNode;
+    let rootNode = this.tree.rootNode;
     this.folderService.loadData( data, rootNode );
 
+  }
+
+  addNode( node ){
+    let tree = getTree("#tree");
+    let root = tree.getActiveNode();
+    root.addNode( node );
   }
 
   detached() {

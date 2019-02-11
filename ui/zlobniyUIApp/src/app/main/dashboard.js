@@ -4,18 +4,21 @@ import {inject} from 'aurelia-framework';
 import {ClientService} from "../services/client-service";
 import {NavigationService} from "../services/navigation-service";
 import {Ui} from "../ui";
+import {Popup} from "./common/popup";
+import {DialogService} from 'aurelia-dialog';
 
 
-@inject( ClientService, NavigationService, Ui )
+@inject( ClientService, NavigationService, DialogService, Ui )
 export class Dashboard extends Ui {
 
   title = 'Dashboard';
   info = "";
 
-  constructor( clientService, navigationService, ...rest ){
+  constructor( clientService, navigationService, dialogService, ...rest ){
     super(...rest);
     this.clientService = clientService;
     this.navigationService = navigationService;
+    this.dialogService = dialogService;
   }
 
   activate(){
@@ -31,6 +34,22 @@ export class Dashboard extends Ui {
       //     that.navigationService.goTo( that.navigationService.NAV_PANEL );
       //   }, css: 'fa fa-file-invoice'
       // }
+      {
+        title: 'Create folder', action: function () {
+
+          let data = {};
+
+          data.width = "40%";
+          data.view = "app/main/folders/folder";
+          that.dialogService.open({
+            viewModel: Popup,
+            model: data,
+            lock: false
+          })
+            .whenClosed( resp => {}  );
+
+        }, css: 'fa fa-file-invoice'
+      }
     ];
 
     this.navigationService.setButtons( buttons );

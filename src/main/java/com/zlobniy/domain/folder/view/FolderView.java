@@ -12,16 +12,20 @@ public class FolderView {
     private String title;
     private boolean expanded;
     private boolean selected;
-    private boolean folder;
+    private boolean folder = true;
+    private long parentId;
     private List<FolderView> children = new ArrayList<>(  );
 
     public FolderView( Folder folder ){
+        if (folder == null) return;
+
         this.id = folder.getId();
         this.title = folder.getTitle();
         this.folder = true;
         this.expanded = folder.isExpanded();
         this.selected = folder.isSelected();
         this.children = folder.getChildren().stream().map( FolderView::new ).collect(Collectors.toList());
+        this.parentId = folder.getParent() != null ? folder.getParent().getId() : 0L;
     }
 
     public FolderView(){
@@ -74,5 +78,13 @@ public class FolderView {
 
     public void setSelected( boolean selected ) {
         this.selected = selected;
+    }
+
+    public long getParentId() {
+        return parentId;
+    }
+
+    public void setParentId( long parentId ) {
+        this.parentId = parentId;
     }
 }

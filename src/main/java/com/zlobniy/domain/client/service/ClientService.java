@@ -56,7 +56,7 @@ public class ClientService extends Client {
                 homeFolder.setSelected( true );
                 homeFolder.setTitle( client.getUsername() );
 
-                folderService.saveFolder( homeFolder );
+                folderService.save( homeFolder );
                 client.getFolders().add( homeFolder );
             }
         } catch ( Exception e ) {

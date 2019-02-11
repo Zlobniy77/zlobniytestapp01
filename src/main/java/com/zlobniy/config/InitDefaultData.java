@@ -85,7 +85,7 @@ public class InitDefaultData {
         homeFolder.setSelected( true );
         homeFolder.setTitle( client.getUsername() );
 
-        folderService.saveFolder( homeFolder );
+        folderService.save( homeFolder );
 
         final Folder subFolder = new Folder();
         subFolder.setParent( homeFolder );
@@ -98,8 +98,8 @@ public class InitDefaultData {
         subFolder2.setTitle( "folder 2" );
 
 
-        folderService.saveFolder( subFolder );
-        folderService.saveFolder( subFolder2 );
+        folderService.save( subFolder );
+        folderService.save( subFolder2 );
 
         return homeFolder;
     }
