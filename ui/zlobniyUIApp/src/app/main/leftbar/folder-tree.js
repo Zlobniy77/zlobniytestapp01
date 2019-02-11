@@ -81,6 +81,13 @@ export class FolderTree {
 
           node.debug( "drop", data );
 
+          // this folder will be moved.
+          let objectId = data.otherNode.data.id;
+          // in this folder
+          let destination = node.data.id;
+
+          that.folderService.moveFolder( objectId, destination );
+
           // alert("Drop on " + node + ":\n"
           //   + "source:" + JSON.stringify(data.otherNodeData) + "\n"
           //   + "hitMode:" + data.hitMode

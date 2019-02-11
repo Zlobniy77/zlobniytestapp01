@@ -5,6 +5,7 @@ import com.zlobniy.domain.client.view.ClientView;
 import com.zlobniy.domain.folder.entity.Folder;
 import com.zlobniy.domain.folder.service.FolderService;
 import com.zlobniy.domain.folder.view.FolderView;
+import com.zlobniy.domain.folder.view.MoveFolderData;
 import com.zlobniy.domain.panel.service.PanelService;
 import com.zlobniy.domain.survey.service.SurveyService;
 import com.zlobniy.view.InfoView;
@@ -99,6 +100,16 @@ public class FolderController {
         }
 
         folderService.save( folder );
+    }
+
+    @RequestMapping( value = "/api/folder/move", method = RequestMethod.POST )
+    public void moveFolder( @RequestBody MoveFolderData data ) {
+        Folder object = folderService.findById( data.getObject() );
+        Folder destination = folderService.findById( data.getDestination() );
+
+        object.setParent( destination );
+
+        folderService.save( object );
     }
 
 

@@ -73,5 +73,16 @@ export class FolderService {
     this.http.put( 'api/folder/' + id + "/" + param + "/" + status );
   }
 
+  moveFolder( objectId, destination ){
+
+    let data = {
+      destination: destination,
+      object: objectId,
+    };
+
+    this.http.post( 'api/folder/move', data );
+
+  }
+
 
 }
