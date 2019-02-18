@@ -23,6 +23,7 @@ npm install bootstrap --save
 npm install jquery --save
 remove bootstrap.js and rename bootstrap.bundle.js to bootstrap.js
 npm install jquery.fancytree --save
+npm install hammerjs --save
 
 then update:
 npm install gulp --save

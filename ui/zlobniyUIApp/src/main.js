@@ -14,7 +14,8 @@ export function configure(aurelia) {
     .feature(PLATFORM.moduleName('resources/index'))
     .plugin(PLATFORM.moduleName('aurelia-dialog'))
     .plugin(PLATFORM.moduleName('aurelia-validation'))
-    .plugin(PLATFORM.moduleName('aurelia-animator-css'));
+    .plugin(PLATFORM.moduleName('aurelia-animator-css'))
+    .plugin(PLATFORM.moduleName('hammerjs'));
 
   configureContainer(aurelia.container);
 
