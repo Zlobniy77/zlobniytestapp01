@@ -16,15 +16,33 @@
 package com.zlobniy;
 
 import com.jayway.jsonpath.spi.json.JacksonJsonProvider;
+import com.zlobniy.twilio.survey.controllers.SurveyController;
+import com.zlobniy.twilio.survey.util.Config;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import static spark.Spark.*;
+
 @SpringBootApplication
 public class BoosterApplication {
 
+    public static Config config;
+
     public static void main(String[] args) {
         SpringApplication.run(BoosterApplication.class, args);
+
+        config = new Config();
+
+        // configure Spark to use the desired port.
+        port( config.getPort() );
+
+        // Map routes to controllers.
+        staticFileLocation("/public");
+        post("/interview", SurveyController.interview);
+        post("/interview/:phone/transcribe/:question", SurveyController.transcribe);
+//        get("/results", SurveyController.results);
+
     }
 
     @Bean

@@ -106,7 +106,7 @@ public class InitDefaultData {
 
     private void generate1000Surveys( Client client, Folder homeFolder ){
 
-        for( int i = 0; i < 50 ; i++ ){
+        for( int i = 0; i < 5 ; i++ ){
             final DummyQuestionnaire dummyQuestionnaire = new DummyQuestionnaire();
             final SurveyView surveyView = new SurveyView();
             surveyView.setTitle( "Dummy survey " + i );

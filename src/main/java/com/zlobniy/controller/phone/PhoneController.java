@@ -16,10 +16,19 @@ import javax.servlet.http.HttpServletRequest;
 public class PhoneController {
 
 
-    @RequestMapping( value = "/call", method = RequestMethod.GET )
-    public String myCall( HttpServletRequest request ){
+    @RequestMapping( value = "/collectGather", method = RequestMethod.GET )
+    public String collectGather1( HttpServletRequest request ){
 
+        System.out.println( request );
 
+        return "call my baby";
+
+    }
+
+    @RequestMapping( value = "/collectGather", method = RequestMethod.POST )
+    public String collectGather2( HttpServletRequest request ){
+
+        System.out.println( request );
 
         return "call my baby";
 

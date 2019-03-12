@@ -32,8 +32,8 @@ export class Dashboard extends Ui {
       // {
       //   title: 'Create panel', action: function () {
       //     that.navigationService.goTo( that.navigationService.NAV_PANEL );
-      //   }, css: 'fa fa-file-invoice'
-      // }
+      //   }, css: 'fas fa-clipboard-list'
+      // },
       {
         title: 'Create folder', action: function () {
 
@@ -48,7 +48,7 @@ export class Dashboard extends Ui {
           })
             .whenClosed( resp => {}  );
 
-        }, css: 'fa fa-file-invoice'
+        }, css: 'fas fa-folder'
       }
     ];
 
