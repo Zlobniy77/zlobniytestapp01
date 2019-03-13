@@ -3,6 +3,7 @@ package com.zlobniy.controller.phone;
 
 import com.twilio.Twilio;
 import com.twilio.base.ResourceSet;
+import com.twilio.rest.api.v2010.account.Call;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,17 +12,31 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.net.URI;
 
 @RestController
 public class PhoneController {
 
 
-    @RequestMapping( value = "/collectGather", method = RequestMethod.GET )
+    @RequestMapping( value = "/startSurvey", method = RequestMethod.GET )
     public String collectGather1( HttpServletRequest request ){
 
-        System.out.println( request );
+        String sid = "ACbxx";
+        String token = "41xx";
+        String twilioPhone = "+1x";
+        String myPhone = "+79xx";
 
-        return "call my baby";
+        Twilio.init( sid, token );
+        Call call = Call.creator(
+                new com.twilio.type.PhoneNumber( myPhone ),
+                new com.twilio.type.PhoneNumber( twilioPhone ),
+
+                URI.create("http://e9704d68.ngrok.io/interview"))
+                .create();
+
+        System.out.println( call.getAccountSid() );
+
+        return "start survey";
 
     }
 

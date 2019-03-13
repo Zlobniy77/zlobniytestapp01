@@ -1,5 +1,6 @@
 package com.zlobniy.twilio.survey.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.twilio.sdk.verbs.*;
 import com.zlobniy.BoosterApplication;
 import com.zlobniy.twilio.survey.models.Response;
@@ -38,8 +39,15 @@ public class SurveyController {
     return twiml.toXML();
   };
 
-//  // Results accessor route
-//  public static Route results = ( request, response) -> {
+  // Results accessor route
+  public static Route results = ( request, response) -> {
+
+    ObjectMapper mapper = new ObjectMapper(  );
+
+    String json = mapper.writeValueAsString( surveys.findAllFinishedSurveys() );
+    response.type("application/json");
+    return json;
+
 //    Gson gson = new Gson();
 //    JsonObject json = new JsonObject();
 //      // Add questions to the JSON response object
@@ -48,7 +56,7 @@ public class SurveyController {
 //      json.add("results", gson.toJsonTree(surveys.findAllFinishedSurveys()));
 //      response.type("application/json");
 //      return json;
-//    };
+    };
 
   // Transcription route (called by Twilio's callback, once transcription is complete)
   public static Route transcribe = ( request, response) -> {
