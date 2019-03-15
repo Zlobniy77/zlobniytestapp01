@@ -20,6 +20,15 @@ public class BgrDataValue {
     @Column
     private String value;
 
+    public BgrDataValue(){
+
+    }
+
+    public BgrDataValue( String value, BgrDescription description ){
+        this.value = value;
+        this.bgrDescription = description;
+    }
+
     public Long getId() {
         return id;
     }

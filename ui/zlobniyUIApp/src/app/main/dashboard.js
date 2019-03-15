@@ -29,11 +29,11 @@ export class Dashboard extends Ui {
           that.navigationService.goTo( that.navigationService.NAV_SURVEY );
         }, css: 'fa fa-file-invoice'
       },
-      // {
-      //   title: 'Create panel', action: function () {
-      //     that.navigationService.goTo( that.navigationService.NAV_PANEL );
-      //   }, css: 'fas fa-clipboard-list'
-      // },
+      {
+        title: 'Create panel', action: function () {
+          that.navigationService.goTo( that.navigationService.NAV_PANEL );
+        }, css: 'fas fa-clipboard-list'
+      },
       {
         title: 'Create folder', action: function () {
 

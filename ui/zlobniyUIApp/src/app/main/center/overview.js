@@ -84,9 +84,10 @@ export class Overview extends Ui {
       let edit = this.editItem( id );
       let open = this.openItem( id );
       let showLinks = this.showLinksItem( id );
+      let run = this.run( id );
 
       let contextMenu = {id:'contextMenu', position: position, elements:[
-          edit, open, showLinks,
+          edit, open, showLinks, run,
         ]};
 
       return contextMenu;
@@ -144,6 +145,24 @@ export class Overview extends Ui {
       } );
 
     } };
+  }
+
+  run( id ){
+    let that = this;
+    return {index:3, title:'Run survey', action: function () {
+
+        let data = {};
+        data.id = id;
+        data.width = "40%";
+        data.view = "app/main/implementation/implementation";
+        that.dialogService.open({
+          viewModel: Popup,
+          model: data,
+          lock: false
+        }).whenClosed( resp => {}  );
+
+      } };
+
   }
 
 }

@@ -1,5 +1,6 @@
 <template>
   <require from="resources/attributes/tooltip"></require>
+  <require from="app/main/client/client-property"></require>
 
   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
      aria-haspopup="true" aria-expanded="false" data-value="${clientService.clientInfo.username}"
@@ -8,5 +9,6 @@
   </a>
   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
     <a class="dropdown-item" click.delegate="doLogOff()" href="#">Log off</a>
+    <a class="dropdown-item" click.delegate="property()" href="#">Property</a>
   </div>
 </template>

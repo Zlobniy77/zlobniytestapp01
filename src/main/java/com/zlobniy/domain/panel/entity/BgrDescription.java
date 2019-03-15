@@ -18,6 +18,15 @@ public class BgrDescription {
     @ManyToOne( fetch = FetchType.LAZY )
     private Panel panel;
 
+    public BgrDescription(){
+
+    }
+
+    public BgrDescription( String value ){
+        this.value = value;
+        this.type = Type.CLOSED;
+    }
+
     public Long getId() {
         return id;
     }

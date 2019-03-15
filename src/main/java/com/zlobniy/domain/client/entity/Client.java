@@ -30,6 +30,9 @@ public class Client {
     @OneToMany( mappedBy = "client", fetch = FetchType.LAZY, cascade = CascadeType.ALL )
     private List<Folder> folders = new ArrayList<>(  );
 
+    @OneToOne( cascade = CascadeType.ALL, fetch = FetchType.EAGER )
+    private PhoneProperty property = new PhoneProperty();
+
     public Client() {
 
     }
@@ -95,5 +98,13 @@ public class Client {
 
     public void setFolders( List<Folder> folders ) {
         this.folders = folders;
+    }
+
+    public PhoneProperty getProperty() {
+        return property;
+    }
+
+    public void setProperty( PhoneProperty property ) {
+        this.property = property;
     }
 }

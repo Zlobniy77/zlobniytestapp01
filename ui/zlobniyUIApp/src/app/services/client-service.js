@@ -72,6 +72,32 @@ export class ClientService {
 
   }
 
+  loadProperty(){
+
+    let id = this.clientInfo.id;
+
+    let promis = this.http.get( 'api/client/' + id + '/property' );
+
+    return promis;
+  }
+
+  saveProperty( property ){
+
+    let id = this.clientInfo.id;
+
+    let promis = this.http.post( 'api/client/' + id + '/property', property );
+    promis.then(function(response) {
+      console.log('response', response);
+      return response.json()
+    }).then(function(json) {
+      console.log('parsed json', json);
+
+    }).catch(function(ex) {
+      console.log('parsing failed', ex)
+    });
+
+  }
+
   loginAction( clientData ) {
     if( clientData === undefined ){
       clientData = {};

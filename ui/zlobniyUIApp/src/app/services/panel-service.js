@@ -51,4 +51,10 @@ export class PanelService {
     return this.http.post( 'api/panel/save/' + folderId, panel );
   }
 
+  loadPanels( clientId ){
+
+    let url = 'api/panel/all/' + clientId;
+    return this.http.get( url );
+  }
+
 }

@@ -2,6 +2,7 @@ package com.zlobniy.domain.panel.entity;
 
 import com.zlobniy.domain.client.entity.Client;
 import com.zlobniy.domain.folder.entity.Folder;
+import com.zlobniy.domain.panel.view.PanelView;
 import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Validated
@@ -42,6 +44,28 @@ public class Panel {
     @JoinColumn( name = "folder_id" )
     @NotNull
     private Folder folder;
+
+
+    public Panel(){
+
+    }
+
+    public Panel( PanelView panelView ){
+        this.id = panelView.getId();
+        this.title = panelView.getTitle();
+        this.descriptions = panelView.getHeader()
+                .stream()
+                .map( BgrDescription::new )
+                .collect(Collectors.toList());
+
+        List<BgrData> data = panelView.getBody()
+                .stream()
+                .map( b -> new BgrData( b.getRow(), "test", descriptions ) )
+                .collect(Collectors.toList());
+
+        this.data = data;
+        this.creationDate = new Date();
+    }
 
     public Long getId() {
         return id;

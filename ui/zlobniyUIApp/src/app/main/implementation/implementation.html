@@ -1,0 +1,23 @@
+<template>
+  <div>
+
+  </div>
+
+  <div class="body m-2">
+    <div class="mb-1">
+      choose a panel:
+    </div>
+    <div>
+
+      <select value.bind="changedValue" change.delegate="dropdownChanged(changedValue)">
+        <option repeat.for="panel of panels" value="${panel.id}">${panel.title}</option>
+      </select>
+
+    </div>
+  </div>
+  </div>
+
+  <div class="m-2 mt-4" style="text-align: end">
+    <input style="margin: unset" type="button" value="Ok" click.delegate="finish()">
+  </div>
+</template>

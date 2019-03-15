@@ -3,6 +3,7 @@ package com.zlobniy.domain.panel.entity;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class BgrData {
@@ -20,6 +21,16 @@ public class BgrData {
     @ManyToOne( fetch = FetchType.LAZY )
     private Panel panel;
 
+    public BgrData(){
+
+    }
+
+    public BgrData( List<String> rows, String respondentId, List<BgrDescription> descriptions ){
+        this.respondentId = respondentId;
+        this.values = rows.stream()
+                .map( s -> new BgrDataValue( s, descriptions.get( rows.indexOf( s ) ) ) )
+                .collect(Collectors.toList());
+    }
 
     public Long getId() {
         return id;
