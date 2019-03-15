@@ -34,6 +34,8 @@ final class SecuredUsersController {
         SimpleResponse response = new SimpleResponse();
         response.setMessage( "logout" );
 
+        System.out.println("test changes");
+
         return response;
     }
 
