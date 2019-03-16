@@ -16,6 +16,7 @@ public class SurveyService {
 
     private final SurveyDao surveyDao;
 
+
     @Autowired
     public SurveyService( SurveyDao surveyDao ) {
         this.surveyDao = surveyDao;
@@ -27,6 +28,10 @@ public class SurveyService {
         return new SurveyView( survey );
     }
 
+    public Survey find( Long id ){
+        return  surveyDao.findByIdEager( id );
+    }
+
 //    public List<SurveyInfoView> getAllSurveys() {
 //        final List<Survey> surveys = surveyDao.findAll();
 //        final List<SurveyInfoView> surveysInfo = new ArrayList<>();
@@ -36,6 +41,8 @@ public class SurveyService {
 //
 //        return surveysInfo;
 //    }
+
+
 
     @Transactional
     public List<SurveyView> findSurveyViewsByFolder( Long folderId ){

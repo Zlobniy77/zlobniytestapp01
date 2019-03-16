@@ -8,7 +8,7 @@ public class Response {
 
 
   // Constructors
-  public Response(String input) {
+  public Response( String input ) {
     if (input == null || input == "hangup") {
       throw new NullPointerException("An error occurred, because a user hung up, or did not respond");
     }
