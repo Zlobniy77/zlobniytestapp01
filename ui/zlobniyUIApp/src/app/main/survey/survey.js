@@ -156,12 +156,13 @@ export class Survey extends Ui {
       let item = event.item;
       let value = event.value;
 
-      if( item.type === 'SurveyModel' ){
+      if( item.type === 'SurveyModel' ) {
         // update survey title
         that.surveyModel.title = value;
       }else{
         // update item in question
-        let question = that.surveyHelper.findQuestionByNumber( that.surveyModel, item.qNumber );
+        let number = item.qNumber ? item.qNumber : item.number;
+        let question = that.surveyHelper.findQuestionByNumber( that.surveyModel, number );
         let type = item.type;
         let index = item.index;
         let scaleIndex = item.scaleIndex;
@@ -180,7 +181,9 @@ export class Survey extends Ui {
             let option = that.surveyHelper.findOptionByIndex( question, index );
             option.title = value;
             break;
-
+          case 'question':
+            question.title = value;
+            break;
           default:
             console.log( 'unexpected journey' );
 

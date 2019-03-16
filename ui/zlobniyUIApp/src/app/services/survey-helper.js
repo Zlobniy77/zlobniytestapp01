@@ -103,6 +103,7 @@ export class SurveyHelper {
     question.number = questionNumber;
     question.settings = this.createQuestionSettings( questionType, settings );
     question.selected = isSelected;
+    question.type = 'question';
 
     switch ( questionType ){
       case 'closed':
