@@ -3,6 +3,7 @@ package com.zlobniy.domain.survey.entity.questionnaire;
 import com.zlobniy.domain.survey.view.questionnaire.ClosedQuestionView;
 import com.zlobniy.domain.survey.view.questionnaire.MatrixQuestionView;
 import com.zlobniy.domain.survey.view.questionnaire.QuestionView;
+import com.zlobniy.domain.survey.view.questionnaire.TextQuestionView;
 
 import javax.persistence.*;
 
@@ -72,6 +73,8 @@ public class Question {
                 return new ClosedQuestion( (ClosedQuestionView) questionView );
             case "matrix":
                 return new MatrixQuestion( (MatrixQuestionView) questionView );
+            case "text":
+                return new TextQuestion( (TextQuestionView) questionView );
             default:
                 return null;
         }

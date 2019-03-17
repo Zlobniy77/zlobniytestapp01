@@ -112,6 +112,9 @@ export class SurveyHelper {
       case 'matrix':
         this.createMatrixQuestion( question, options, scales );
         break;
+      case 'text':
+        this.createTextQuestion( question, options, scales );
+        break;
       case 'test':
         this.createTestQuestion( question, options, scales );
         break;
@@ -125,6 +128,45 @@ export class SurveyHelper {
 
   createNewTitle( title, questionNumber ){
     return title + " " + questionNumber;
+  }
+
+  createTextQuestion( question, options, scales ){
+    if( !options ){
+      options = this.createDefaultOptions();
+    }
+
+    if( !scales ){
+      scales = this.createDefaultScales();
+    }
+
+    question.settings.view = './../questions/subView/text-question.html';
+
+    question.options = {};
+    question.options.id = "options_"+question.id;
+    question.options.type = "options";
+    question.options.elements = [];
+    let optionIndex = 0;
+    for ( let option of options ) {
+
+      let newOption = this.createOption( option.id, option.title, 'closed-option', question.id, optionIndex, false,
+        'common-option', question.options.id, scales, "./../common/opts/option", question.number );
+
+      question.options.elements.push( newOption );
+      optionIndex++;
+    }
+
+    question.scales = {};
+    question.scales.id = "scales_"+question.id;
+    question.scales.type = "scales";
+    question.scales.cssClass = "scales-view";
+    question.scales.elements = [];
+
+    let scaleIndex = 0;
+    for ( let scale of scales ) {
+      question.scales.elements.push( this.createScale( scale.id, scale.title, 'scale-option', question.id, scaleIndex,
+        false, scale.options.elements, question.scales.id, question.number ) );
+      scaleIndex++;
+    }
   }
 
   createTestQuestion( question, options, scales ){
@@ -422,9 +464,12 @@ export class SurveyHelper {
       {type:'checkbox', title:'Checkboxes'},
     ];
 
+    let textQuestionLayouts = [];
+
     let available = [
       {type:'closed', title:'Only one answer', viewPath: './../questions/subView/closed-question.html', availableLayout: closedQuestionLayouts},
       {type:'matrix', title:'Matrix', viewPath: './../questions/subView/matrix.html', availableLayout: matrixQuestionLayouts},
+      {type:'text', title:'Text question', viewPath: './../questions/subView/text-question.html', availableLayout: textQuestionLayouts},
       // {type:'test', title:'Test', viewPath: './../questions/subView/test-question.html'},
     ];
 

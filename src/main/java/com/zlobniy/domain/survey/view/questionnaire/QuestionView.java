@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.zlobniy.domain.survey.entity.questionnaire.ClosedQuestion;
 import com.zlobniy.domain.survey.entity.questionnaire.MatrixQuestion;
 import com.zlobniy.domain.survey.entity.questionnaire.Question;
+import com.zlobniy.domain.survey.entity.questionnaire.TextQuestion;
 
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
@@ -12,7 +13,8 @@ import com.zlobniy.domain.survey.entity.questionnaire.Question;
         property = "type")
 @JsonSubTypes({
         @JsonSubTypes.Type(value = ClosedQuestionView.class, name = "closed"),
-        @JsonSubTypes.Type(value = MatrixQuestionView.class, name = "matrix")
+        @JsonSubTypes.Type(value = MatrixQuestionView.class, name = "matrix"),
+        @JsonSubTypes.Type(value = TextQuestionView.class, name = "text")
 })
 public class QuestionView {
 
@@ -82,6 +84,8 @@ public class QuestionView {
                 return new ClosedQuestionView( (ClosedQuestion) question );
             case "MatrixQuestion":
                 return new MatrixQuestionView( (MatrixQuestion) question );
+            case "TextQuestion":
+                return new TextQuestionView( (TextQuestion) question );
             default:
                 return null;
         }

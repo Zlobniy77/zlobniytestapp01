@@ -35,29 +35,7 @@ public class PhoneSurveyController {
 
   private static SurveyService surveys = new SurveyService();
 
-
   // Main interview loop.
-  public static Route interview2 = ( request, response) -> {
-
-    IncomingCall call = new IncomingCall(parseBody(request.body()));
-
-    TwiMLResponse twiml = new TwiMLResponse();
-    Survey existingSurvey = surveys.getSurvey(call.getFrom());
-    if (existingSurvey == null) {
-      Survey survey = surveys.createSurvey(call.getFrom());
-      twiml.append(new Say("Thanks for taking our survey."));
-      continueSurvey(survey, twiml);
-    } else if (!existingSurvey.isDone()) {
-      existingSurvey.appendResponse(new Response(call.getInput()));
-      surveys.updateSurvey(existingSurvey);
-      if (!existingSurvey.isDone()) {
-        continueSurvey(existingSurvey, twiml);
-      }
-    }
-    twiml.append(new Say("Your responses have been recorded. Thank you for your time!"));
-    return twiml.toXML();
-  };
-
   public Route interview = ( request, response) -> {
 
     IncomingCall call = new IncomingCall( parseBody(request.body()) );
@@ -75,7 +53,7 @@ public class PhoneSurveyController {
         ExportAnswerView exportAnswerView = new ExportAnswerView();
         exportAnswerView.setQuestionNumber( survey.getIndex() + 1 );
 
-        exportAnswerView.setRespondent( "" + (answersViewList.size() + 1) );
+        exportAnswerView.setRespondent( "test" );
 
         int questionNumber = survey.getIndex();
         QuestionView q = survey.getQuestionnaire().getQuestions().get( survey.getIndex() );
@@ -89,9 +67,9 @@ public class PhoneSurveyController {
 
         List<OptionView> options = new ArrayList<>();
 
-        Integer selectedIndex = Integer.parseInt( response1.getAnswer().toString() );
-
         if( q.getType().equalsIgnoreCase( "closed" ) ){
+
+          Integer selectedIndex = Integer.parseInt( response1.getAnswer().toString() );
 
           ClosedQuestionView closedQuestion = (ClosedQuestionView)q;
 
@@ -117,6 +95,10 @@ public class PhoneSurveyController {
 
           answerView.setOptions( options );
           answerView.setFreeTextOption( new OptionView() );
+
+        }else if( q.getType().equalsIgnoreCase( "text" ) ){
+
+          exportAnswerView.setValue( response1.getAnswer().toString() );
 
         }
 
@@ -309,7 +291,9 @@ public class PhoneSurveyController {
   }
 
   public static void addToRunner( String phoneNumber, com.zlobniy.domain.survey.entity.Survey survey ){
-    surveysMap.put( phoneNumber, new PhoneSurveyView( survey ) );
+    PhoneSurveyView surveyView = new PhoneSurveyView( survey );
+    surveyView.setPhone( phoneNumber );
+    surveysMap.put( phoneNumber, surveyView );
   }
 
   public static Map<String, PhoneSurveyView> getSurveysMap() {
