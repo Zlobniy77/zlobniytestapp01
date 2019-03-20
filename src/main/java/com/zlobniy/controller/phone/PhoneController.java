@@ -8,6 +8,7 @@ import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
 import com.zlobniy.domain.client.entity.Client;
 import com.zlobniy.domain.client.service.ClientService;
+import com.zlobniy.domain.export.ExportAnswerView;
 import com.zlobniy.domain.implementation.view.PhoneImplRequestView;
 import com.zlobniy.domain.panel.entity.Panel;
 import com.zlobniy.domain.panel.service.PanelService;
@@ -15,13 +16,11 @@ import com.zlobniy.domain.survey.entity.Survey;
 import com.zlobniy.domain.survey.service.SurveyService;
 import com.zlobniy.twilio.survey.controllers.PhoneSurveyController;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
+import java.util.List;
 
 @RestController
 public class PhoneController {
@@ -63,6 +62,12 @@ public class PhoneController {
 
         return "start survey";
     }
+
+    @RequestMapping( value = "/api/results/{id}", method = RequestMethod.GET )
+    public List<ExportAnswerView> getResults( @PathVariable Long id ){
+        return PhoneSurveyController.getResults( id );
+    }
+
 
     @RequestMapping( value = "/readSms", method = RequestMethod.POST )
     public String readSms( @RequestBody PhoneRequest phoneRequest ){
