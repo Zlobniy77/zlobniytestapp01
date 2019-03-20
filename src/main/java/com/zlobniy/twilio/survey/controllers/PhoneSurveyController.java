@@ -119,6 +119,16 @@ public class PhoneSurveyController {
     return twiml.toXML();
   };
 
+  public static List<ExportAnswerView> getResults( Long id ){
+    System.out.println("Get results for survey " + id);
+    List<ExportAnswerView> answers = new ArrayList<>();
+    for (PhoneSurveyView survey : surveysMap.values()) {
+
+      answers.addAll( survey.getResponses() );
+    }
+    return answers;
+  }
+
   // Results accessor route
   public Route results = ( request, response) -> {
 

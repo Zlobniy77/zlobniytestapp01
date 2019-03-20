@@ -85,9 +85,10 @@ export class Overview extends Ui {
       let open = this.openItem( id );
       let showLinks = this.showLinksItem( id );
       let run = this.run( id );
+      let showAnswers = this.showAnswers( id );
 
       let contextMenu = {id:'contextMenu', position: position, elements:[
-          edit, open, showLinks, run,
+          edit, open, showLinks, run, showAnswers
         ]};
 
       return contextMenu;
@@ -155,6 +156,24 @@ export class Overview extends Ui {
         data.id = id;
         data.width = "40%";
         data.view = "app/main/implementation/implementation";
+        that.dialogService.open({
+          viewModel: Popup,
+          model: data,
+          lock: false
+        }).whenClosed( resp => {}  );
+
+      } };
+
+  }
+
+  showAnswers( id ){
+    let that = this;
+    return {index:4, title:'Results', action: function () {
+
+        let data = {};
+        data.id = id;
+        data.width = "40%";
+        data.view = "app/main/exports/exports";
         that.dialogService.open({
           viewModel: Popup,
           model: data,
