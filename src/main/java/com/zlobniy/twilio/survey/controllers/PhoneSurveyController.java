@@ -53,7 +53,7 @@ public class PhoneSurveyController {
         ExportAnswerView exportAnswerView = new ExportAnswerView();
         exportAnswerView.setQuestionNumber( survey.getIndex() + 1 );
 
-        exportAnswerView.setRespondent( "test" );
+        exportAnswerView.setRespondent( "1" );
 
         int questionNumber = survey.getIndex();
         QuestionView q = survey.getQuestionnaire().getQuestions().get( survey.getIndex() );
@@ -102,10 +102,10 @@ public class PhoneSurveyController {
 
         }
 
-        AnswerSession answerSession = new AnswerSession( answerView );
+        //AnswerSession answerSession = new AnswerSession( answerView );
 
-        answersViewList.add( answerView );
-        answerSessionsList.add( answerSession );
+//        answersViewList.add( answerView );
+//        answerSessionsList.add( answerSession );
 
         survey.addResponse( exportAnswerView );
       }
@@ -135,19 +135,31 @@ public class PhoneSurveyController {
     };
 
   // Transcription route (called by Twilio's callback, once transcription is complete)
-  public Route transcribe = ( request, response) -> {
-    IncomingCall call = new IncomingCall(parseBody(request.body()));
-      // Get the phone and question numbers from the URL parameters provided by the "Record" verb
-      String surveyId = request.params(":phone");
-      int questionId = Integer.parseInt(request.params(":question"));
-      // Find the survey in the DB...
-      Survey survey = surveys.getSurvey(surveyId);
-      // ...and update it with our transcription text.
-      survey.getResponses()[questionId].setAnswer(call.getTranscriptionText());
-      surveys.updateSurvey(survey);
-      response.status(200);
-      return "OK";
-    };
+  public Route transcribe = (request, response) -> {
+    IncomingCall call = new IncomingCall( parseBody( request.body() ) );
+    // Get the phone and question numbers from the URL parameters provided by the "Record" verb
+//    String surveyId = request.params(":phone");
+    int questionId = Integer.parseInt(request.params(":question"));
+    // Find the survey in the DB...
+
+    PhoneSurveyView survey = getRunnedSurvey( call.getFrom() );
+
+//    Survey survey = surveys.getSurvey(surveyId);
+    // ...and update it with our transcription text.
+
+    ExportAnswerView exportAnswerView = new ExportAnswerView();
+    exportAnswerView.setQuestionNumber( questionId );
+    exportAnswerView.setRespondent( "1" );
+    exportAnswerView.setValue( call.getTranscriptionText() );
+
+    survey.addResponse( exportAnswerView );
+
+//    survey.getResponses()[questionId].setAnswer(call.getTranscriptionText());
+//
+//    surveys.updateSurvey(survey);
+    response.status(200);
+    return "OK";
+  };
 
   protected static String newContinueSurvey( PhoneSurveyView survey, TwiMLResponse twiml ) throws TwiMLException,
           UnsupportedEncodingException {
@@ -161,7 +173,7 @@ public class PhoneSurveyController {
       case "closed":
         closedQuestionGather( question, twiml );
         break;
-      case "freeText":
+      case "text":
         freeTextGather( twiml, survey );
         break;
       case "number":
@@ -214,7 +226,7 @@ public class PhoneSurveyController {
     text.setFinishOnKey("#");
     // Use the Transcription route to receive the text of a voice response.
     text.setTranscribe(true);
-    text.setTranscribeCallback("/interview/" + urlEncode( survey.getPhone() ) + "/transcribe/" + survey.getIndex());
+    text.setTranscribeCallback("/interview/" + urlEncode( survey.getPhone() ) + "/transcribe/" + survey.getIndex() + 1 );
     twiml.append(text);
 
   }
