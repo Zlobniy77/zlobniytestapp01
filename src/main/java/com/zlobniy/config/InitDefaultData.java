@@ -1,6 +1,7 @@
 package com.zlobniy.config;
 
 import com.zlobniy.domain.client.entity.Client;
+import com.zlobniy.domain.client.entity.PhoneProperty;
 import com.zlobniy.domain.client.service.ClientService;
 import com.zlobniy.domain.folder.entity.Folder;
 import com.zlobniy.domain.folder.service.FolderService;
@@ -50,6 +51,12 @@ public class InitDefaultData {
         client.setUsername( "ans" );
         client.setPassword( "123" );
         client.setEmail( "email" );
+
+        PhoneProperty property = new PhoneProperty();
+        property.setPhoneNumber( "+12029309314" );
+        property.setSid( "AC69120befd5ef3ed6c4fc3ecd9cf44f57" );
+        property.setToken( "eaa605fd56f09ab9e55e45d59f568d46" );
+        client.setProperty( property );
 
         clientService.saveClient( client );
 

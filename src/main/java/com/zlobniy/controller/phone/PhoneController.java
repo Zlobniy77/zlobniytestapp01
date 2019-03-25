@@ -17,14 +17,13 @@ import com.zlobniy.domain.panel.service.PanelService;
 import com.zlobniy.domain.survey.entity.Survey;
 import com.zlobniy.domain.survey.service.SurveyService;
 import com.zlobniy.domain.survey.view.PhoneSurveyView;
-import com.zlobniy.twilio.survey.controllers.PhoneSurveyController;
 import com.zlobniy.twilio.survey.util.IncomingCall;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.UnsupportedEncodingException;
+import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 
@@ -65,13 +64,13 @@ public class PhoneController {
         String twilioPhone = client.getProperty().getPhoneNumber();
         String myPhone = panel.getData().get( 0 ).getValues().get( 0 ).getValue();
 
-        PhoneSurveyController.addToRunner( twilioPhone, survey );
+        phoneService.resetSurvey( view.getSurveyId() );
 
         Twilio.init( sid, token );
         Call call = Call.creator(
                 new com.twilio.type.PhoneNumber( myPhone ),
                 new com.twilio.type.PhoneNumber( twilioPhone ),
-                URI.create( "http://188.242.130.250:8080/interview" ))
+                URI.create( "http://188.242.130.250:8080/interview?surveyId=" + survey.getId() ))
                 .create();
 
         System.out.println( call.getAccountSid() );
@@ -79,57 +78,50 @@ public class PhoneController {
         return "start survey";
     }
 
-    @RequestMapping( value = "/interview", method = RequestMethod.GET )
-    public Object runSurveyInterview( HttpServletRequest request, HttpServletResponse response )
-            throws TwiMLException, UnsupportedEncodingException {
-
-        IncomingCall call = new IncomingCall(  );
-        PhoneSurveyView phoneSurveyView = new PhoneSurveyView(  );
-
-        String xml = phoneService.phoneHandler( call, phoneSurveyView );
-
-        System.out.println( xml );
-        return xml;
-    }
-
     @RequestMapping( value = "/interview", method = RequestMethod.POST )
-    public Object runSurveyInterviewPOST( HttpServletRequest request, HttpServletResponse response )
-            throws TwiMLException, UnsupportedEncodingException {
+    public void runSurveyInterviewPOST( HttpServletRequest request, HttpServletResponse response )
+            throws TwiMLException, IOException {
 
-        IncomingCall call = new IncomingCall(  );
-        PhoneSurveyView phoneSurveyView = new PhoneSurveyView(  );
+        Long surveyId = Long.parseLong( request.getParameter( "surveyId" ) );
+        String to = request.getParameter( "To" );
 
-        String xml = phoneService.phoneHandler( call, phoneSurveyView );
+        Survey survey = surveyService.find( surveyId );
+
+        PhoneSurveyView surveyView = new PhoneSurveyView( survey );
+        surveyView.setPhone( to );
+
+        phoneService.addSurvey( surveyId, surveyView );
+
+        IncomingCall call = getIncomingCall( request );
+
+        String xml = phoneService.phoneHandler( call, surveyId );
 
         System.out.println( xml );
-        return xml;
+
+        response.getWriter().print(xml);
+        response.setContentType("application/xml");
     }
 
-    @RequestMapping( value = "/interview/{phone}/transcribe/{question}", method = RequestMethod.POST )
-    public String transcribeAnswer( @PathVariable String phone,
+    @RequestMapping( value = "/interview/{surveyId}/transcribe/{question}", method = RequestMethod.POST )
+    public String transcribeAnswer( @PathVariable Long surveyId,
                                     @PathVariable String question,
                                     HttpServletRequest request,
                                     HttpServletResponse response ){
 
-        String param = request.getParameter( "phone" );
-        System.out.println( param );
+        IncomingCall call = getIncomingCall( request );
+        // Get the phone and question numbers from the URL parameters provided by the "Record" verb
 
-//        IncomingCall call = new IncomingCall(parseBody(request.body()));
-//        // Get the phone and question numbers from the URL parameters provided by the "Record" verb
-//        String surveyId = request.params(":phone");
-//        int questionId = Integer.parseInt(request.params(":question"));
-//        // Find the survey in the DB...
-//        com.zlobniy.twilio.survey.models.Survey survey = surveys.getSurvey(surveyId);
-//        // ...and update it with our transcription text.
-//        survey.getResponses()[questionId].setAnswer(call.getTranscriptionText());
-//        surveys.updateSurvey(survey);
-//        response.status(200);
+        int questionId = Integer.parseInt( question );
+        // Find the survey in the DB...
+        phoneService.addAnswerData( surveyId, questionId, call.getTranscriptionText() );
+
         return "OK";
     }
 
     @RequestMapping( value = "/api/results/{id}", method = RequestMethod.GET )
     public List<ExportAnswerView> getResults( @PathVariable Long id ){
-        return PhoneSurveyController.getResults( id );
+
+        return phoneService.getAnswers( id );
     }
 
 
@@ -166,6 +158,15 @@ public class PhoneController {
 
         return "call me baby";
 
+    }
+
+    private IncomingCall getIncomingCall( HttpServletRequest request ){
+        return new IncomingCall(
+                request.getParameter( "From" ),
+                request.getParameter( "RecordingUrl" ),
+                request.getParameter( "Digits" ),
+                request.getParameter( "TranscriptionText" )
+        );
     }
 
 }

@@ -1,7 +1,6 @@
 package com.zlobniy.domain.implementation;
 
 import com.twilio.sdk.verbs.*;
-import com.zlobniy.domain.answer.entity.AnswerSession;
 import com.zlobniy.domain.answer.view.AnswerView;
 import com.zlobniy.domain.answer.view.OptionView;
 import com.zlobniy.domain.export.ExportAnswerView;
@@ -16,16 +15,40 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class PhoneImplService {
 
+    private final Map<Long, PhoneSurveyView> surveys = new HashMap<>();
 
-    public String phoneHandler( IncomingCall call, PhoneSurveyView survey )
+    public void addSurvey( Long id, PhoneSurveyView survey ){
+        surveys.putIfAbsent( id , survey );
+    }
+
+    public void addAnswerData( Long surveyId, int questionNumber, String value ){
+        PhoneSurveyView survey = surveys.get( surveyId );
+        survey.getResponses().get( questionNumber ).setValue( value );
+    }
+
+    public List<ExportAnswerView> getAnswers( Long surveyId ){
+
+        System.out.println("Get results for survey " + surveyId);
+        return surveys.get( surveyId ).getResponses();
+    }
+
+    public void resetSurvey( Long surveyId ){
+        surveys.remove( surveyId );
+    }
+
+    public String phoneHandler( IncomingCall call, Long id )
             throws TwiMLException, UnsupportedEncodingException {
 
         TwiMLResponse twiml = new TwiMLResponse();
+
+        PhoneSurveyView survey = surveys.get( id );
 
         if( !survey.isDone() ){
             if( !survey.isStarted() ){
@@ -41,6 +64,11 @@ public class PhoneImplService {
         }
 
         twiml.append(new Say("Your responses have been recorded. Thank you for your time!"));
+
+        survey.setIndex( 0 );
+        survey.setDone( false );
+        survey.setStarted( false );
+
         return twiml.toXML();
 
     }
@@ -69,11 +97,11 @@ public class PhoneImplService {
 
         }else if( q.getType().equalsIgnoreCase( "text" ) ){
 
-            exportAnswerView.setValue( response1.getAnswer().toString() );
+            exportAnswerView.setUrl( response1.getAnswer().toString() );
 
         }
 
-        AnswerSession answerSession = new AnswerSession( answerView );
+//        AnswerSession answerSession = new AnswerSession( answerView );
 
 //                answersViewList.add( answerView );
 //                answerSessionsList.add( answerSession );
@@ -123,7 +151,7 @@ public class PhoneImplService {
             case "closed":
                 closedQuestionGather( question, twiml );
                 break;
-            case "freeText":
+            case "text":
                 freeTextGather( twiml, survey );
                 break;
             case "number":
@@ -175,7 +203,7 @@ public class PhoneImplService {
         text.setFinishOnKey("#");
         // Use the Transcription route to receive the text of a voice response.
         text.setTranscribe(true);
-        text.setTranscribeCallback("/interview/" + urlEncode( survey.getPhone() ) + "/transcribe/" + survey.getIndex());
+        text.setTranscribeCallback("/interview/" + survey.getId() + "/transcribe/" + survey.getIndex());
         twiml.append(text);
 
     }
