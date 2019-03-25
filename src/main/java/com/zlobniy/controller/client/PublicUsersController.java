@@ -65,7 +65,11 @@ final class PublicUsersController {
     }
 
     private Long findSelectedOrRootFolderId( Client client ){
-        List<Folder> folders = client.getFolders().stream().filter( Folder::isSelected ).collect(Collectors.toList());
+        List<Folder> allFolders = client.getFolders();
+        List<Folder> folders = allFolders.stream().filter( Folder::isSelected ).collect(Collectors.toList());
+        if( folders.isEmpty() ){
+            return allFolders.isEmpty() ? 0 : allFolders.get( 0 ).getId();
+        }
         return Optional.of( folders.get( 0 )
                 .getId() )
                 .orElseThrow( () -> new NullPointerException( "Root folder not found" ));
