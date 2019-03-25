@@ -1,7 +1,7 @@
 <template>
-  <div repeat.for="answer of answers">
-    <div>${answer.questionNumber}</div>
-    <div>${answer.value}</div>
-    <div>${answer.url}</div>
+  <div style="display: flex" repeat.for="answer of answers">
+    <div style="margin: 5px">Question number: ${answer.questionNumber}</div>
+    <div style="margin: 5px">Answer: ${answer.value}</div>
+    <div style="margin: 5px"> ${answer.url} </div>
   </div>
 </template>

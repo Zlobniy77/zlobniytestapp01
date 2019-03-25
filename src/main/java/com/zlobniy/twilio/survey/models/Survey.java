@@ -1,7 +1,5 @@
 package com.zlobniy.twilio.survey.models;
 
-import com.zlobniy.BoosterApplication;
-
 public class Survey {
 
   private Long id;
@@ -16,7 +14,7 @@ public class Survey {
 
   // Constructors
   public Survey(String phone) {
-    this.responses = new Response[BoosterApplication.config.getQuestions().length];
+    this.responses = new Response[1];
     this.done = false;
     this.phone = phone;
     this.index = 0;
@@ -48,7 +46,7 @@ public class Survey {
   }
 
   public boolean isDone() {
-    if (index > BoosterApplication.config.getQuestions().length - 1) {
+    if (index > 1) {
       this.markDone();
     }
     return done;

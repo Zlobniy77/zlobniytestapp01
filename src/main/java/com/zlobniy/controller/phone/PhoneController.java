@@ -48,7 +48,12 @@ public class PhoneController {
     }
 
     @RequestMapping( value = "/api/startSurvey", method = RequestMethod.POST )
-    public String startSurvey( @RequestBody PhoneImplRequestView view ){
+    public String startSurvey( @RequestBody PhoneImplRequestView view, HttpServletRequest request ){
+
+        String baseUrl = String.format("%s://%s:%d/",
+                request.getScheme(),
+                request.getServerName(),
+                request.getServerPort());
 
         Client client = clientService.find( view.getClientId() );
         Panel panel = panelService.findFull( view.getPanelId() );
@@ -66,7 +71,7 @@ public class PhoneController {
         Call call = Call.creator(
                 new com.twilio.type.PhoneNumber( myPhone ),
                 new com.twilio.type.PhoneNumber( twilioPhone ),
-                URI.create("/interview"))
+                URI.create( "http://188.242.130.250:8080/interview" ))
                 .create();
 
         System.out.println( call.getAccountSid() );
@@ -76,6 +81,19 @@ public class PhoneController {
 
     @RequestMapping( value = "/interview", method = RequestMethod.GET )
     public Object runSurveyInterview( HttpServletRequest request, HttpServletResponse response )
+            throws TwiMLException, UnsupportedEncodingException {
+
+        IncomingCall call = new IncomingCall(  );
+        PhoneSurveyView phoneSurveyView = new PhoneSurveyView(  );
+
+        String xml = phoneService.phoneHandler( call, phoneSurveyView );
+
+        System.out.println( xml );
+        return xml;
+    }
+
+    @RequestMapping( value = "/interview", method = RequestMethod.POST )
+    public Object runSurveyInterviewPOST( HttpServletRequest request, HttpServletResponse response )
             throws TwiMLException, UnsupportedEncodingException {
 
         IncomingCall call = new IncomingCall(  );
