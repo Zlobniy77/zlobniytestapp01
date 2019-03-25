@@ -70,7 +70,7 @@ public class PhoneController {
         Call call = Call.creator(
                 new com.twilio.type.PhoneNumber( myPhone ),
                 new com.twilio.type.PhoneNumber( twilioPhone ),
-                URI.create( "http://188.242.130.250:8080/interview?surveyId=" + survey.getId() ))
+                URI.create( baseUrl + "interview?surveyId=" + survey.getId() ))
                 .create();
 
         System.out.println( call.getAccountSid() );
