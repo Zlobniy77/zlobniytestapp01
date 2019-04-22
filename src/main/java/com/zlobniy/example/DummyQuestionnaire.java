@@ -17,6 +17,14 @@ public class DummyQuestionnaire {
         return questionnaireView;
     }
 
+    public QuestionnaireView createQuestionnaireWithOpenQuestions(){
+        QuestionnaireView questionnaireView = new QuestionnaireView();
+        questionnaireView.getQuestions().add( createDummyOpenQuestion( 1L ) );
+        questionnaireView.getQuestions().add( createDummyOpenQuestion( 2L ) );
+
+        return questionnaireView;
+    }
+
     public QuestionnaireView createDummyQuestionnaire( int amountOfQuestions ){
         QuestionnaireView questionnaireView = new QuestionnaireView();
 
@@ -26,6 +34,20 @@ public class DummyQuestionnaire {
         }
 
         return questionnaireView;
+    }
+
+    public QuestionView createDummyOpenQuestion( Long id ){
+        TextQuestionView question = new TextQuestionView();
+        question.setSettings( createDummySettings() );
+        question.setTitle( "dummy open question " + id );
+        question.setIndex( 0 );
+
+        OptionView view = new OptionView();
+        view.setTitle( "test view" );
+
+        question.setOptionView( view );
+
+        return question;
     }
 
 

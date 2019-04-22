@@ -1,4 +1,4 @@
 package com.zlobniy.domain.implementation;
 
-public class PhoneImplementation {
+public interface Implementation {
 }

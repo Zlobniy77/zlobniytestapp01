@@ -94,9 +94,10 @@ public class FolderController {
                 }
 
                 folder.setSelected( value );
-
+                break;
             default:
                 System.out.println( "unexpected folder update" );
+                break;
         }
 
         folderService.save( folder );

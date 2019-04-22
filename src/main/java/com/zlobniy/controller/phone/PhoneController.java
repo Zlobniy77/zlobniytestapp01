@@ -10,14 +10,17 @@ import com.twilio.type.PhoneNumber;
 import com.zlobniy.domain.client.entity.Client;
 import com.zlobniy.domain.client.service.ClientService;
 import com.zlobniy.domain.export.ExportAnswerView;
-import com.zlobniy.domain.implementation.PhoneImplService;
-import com.zlobniy.domain.implementation.view.PhoneImplRequestView;
+import com.zlobniy.domain.implementation.phone.PhoneImplService;
+import com.zlobniy.domain.implementation.view.IncomingCall;
+import com.zlobniy.domain.implementation.view.PhoneImplRequest;
 import com.zlobniy.domain.panel.entity.Panel;
 import com.zlobniy.domain.panel.service.PanelService;
 import com.zlobniy.domain.survey.entity.Survey;
 import com.zlobniy.domain.survey.service.SurveyService;
 import com.zlobniy.domain.survey.view.PhoneSurveyView;
-import com.zlobniy.twilio.survey.util.IncomingCall;
+import com.zlobniy.util.HttpUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,6 +33,8 @@ import java.util.List;
 @RestController
 public class PhoneController {
 
+    private static final Logger LOG = LoggerFactory.getLogger( PhoneController.class );
+
     private ClientService clientService;
     private PanelService panelService;
     private SurveyService surveyService;
@@ -39,7 +44,7 @@ public class PhoneController {
     public PhoneController( ClientService clientService,
                             PanelService panelService,
                             SurveyService surveyService,
-                            PhoneImplService phoneService ){
+                            PhoneImplService phoneService ) {
         this.clientService = clientService;
         this.panelService = panelService;
         this.surveyService = surveyService;
@@ -47,18 +52,14 @@ public class PhoneController {
     }
 
     @RequestMapping( value = "/api/startSurvey", method = RequestMethod.POST )
-    public String startSurvey( @RequestBody PhoneImplRequestView view, HttpServletRequest request ){
+    public void startSurvey( @RequestBody PhoneImplRequest view, HttpServletRequest request ) {
 
-        String baseUrl = String.format("%s://%s:%d/",
-                request.getScheme(),
-                request.getServerName(),
-                request.getServerPort());
+        String baseUrl = HttpUtils.getRootUrl( request );
 
         Client client = clientService.find( view.getClientId() );
         Panel panel = panelService.findFull( view.getPanelId() );
         Survey survey = surveyService.find( view.getSurveyId() );
 
-        // acc telefon0000001@mail.ru
         String sid = client.getProperty().getSid();
         String token = client.getProperty().getToken();
         String twilioPhone = client.getProperty().getPhoneNumber();
@@ -67,22 +68,30 @@ public class PhoneController {
         phoneService.resetSurvey( view.getSurveyId() );
 
         Twilio.init( sid, token );
-        Call call = Call.creator(
-                new com.twilio.type.PhoneNumber( myPhone ),
-                new com.twilio.type.PhoneNumber( twilioPhone ),
-                URI.create( baseUrl + "interview?surveyId=" + survey.getId() ))
-                .create();
 
-        System.out.println( call.getAccountSid() );
+        try{
 
-        return "start survey";
+            Call.creator(
+                    new com.twilio.type.PhoneNumber( myPhone ),
+                    new com.twilio.type.PhoneNumber( twilioPhone ),
+                    URI.create( baseUrl + "interview?surveyId=" + survey.getId() )
+            ).create();
+
+        }catch ( RuntimeException e ){
+
+            LOG.error( e.getMessage(), e );
+        }
+
     }
 
     @RequestMapping( value = "/interview", method = RequestMethod.POST )
     public void runSurveyInterviewPOST( HttpServletRequest request, HttpServletResponse response )
             throws TwiMLException, IOException {
 
-        Long surveyId = Long.parseLong( request.getParameter( "surveyId" ) );
+        String surveyIdParameter = request.getParameter( "surveyId" );
+        if( surveyIdParameter == null || surveyIdParameter.isEmpty() ) return;
+
+        Long surveyId = Long.parseLong( surveyIdParameter );
         String to = request.getParameter( "To" );
 
         Survey survey = surveyService.find( surveyId );
@@ -98,69 +107,73 @@ public class PhoneController {
 
         System.out.println( xml );
 
-        response.getWriter().print(xml);
-        response.setContentType("application/xml");
+        response.getWriter().print( xml );
+        response.setContentType( "application/xml" );
     }
 
-    @RequestMapping( value = "/interview/{surveyId}/transcribe/{question}", method = RequestMethod.POST )
+    /**
+     * Convert voice to text. Twilio function
+     * */
+    @RequestMapping( value = "/interview/{surveyId}/transcribe/{question}/{userId}", method = RequestMethod.POST )
     public String transcribeAnswer( @PathVariable Long surveyId,
                                     @PathVariable String question,
+                                    @PathVariable String userId,
                                     HttpServletRequest request,
-                                    HttpServletResponse response ){
+                                    HttpServletResponse response ) {
 
         IncomingCall call = getIncomingCall( request );
         // Get the phone and question numbers from the URL parameters provided by the "Record" verb
 
         int questionId = Integer.parseInt( question );
-        // Find the survey in the DB...
-        phoneService.addAnswerData( surveyId, questionId, call.getTranscriptionText() );
+        // update answers in database, add speech to text.
+        phoneService.addAnswerData( surveyId, questionId, userId, call.getTranscriptionText() );
 
         return "OK";
     }
 
     @RequestMapping( value = "/api/results/{id}", method = RequestMethod.GET )
-    public List<ExportAnswerView> getResults( @PathVariable Long id ){
+    public List<ExportAnswerView> getResults( @PathVariable Long id ) {
 
         return phoneService.getAnswers( id );
     }
 
 
     @RequestMapping( value = "/readSms", method = RequestMethod.POST )
-    public String readSms( @RequestBody PhoneRequest phoneRequest ){
+    public String readSms( @RequestBody PhoneRequest phoneRequest ) {
 
         Twilio.init( phoneRequest.getSid(), phoneRequest.getToken() );
 
-        ResourceSet<Message> messages = Message.reader( phoneRequest.getSid() ).read(  );
+        ResourceSet<Message> messages = Message.reader( phoneRequest.getSid() ).read();
 
         for ( Message message : messages ) {
             System.out.println( message );
-            if( message.getDirection().equals( Message.Direction.INBOUND ) ){
+            if ( message.getDirection().equals( Message.Direction.INBOUND ) ) {
                 System.out.println( "incoming message: " + message.getBody() );
             }
         }
 
-        return "call my baby";
+        return "get sms";
 
     }
 
     @RequestMapping( value = "/sendSms", method = RequestMethod.POST )
-    public String sendSms( @RequestBody PhoneRequest phoneRequest, HttpServletRequest request ){
+    public String sendSms( @RequestBody PhoneRequest phoneRequest, HttpServletRequest request ) {
 
         Twilio.init( phoneRequest.getSid(), phoneRequest.getToken() );
 
         Message message = Message
-                .creator(new PhoneNumber( phoneRequest.getTo() ),
+                .creator( new PhoneNumber( phoneRequest.getTo() ),
                         new PhoneNumber( phoneRequest.getFrom() ),
                         phoneRequest.getMessage() )
                 .create();
 
-        System.out.println(message.getSid());
+        System.out.println( message.getSid() );
 
-        return "call me baby";
+        return "send sms";
 
     }
 
-    private IncomingCall getIncomingCall( HttpServletRequest request ){
+    private IncomingCall getIncomingCall( HttpServletRequest request ) {
         return new IncomingCall(
                 request.getParameter( "From" ),
                 request.getParameter( "RecordingUrl" ),

@@ -1,15 +1,25 @@
 package com.zlobniy.domain.answer.view;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class OptionView {
+public class AnswerOptionView {
 
     private Long id;
     private String name;
     private Boolean selected;
     private String value;
     private Integer index;
-    private List<ScaleView> scaleGroup;
+    private List<ScaleView> scaleGroup = new ArrayList<>(  );
+
+    public AnswerOptionView(){
+
+    }
+
+    public AnswerOptionView( Integer index, String value ){
+        this.index = index;
+        this.value = value;
+    }
 
     public Long getId(){
         return id;

@@ -1,6 +1,4 @@
-package com.zlobniy.twilio.survey.util;
-
-import java.util.Map;
+package com.zlobniy.domain.implementation.view;
 
 public class IncomingCall {
 
@@ -17,13 +15,6 @@ public class IncomingCall {
     this.transcriptionText = transcriptionText;
   }
 
-  public IncomingCall( Map<String, String> parsedBody ){
-    this( parsedBody.get( "From" ),
-            parsedBody.get( "RecordingUrl" ),
-            parsedBody.get( "Digits" ),
-            parsedBody.get( "TranscriptionText" ) );
-  }
-  
   public IncomingCall() {
     this("+0000000000", null, null, null);
   }
@@ -43,5 +34,29 @@ public class IncomingCall {
 
   public String getTranscriptionText() {
     return transcriptionText;
+  }
+
+  public void setFrom( String from ) {
+    this.from = from;
+  }
+
+  public String getRecordingUrl() {
+    return recordingUrl;
+  }
+
+  public void setRecordingUrl( String recordingUrl ) {
+    this.recordingUrl = recordingUrl;
+  }
+
+  public String getDigits() {
+    return digits;
+  }
+
+  public void setDigits( String digits ) {
+    this.digits = digits;
+  }
+
+  public void setTranscriptionText( String transcriptionText ) {
+    this.transcriptionText = transcriptionText;
   }
 }

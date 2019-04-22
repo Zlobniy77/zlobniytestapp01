@@ -1,15 +1,15 @@
-package com.zlobniy.twilio.survey.models;
+package com.zlobniy.domain.implementation.view;
 
 public class Response {
 
   // The content of Twilio's request.
-  String answer;
-  String recordingUrl;
+  private String answer;
+  private String recordingUrl;
 
 
   // Constructors
   public Response( String input ) {
-    if (input == null || input == "hangup") {
+    if (input == null || input.equals( "hangup" ) ) {
       throw new NullPointerException("An error occurred, because a user hung up, or did not respond");
     }
     if (input.contains("http:")) {

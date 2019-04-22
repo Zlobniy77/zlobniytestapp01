@@ -1,6 +1,6 @@
 package com.zlobniy.domain.implementation.view;
 
-public class PhoneImplRequestView {
+public class PhoneImplRequest {
 
     private Long surveyId;
     private Long panelId;

@@ -31,6 +31,11 @@ public class Element {
 
     }
 
+    public Element( String name, String value, Integer answerOrder ){
+        this.name = name;
+        this.value = value;
+        this.answerOrder = answerOrder;
+    }
 
     public String getName(){
         return name;

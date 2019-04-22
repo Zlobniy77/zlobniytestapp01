@@ -51,6 +51,10 @@ final class PublicUsersController {
         Client client = clientService.findByToken( token );
         if( client == null ) return null;
 
+        if( client.getFolders() == null || client.getFolders().isEmpty() ){
+            client = clientService.findWithFolders( client.getId() );
+        }
+
         return createView( client );
     }
 

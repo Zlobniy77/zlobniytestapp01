@@ -1,7 +1,7 @@
 package com.zlobniy.domain.answer.entity;
 
+import com.zlobniy.domain.answer.view.AnswerOptionView;
 import com.zlobniy.domain.answer.view.AnswerView;
-import com.zlobniy.domain.answer.view.OptionView;
 import com.zlobniy.domain.answer.view.ScaleView;
 
 import javax.persistence.*;
@@ -37,20 +37,20 @@ public class Answer {
 
         List<Element> elements = new ArrayList<>(  );
         // sub question (answer alternative)
-        for ( OptionView optionView : answerView.getOptions() ) {
-            if( optionView.getSelected() ){
+        for ( AnswerOptionView answerOptionView : answerView.getOptions() ) {
+            if( answerOptionView.getSelected() ){
                 Element element = new Element(  );
-                element.setAnswerOrder( optionView.getIndex() );
-                element.setValue( optionView.getValue() );
+                element.setAnswerOrder( answerOptionView.getIndex() );
+                element.setValue( answerOptionView.getValue() );
                 elements.add( element );
             }else{
                 // scales
-                for ( ScaleView scaleView : optionView.getScaleGroup() ) {
+                for ( ScaleView scaleView : answerOptionView.getScaleGroup() ) {
                     // scale steps
-                    for ( OptionView view : scaleView.getOptions() ) {
+                    for ( AnswerOptionView view : scaleView.getOptions() ) {
                         if( view.getSelected() ){
                             Element element = new Element( );
-                            element.setAnswerOrder( optionView.getIndex() );
+                            element.setAnswerOrder( answerOptionView.getIndex() );
                             element.setValue( view.getValue() );
                             element.setScaleGroupOrder( view.getIndex() );
                             element.setScaleOrder( scaleView.getIndex() );
@@ -62,7 +62,7 @@ public class Answer {
 
         }
 
-        OptionView otherField = answerView.getFreeTextOption();
+        AnswerOptionView otherField = answerView.getFreeTextOption();
         if( otherField.getValue() != null && !otherField.getValue().isEmpty() ){
             Element element = new Element( );
             element.setAnswerOrder( -1 );

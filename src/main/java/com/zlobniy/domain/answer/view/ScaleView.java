@@ -1,12 +1,13 @@
 package com.zlobniy.domain.answer.view;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ScaleView {
 
     private Integer index;
     private String name;
-    private List<OptionView> options;
+    private List<AnswerOptionView> options = new ArrayList<>(  );
 
     public Integer getIndex(){
         return index;
@@ -16,11 +17,11 @@ public class ScaleView {
         this.index = index;
     }
 
-    public List<OptionView> getOptions(){
+    public List<AnswerOptionView> getOptions(){
         return options;
     }
 
-    public void setOptions( List<OptionView> options ){
+    public void setOptions( List<AnswerOptionView> options ){
         this.options = options;
     }
 

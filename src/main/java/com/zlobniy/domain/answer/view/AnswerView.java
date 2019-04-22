@@ -16,8 +16,8 @@ public class AnswerView {
     private Long questionId;
     private Integer questionNumber;
     private String questionType;
-    private List<OptionView> options;
-    private OptionView freeTextOption;
+    private List<AnswerOptionView> options = new ArrayList<>();
+    private AnswerOptionView freeTextOption = new AnswerOptionView();
 
     public AnswerView(){
 
@@ -30,27 +30,27 @@ public class AnswerView {
         setQuestionId( answer.getQuestionId() );
         setQuestionNumber( answer.getQuestionNumber() );
 
-        OptionView freeTextOption = null;
+        AnswerOptionView freeTextOption = null;
 
-        Map<Integer,OptionView> options = new HashMap<>(  );
+        Map<Integer,AnswerOptionView> options = new HashMap<>(  );
         // option index,  scale index, list of elements
-        Map<Integer,Map<Integer, List<OptionView>>> scaleOptionsMap = new HashMap<>(  );
+        Map<Integer,Map<Integer, List<AnswerOptionView>>> scaleOptionsMap = new HashMap<>(  );
         for ( Element element : answer.getElements() ) {
 
 
 
             if( element.getAnswerOrder() == -1 ){
                 // freeTextOption
-                freeTextOption = new OptionView(); //other
+                freeTextOption = new AnswerOptionView(); //other
                 freeTextOption.setName( element.getName() );
                 freeTextOption.setValue( element.getValue() );
 
             }else{
 
 
-                OptionView option = options.get( element.getAnswerOrder() );
+                AnswerOptionView option = options.get( element.getAnswerOrder() );
                 if( option == null ){
-                    option = new OptionView();
+                    option = new AnswerOptionView();
                     option.setSelected( element.getScaleOrder() == -1 );
                     option.setIndex( element.getAnswerOrder() );
 
@@ -59,21 +59,21 @@ public class AnswerView {
 
                 if( element.getScaleOrder() >= 0 ){
 
-                    Map<Integer, List<OptionView>> stepsMap = scaleOptionsMap.get( element.getAnswerOrder() );
+                    Map<Integer, List<AnswerOptionView>> stepsMap = scaleOptionsMap.get( element.getAnswerOrder() );
                     if( stepsMap == null ){
                         stepsMap = new HashMap<>(  );
-                        List<OptionView> steps = new ArrayList<>(  );
+                        List<AnswerOptionView> steps = new ArrayList<>(  );
                         stepsMap.put( element.getScaleOrder(), steps );
                         scaleOptionsMap.put( element.getAnswerOrder(), stepsMap );
                     }
 
-                    List<OptionView> steps = stepsMap.get( element.getScaleOrder() );
+                    List<AnswerOptionView> steps = stepsMap.get( element.getScaleOrder() );
                     if( steps == null ){
-                        List<OptionView> scaleSteps = new ArrayList<>(  );
+                        List<AnswerOptionView> scaleSteps = new ArrayList<>(  );
                         stepsMap.put( element.getScaleOrder(), scaleSteps );
                         steps = scaleSteps;
                     }
-                    final OptionView scaleStep = new OptionView();
+                    final AnswerOptionView scaleStep = new AnswerOptionView();
                     scaleStep.setIndex( element.getScaleGroupOrder() );
                     scaleStep.setSelected( true );
                     steps.add( scaleStep );
@@ -82,13 +82,13 @@ public class AnswerView {
             }
         }
 
-        List<OptionView> optionList = new ArrayList<>(  );
+        List<AnswerOptionView> optionList = new ArrayList<>(  );
         for ( Integer answerOrder : options.keySet() ) {
-            OptionView optionView = new OptionView();
-            optionView.setSelected( options.get( answerOrder ).getSelected() );
-            optionView.setIndex( answerOrder );
+            AnswerOptionView answerOptionView = new AnswerOptionView();
+            answerOptionView.setSelected( options.get( answerOrder ).getSelected() );
+            answerOptionView.setIndex( answerOrder );
             List<ScaleView> scales = new ArrayList<>(  );
-            Map<Integer, List<OptionView>> scale = scaleOptionsMap.get( answerOrder );
+            Map<Integer, List<AnswerOptionView>> scale = scaleOptionsMap.get( answerOrder );
             if( scale != null ){
                 for ( Integer scaleOrder : scale.keySet() ) {
                     ScaleView scaleView = new ScaleView();
@@ -98,9 +98,9 @@ public class AnswerView {
                 }
             }
 
-            optionView.setScaleGroup( scales );
+            answerOptionView.setScaleGroup( scales );
 
-            optionList.add( optionView );
+            optionList.add( answerOptionView );
         }
 
         setOptions( optionList );
@@ -135,11 +135,11 @@ public class AnswerView {
         this.surveyId = surveyId;
     }
 
-    public List<OptionView> getOptions(){
+    public List<AnswerOptionView> getOptions(){
         return options;
     }
 
-    public void setOptions( List<OptionView> options ){
+    public void setOptions( List<AnswerOptionView> options ){
         this.options = options;
     }
 
@@ -167,11 +167,11 @@ public class AnswerView {
         this.questionType = questionType;
     }
 
-    public OptionView getFreeTextOption() {
+    public AnswerOptionView getFreeTextOption() {
         return freeTextOption;
     }
 
-    public void setFreeTextOption(OptionView freeTextOption) {
+    public void setFreeTextOption(AnswerOptionView freeTextOption) {
         this.freeTextOption = freeTextOption;
     }
 

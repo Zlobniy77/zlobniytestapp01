@@ -1,19 +1,19 @@
-package com.zlobniy.domain.implementation;
+package com.zlobniy.domain.implementation.phone;
 
 import com.twilio.sdk.verbs.*;
+import com.zlobniy.domain.answer.service.AnswerService;
+import com.zlobniy.domain.answer.view.AnswerOptionView;
 import com.zlobniy.domain.answer.view.AnswerView;
-import com.zlobniy.domain.answer.view.OptionView;
 import com.zlobniy.domain.export.ExportAnswerView;
+import com.zlobniy.domain.implementation.view.IncomingCall;
+import com.zlobniy.domain.implementation.view.Response;
 import com.zlobniy.domain.survey.view.PhoneSurveyView;
 import com.zlobniy.domain.survey.view.questionnaire.ClosedQuestionView;
 import com.zlobniy.domain.survey.view.questionnaire.QuestionView;
-import com.zlobniy.twilio.survey.models.Response;
-import com.zlobniy.twilio.survey.util.IncomingCall;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,13 +24,23 @@ public class PhoneImplService {
 
     private final Map<Long, PhoneSurveyView> surveys = new HashMap<>();
 
+    private AnswerService answerService;
+
+    @Autowired
+    public PhoneImplService( AnswerService answerService ){
+        this.answerService = answerService;
+    }
+
     public void addSurvey( Long id, PhoneSurveyView survey ){
         surveys.putIfAbsent( id , survey );
     }
 
-    public void addAnswerData( Long surveyId, int questionNumber, String value ){
-        PhoneSurveyView survey = surveys.get( surveyId );
-        survey.getResponses().get( questionNumber ).setValue( value );
+    /**
+     * Add transcribed answer, speech to text.
+     * */
+    public void addAnswerData( Long surveyId, int questionNumber, String userId, String value ){
+
+        answerService.updateAnswersElements( surveyId, userId, questionNumber, value );
     }
 
     public List<ExportAnswerView> getAnswers( Long surveyId ){
@@ -54,8 +64,8 @@ public class PhoneImplService {
             if( !survey.isStarted() ){
                 survey.setStarted( true );
             }else{
-                saveAnswers( call, survey );
-
+                AnswerView answerView = processAnswer( call, survey );
+                answerService.addAnswer( answerView );
             }
             if( !survey.isDone() ){
                 return processSurvey( survey, twiml );
@@ -73,7 +83,7 @@ public class PhoneImplService {
 
     }
 
-    private void saveAnswers( IncomingCall call, PhoneSurveyView survey ){
+    AnswerView processAnswer( IncomingCall call, PhoneSurveyView survey ){
         Response response1 = new Response( call.getInput() );
 
         ExportAnswerView exportAnswerView = new ExportAnswerView();
@@ -93,24 +103,27 @@ public class PhoneImplService {
 
         if( q.getType().equalsIgnoreCase( "closed" ) ){
 
-            saveClosedAnswer( response1, q, exportAnswerView );
+            saveClosedAnswer( response1, q, exportAnswerView, answerView );
 
         }else if( q.getType().equalsIgnoreCase( "text" ) ){
 
             exportAnswerView.setUrl( response1.getAnswer().toString() );
 
+            AnswerOptionView answerOptionView = new AnswerOptionView(  );
+            answerOptionView.setName( "url" );
+            answerOptionView.setValue( response1.getAnswer().toString() );
+
+            answerView.getOptions().add( answerOptionView );
+
         }
 
-//        AnswerSession answerSession = new AnswerSession( answerView );
-
-//                answersViewList.add( answerView );
-//                answerSessionsList.add( answerSession );
-
         survey.addResponse( exportAnswerView );
+
+        return answerView;
     }
 
-    private void saveClosedAnswer( Response response1, QuestionView q, ExportAnswerView exportAnswerView ){
-        List<OptionView> options = new ArrayList<>();
+    private void saveClosedAnswer( Response response1, QuestionView q, ExportAnswerView exportAnswerView, AnswerView answerView ){
+        List<AnswerOptionView> options = new ArrayList<>();
         Integer selectedIndex = Integer.parseInt( response1.getAnswer().toString() );
 
         ClosedQuestionView closedQuestion = (ClosedQuestionView)q;
@@ -123,7 +136,7 @@ public class PhoneImplService {
                 exportAnswerView.setValue( opt.getTitle() );
             }
 
-            OptionView option = new OptionView();
+            AnswerOptionView option = new AnswerOptionView();
             option.setIndex( index );
             option.setSelected( selected );
             option.setValue( "" );
@@ -135,8 +148,7 @@ public class PhoneImplService {
             index++;
         }
 
-        //answerView.setOptions( options );
-        //answerView.setFreeTextOption( new OptionView() );
+        answerView.setOptions( options );
     }
 
     private String processSurvey( PhoneSurveyView survey, TwiMLResponse twiml ) throws TwiMLException,
@@ -203,19 +215,9 @@ public class PhoneImplService {
         text.setFinishOnKey("#");
         // Use the Transcription route to receive the text of a voice response.
         text.setTranscribe(true);
-        text.setTranscribeCallback("/interview/" + survey.getId() + "/transcribe/" + survey.getIndex());
+        text.setTranscribeCallback("/interview/" + survey.getId() + "/transcribe/" + survey.getIndex() + "/test");
         twiml.append(text);
 
-    }
-
-
-    // Wrap the URLEncoder and URLDecoder for cleanliness.
-    public static String urlEncode(String s) throws UnsupportedEncodingException {
-        return URLEncoder.encode(s, "utf-8");
-    }
-
-    public static String urlDecode(String s) throws UnsupportedEncodingException {
-        return URLDecoder.decode(s, "utf-8");
     }
 
 }

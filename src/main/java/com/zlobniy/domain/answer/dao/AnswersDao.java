@@ -7,9 +7,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AnsDao extends JpaRepository<AnswerSession, Long> {
+public interface AnswersDao extends JpaRepository<AnswerSession, Long> {
 
-    @Query( "select a from AnswerSession a where a.surveyId = :surveyId and a.userId = :userId and a.deleted = 'false'" )
+    @Query("select a from AnswerSession a where a.surveyId = :surveyId and a.userId = :userId and a.deleted = 'false'")
     AnswerSession getBy( @Param( "surveyId" ) Long surveyId, @Param( "userId" ) String userId );
+
+    AnswerSession findBySurveyId( Long surveyId );
 
 }

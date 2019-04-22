@@ -128,9 +128,7 @@ public class SurveyController {
     }
 
     @RequestMapping( value = "/api/saveSurvey/{folderId}", method = RequestMethod.POST )
-    public SurveyView saveSurvey(
-            @RequestBody SurveyView surveyView,
-            @PathVariable Long folderId ) {
+    public SurveyView saveSurvey( @RequestBody SurveyView surveyView, @PathVariable Long folderId ) {
 
         Folder folder = getFolder( folderId );
         Client client = findClient();
@@ -147,18 +145,15 @@ public class SurveyController {
     }
 
     @RequestMapping( value = "/saveAnswers", method = RequestMethod.POST )
-    public String saveAnswers( @RequestBody AnswerView answerView, HttpServletRequest request ) {
-        AnswerSession answerSession = new AnswerSession( answerView );
-
-        answerService.addAnswer( answerSession );
-        answerService.saveAnswer( answerView );
+    public String saveAnswers( @RequestBody AnswerView answerView ) {
+        answerService.addAnswer( answerView );
 
         System.out.println( answerView );
         return answerView.toString();
     }
 
     @RequestMapping( value = "/api/answers/{surveyId}", method = RequestMethod.GET )
-    public List<AnswerView> loadAnswers( @PathVariable( "surveyId" ) Long surveyId, HttpServletRequest request ) {
+    public List<AnswerView> loadAnswers( @PathVariable( "surveyId" ) Long surveyId ) {
         return answerService.loadAnswers( surveyId );
     }
 

@@ -52,10 +52,10 @@ public class InitDefaultData {
         client.setPassword( "123" );
         client.setEmail( "email" );
 
-        PhoneProperty property = new PhoneProperty();
-        property.setPhoneNumber( "+12029309314" );
-        property.setSid( "AC69120befd5ef3ed6c4fc3ecd9cf44f57" );
-        property.setToken( "eaa605fd56f09ab9e55e45d59f568d46" );
+        final PhoneProperty property = new PhoneProperty();
+        property.setPhoneNumber( "" );
+        property.setSid( "" );
+        property.setToken( "" );
         client.setProperty( property );
 
         clientService.saveClient( client );
@@ -64,7 +64,7 @@ public class InitDefaultData {
 
         Panel panel = generatePanel( client, homeFolder );
 
-        generate1000Surveys( client, homeFolder );
+        generateSurveys( client, homeFolder );
 
     }
 
@@ -80,9 +80,7 @@ public class InitDefaultData {
         panel.setFolder( folder );
         panel.setCreationDate( new Date(  ) );
 
-        Panel newPanel = panelService.save( panel );
-
-        return newPanel;
+        return panelService.save( panel );
     }
 
     private Folder generateFolders( Client client ){
@@ -104,14 +102,13 @@ public class InitDefaultData {
         subFolder2.setClient( client );
         subFolder2.setTitle( "folder 2" );
 
-
         folderService.save( subFolder );
         folderService.save( subFolder2 );
 
         return homeFolder;
     }
 
-    private void generate1000Surveys( Client client, Folder homeFolder ){
+    private void generateSurveys( Client client, Folder homeFolder ){
 
         for( int i = 0; i < 5 ; i++ ){
             final DummyQuestionnaire dummyQuestionnaire = new DummyQuestionnaire();
@@ -130,17 +127,17 @@ public class InitDefaultData {
     }
 
     private List<BgrDescription> getDescriptions(){
-        List<BgrDescription> descriptions = new ArrayList<>(  );
+        final List<BgrDescription> descriptions = new ArrayList<>(  );
 
-        BgrDescription mail = new BgrDescription();
+        final BgrDescription mail = new BgrDescription();
         mail.setType( BgrDescription.Type.EMAIL );
         mail.setValue( "email" );
 
-        BgrDescription name = new BgrDescription();
+        final BgrDescription name = new BgrDescription();
         name.setType( BgrDescription.Type.OPEN );
         name.setValue( "name" );
 
-        BgrDescription dep = new BgrDescription();
+        final BgrDescription dep = new BgrDescription();
         dep.setType( BgrDescription.Type.CLOSED );
         dep.setValue( "department" );
 
