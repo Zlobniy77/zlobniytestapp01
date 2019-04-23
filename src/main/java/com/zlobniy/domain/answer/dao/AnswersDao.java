@@ -6,12 +6,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface AnswersDao extends JpaRepository<AnswerSession, Long> {
 
     @Query("select a from AnswerSession a where a.surveyId = :surveyId and a.userId = :userId and a.deleted = 'false'")
     AnswerSession getBy( @Param( "surveyId" ) Long surveyId, @Param( "userId" ) String userId );
 
-    AnswerSession findBySurveyId( Long surveyId );
+    List<AnswerSession> findBySurveyId(Long surveyId );
 
 }

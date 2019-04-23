@@ -73,8 +73,17 @@ public class AnswerService {
         return dao.getBy( surveyId, userId );
     }
 
+    public List<AnswerSession> getSesions( Long surveyId ){
+        List<AnswerSession> sessions = dao.findBySurveyId( surveyId );
+        return sessions;
+    }
 
-    public void updateAnswersElements( Long surveyId, String userId, Integer questionNumber, String value ){
+    public void updateAnswersElements( Long surveyId,
+                                       String userId,
+                                       Integer questionNumber,
+                                       String value,
+                                       String extraInfo ){
+
         AnswerSession answerSession = dao.getBy( surveyId, userId );
         List<Answer> answers = answerSession.getAnswers()
                 .stream()
@@ -85,6 +94,7 @@ public class AnswerService {
             List<Element> elements = new ArrayList<>(  );
             Element element = new Element(  );
             element.setValue( value );
+            element.setExtraInfo( extraInfo );
             elements.add( element );
 
             answer.setElements( elements );
@@ -93,9 +103,6 @@ public class AnswerService {
         dao.save( answerSession );
     }
 
-    public AnswerSession getSession( Long surveyId ){
-        return dao.findBySurveyId( surveyId );
-    }
 
     public List<AnswerView> loadAnswers( Long surveyId ) {
         AnswerSession answerSession = dao.getOne( surveyId );

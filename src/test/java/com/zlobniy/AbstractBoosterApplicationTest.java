@@ -15,36 +15,31 @@
  */
 package com.zlobniy;
 
-import com.zlobniy.greetings.GreetingProperties;
-import org.hamcrest.core.Is;
 import org.junit.Ignore;
 import org.junit.Test;
-
-import static com.jayway.restassured.RestAssured.given;
-import static com.jayway.restassured.RestAssured.when;
 
 public abstract class AbstractBoosterApplicationTest {
 
     @Ignore
     @Test
     public void testGreetingEndpoint() {
-        when().get()
-                .then()
-                .statusCode(200)
-                .body("content", Is.is(String.format(getProperties().getMessage(), "World")));
+//        when().get()
+//                .then()
+//                .statusCode(200)
+//                .body("content", Is.is(String.format(getProperties().getMessage(), "World")));
     }
 
     @Ignore
     @Test
     public void testGreetingEndpointWithNameParameter() {
-        given().param("name", "John")
-                .when()
-                .get()
-                .then()
-                .statusCode(200)
-                .body("content", Is.is(String.format(getProperties().getMessage(), "John")));
+//        given().param("name", "John")
+//                .when()
+//                .get()
+//                .then()
+//                .statusCode(200)
+//                .body("content", Is.is(String.format(getProperties().getMessage(), "John")));
     }
 
-    protected abstract GreetingProperties getProperties();
+
 
 }

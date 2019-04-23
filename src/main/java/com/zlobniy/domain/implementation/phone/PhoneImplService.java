@@ -1,6 +1,9 @@
 package com.zlobniy.domain.implementation.phone;
 
 import com.twilio.sdk.verbs.*;
+import com.zlobniy.domain.answer.entity.Answer;
+import com.zlobniy.domain.answer.entity.AnswerSession;
+import com.zlobniy.domain.answer.entity.Element;
 import com.zlobniy.domain.answer.service.AnswerService;
 import com.zlobniy.domain.answer.view.AnswerOptionView;
 import com.zlobniy.domain.answer.view.AnswerView;
@@ -38,15 +41,41 @@ public class PhoneImplService {
     /**
      * Add transcribed answer, speech to text.
      * */
-    public void addAnswerData( Long surveyId, int questionNumber, String userId, String value ){
+    public void addAnswerData( Long surveyId, int questionNumber, String userId, String value, String extraInfo ){
 
-        answerService.updateAnswersElements( surveyId, userId, questionNumber, value );
+        answerService.updateAnswersElements( surveyId, userId, questionNumber, value, extraInfo );
     }
 
     public List<ExportAnswerView> getAnswers( Long surveyId ){
-
         System.out.println("Get results for survey " + surveyId);
-        return surveys.get( surveyId ).getResponses();
+
+        List<AnswerSession> sessions = answerService.getSesions( surveyId );
+        List<ExportAnswerView> exportData = new ArrayList<>();
+
+        for (AnswerSession session : sessions) {
+
+            for (Answer answer : session.getAnswers()) {
+
+                for (Element element : answer.getElements()) {
+                    ExportAnswerView export = new ExportAnswerView();
+
+                    export.setRespondent( session.getUserId() );
+                    export.setQuestionNumber( answer.getQuestionNumber() );
+                    if( element.getAnswerOrder() != null ){
+                        export.setValue( element.getAnswerOrder().toString() );
+                    }else{
+                        String value = element.getValue() + " ( " + element.getExtraInfo() + " ) ";
+                        export.setValue( value );
+                    }
+
+                    exportData.add( export );
+                }
+
+            }
+
+        }
+
+        return exportData;
     }
 
     public void resetSurvey( Long surveyId ){
@@ -215,7 +244,7 @@ public class PhoneImplService {
         text.setFinishOnKey("#");
         // Use the Transcription route to receive the text of a voice response.
         text.setTranscribe(true);
-        text.setTranscribeCallback("/interview/" + survey.getId() + "/transcribe/" + survey.getIndex() + "/test");
+        text.setTranscribeCallback("/interview/" + survey.getId() + "/transcribe/" + ( survey.getIndex() + 1 ) + "/test");
         twiml.append(text);
 
     }

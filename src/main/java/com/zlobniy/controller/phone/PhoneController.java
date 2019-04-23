@@ -126,7 +126,7 @@ public class PhoneController {
 
         int questionId = Integer.parseInt( question );
         // update answers in database, add speech to text.
-        phoneService.addAnswerData( surveyId, questionId, userId, call.getTranscriptionText() );
+        phoneService.addAnswerData( surveyId, questionId, userId, call.getTranscriptionText(), call.getRecordingUrl() );
 
         return "OK";
     }

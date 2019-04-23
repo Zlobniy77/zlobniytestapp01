@@ -27,6 +27,9 @@ public class Element {
     @Column
     private Integer scaleGroupOrder = -1;
 
+    @Column
+    private String extraInfo;
+
     public Element(){
 
     }
@@ -85,6 +88,14 @@ public class Element {
         this.id = id;
     }
 
+    public String getExtraInfo() {
+        return extraInfo;
+    }
+
+    public void setExtraInfo(String extraInfo) {
+        this.extraInfo = extraInfo;
+    }
+
     public Element copy() {
         final Element element = new Element();
         element.setAnswerOrder( getAnswerOrder() );
@@ -92,6 +103,7 @@ public class Element {
         element.setScaleGroupOrder( getScaleGroupOrder() );
         element.setScaleOrder( getScaleOrder() );
         element.setValue( getValue() );
+        element.setExtraInfo( getExtraInfo() );
 
         return element;
     }
