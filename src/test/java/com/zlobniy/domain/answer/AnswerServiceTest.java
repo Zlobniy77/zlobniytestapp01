@@ -33,7 +33,7 @@ public class AnswerServiceTest {
 
         answerService.addAnswer( answerView );
 
-        AnswerSession session = answerService.getSession( surveyId );
+        AnswerSession session = answerService.getAnswers( surveyId, "test" );
 
         Assert.assertEquals( "Wrong amount of answers ",
                 1,
@@ -43,7 +43,7 @@ public class AnswerServiceTest {
 
         answerService.addAnswer( anotherAnswer );
 
-        session = answerService.getSession( surveyId );
+        session = answerService.getAnswers( surveyId, "test" );
 
         Assert.assertEquals( "Wrong amount of answers after second answer ",
                 2,
@@ -53,7 +53,7 @@ public class AnswerServiceTest {
 
         answerService.addAnswer( reAnswered );
 
-        session = answerService.getSession( surveyId );
+        session = answerService.getAnswers( surveyId, "test" );
 
         Assert.assertEquals( "Wrong amount of answers after re answering ",
                 2,

@@ -1,5 +1,10 @@
 install aurelia, npm should be installed
 
+some probably extra dependency
+npm install eslint --save-dev
+npm install --save-dev extract-text-webpack-plugin
+npm install --save-dev webpack-bundle-analyzer
+
 npm i -g aurelia-cli
 npm i --save-dev aurelia-cli
 
@@ -11,7 +16,7 @@ npm install aurelia-router --save
 npm install whatwg-fetch --save
 npm install aurelia-dialog --save
 npm install aurelia-animator-css --save
-npm install aurelia-validation --save
+npm install --save-dev aurelia-validation@1.2.3
 
 sortable draggable dependency
 npm install sortablejs --save
