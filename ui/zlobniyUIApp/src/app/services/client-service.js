@@ -167,7 +167,13 @@ export class ClientService {
   }
 
   ifTest( clientData ){
-    if( clientData.username === 'test' ){
+    let hasLoggedAsTest = window.localStorage.getItem( 'isTest' );
+    if( hasLoggedAsTest === 'test' ){
+      this.clientInfo = { id:'0', username:'test', hasLogged: true, name: 'Test'};
+      this.hasLogged = true;
+      return true;
+    } else if ( clientData.username === 'test' ){
+      window.localStorage.setItem( 'isTest', 'test' );
       this.clientInfo = { id:'0', username:'test', hasLogged: true, name: 'Test'};
       this.hasLogged = true;
       this.navigationService.goTo( this.navigationService.NAV_DASHBOARD );

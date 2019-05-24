@@ -16,27 +16,6 @@ export class SurveyService {
     this.eventAggregator = eventAggregator;
   }
 
-  setEditedModel( model ){
-    console.log( 'start editing ' + model.name );
-    if( this.editedModel ){
-      console.log( 'already editing ' + this.editedModel );
-      this.editedModel.finishEdit();
-    }
-    this.editedModel = model;
-    console.log( 'editedModel = ' + this.editedModel );
-  }
-
-  unsetEditedModel(){
-    if( this.editedModel ){
-      this.editedModel.finishEdit();
-      this.editedModel = undefined;
-    }
-  }
-
-  isEditedModel(){
-    return this.editedModel !== undefined;
-  }
-
   loadSurvey( id ){
     return this.http.get( 'api/survey/' + id );
   }

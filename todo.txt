@@ -1,4 +1,10 @@
-1. create export answers
+1. change panel
+    - ui
+    - ui edit panel
+2. change implementation
+    - add user id to implementation
+    - add user id to open in popup (open as)
+3. create export answers
     - entity
     - dao
     - service
@@ -6,16 +12,9 @@
     - controller
     - UI
     - context menu on survey to create/show/download export data
-2. change controllers
+4. change controllers
     - survey controller
     - folder controller
     - panel controller
-3. change panel
-    - ui
-    - ui edit panel
-4. change implementation
-    - add user id to implementation
-    - add user id to open in popup (open as)
-
-5. change phone behaviour
+6. change phone behaviour
     - change phone property to client property and fix it

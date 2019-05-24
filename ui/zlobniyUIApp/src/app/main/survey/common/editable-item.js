@@ -1,21 +1,21 @@
 import 'css/survey.css';
 
 import {bindable, inject} from 'aurelia-framework';
-import {SurveyService} from "../../../services/survey-service";
+import {WizardService} from "../../../services/wizard-service";
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {EventSources} from "../../../services/event-sources";
 import {Ui} from "../../../ui";
 
-@inject( SurveyService, EventAggregator, EventSources, Ui )
+@inject( WizardService, EventAggregator, EventSources, Ui )
 export class EditableItem extends Ui {
 
   @bindable item;
   @bindable editMode;
   edit;
 
-  constructor( surveyService, eventAggregator, eventSources, ...rest ) {
+  constructor( wizardService, eventAggregator, eventSources, ...rest ) {
     super(...rest);
-    this.surveyService = surveyService;
+    this.wizardService = wizardService;
     this.eventAggregator = eventAggregator;
     this.eventSources = eventSources;
     this.edit = false;
@@ -23,7 +23,7 @@ export class EditableItem extends Ui {
 
   startEdit(){
     if( !this.edit ){
-      this.surveyService.setEditedModel( this );
+      this.wizardService.setEditedModel( this );
       this.edit = true;
     }
   }

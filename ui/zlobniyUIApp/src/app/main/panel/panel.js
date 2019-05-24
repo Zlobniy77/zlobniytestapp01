@@ -1,47 +1,67 @@
-import 'css/main.css';
+import 'css/panel.css';
 
 import {inject} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {NavigationService} from "../../services/navigation-service";
 import {PanelService} from "../../services/panel-service";
 import {ClientService} from "../../services/client-service";
+import {WizardService} from "../../services/wizard-service";
 
-@inject( EventAggregator, NavigationService, PanelService, ClientService )
+@inject( EventAggregator, NavigationService, PanelService, ClientService, WizardService )
 export class Panel {
 
-  constructor( eventAggregator, navigationService, panelService, clientService ) {
+  isOpenedColumns = false;
+
+  constructor( eventAggregator, navigationService, panelService, clientService, wizardService ) {
     console.log('constructor panel ');
     this.eventAggregator = eventAggregator;
     this.navigation = navigationService;
     this.panelService = panelService;
     this.clientService = clientService;
+    this.wizardService = wizardService;
 
-    this.initSurveyMouseHandler();
+    this.initPanelMouseHandler();
 
     this.header = '';
     this.body = '';
+
+    this.data = {
+      standardColumn: false,
+    };
   }
 
-  initSurveyMouseHandler(){
+  initPanelMouseHandler(){
     let that = this;
-    this.surveyMouseHandler = e => {
-      console.log( e.target.dataset.type );
-      if ( e.target.dataset.type === 'editable' ) {
+    this.panelMouseHandler = e => {
+      let type = e.target.dataset.type;
+      console.log( type );
+      if ( type === 'editable' || type === 'selectable' ) {
         //console.log( that.name + " " + e.target );
       } else {
-        if ( that.panelService.isEditedModel() ) {
-          that.panelService.unsetEditedModel();
+        if ( that.wizardService.isEditedModel() ) {
+          that.wizardService.unsetEditedModel();
         } else {
           //console.log( 'nothing to edit' );
         }
+        // hide opened selectable block
+        that.isOpenedColumns = false;
       }
-
     };
+  }
+
+  switchOpenColumns( event ){
+    this.isOpenedColumns = !this.isOpenedColumns;
+  }
+
+  addColumn( event, optionNumber ){
+    //event.stopPropagation();
+    console.log( optionNumber );
+
   }
 
   attached() {
     console.log('attached panel ');
-    document.addEventListener( 'click', this.surveyMouseHandler );
+    document.addEventListener( 'click', this.panelMouseHandler );
     this.changeTitleSub = this.eventAggregator.subscribe('change.title', event => {
 
       let value = event.value;
@@ -52,8 +72,9 @@ export class Panel {
   }
 
   detached() {
-    document.removeEventListener( 'click', this.surveyMouseHandler );
+    document.removeEventListener( 'click', this.panelMouseHandler );
     this.changeTitleSub.dispose();
+    this.navigation.setTitle( {} );
     console.log('detached panel ');
   }
 

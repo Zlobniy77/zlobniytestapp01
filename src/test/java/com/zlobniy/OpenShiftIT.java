@@ -1,5 +1,5 @@
-package com.zlobniy;
-
+//package com.zlobniy;
+//
 //import com.jayway.restassured.RestAssured;
 //import com.zlobniy.greetings.GreetingProperties;
 //import org.arquillian.cube.openshift.impl.enricher.AwaitRoute;
@@ -7,7 +7,7 @@ package com.zlobniy;
 //import org.jboss.arquillian.junit.Arquillian;
 //import org.junit.Before;
 //import org.junit.runner.RunWith;
-
+//
 //@RunWith(Arquillian.class)
 //public class OpenShiftIT extends AbstractBoosterApplicationTest {
 //

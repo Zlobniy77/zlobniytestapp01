@@ -11,27 +11,6 @@ export class PanelService {
     console.log('constructor PanelService ');
   }
 
-  setEditedModel( model ){
-    console.log( 'start editing ' + model.name );
-    if( this.editedModel ){
-      console.log( 'already editing ' + this.editedModel );
-      this.editedModel.finishEdit();
-    }
-    this.editedModel = model;
-    console.log( 'editedModel = ' + this.editedModel );
-  }
-
-  unsetEditedModel(){
-    if( this.editedModel ){
-      this.editedModel.finishEdit();
-      this.editedModel = undefined;
-    }
-  }
-
-  isEditedModel(){
-    return this.editedModel !== undefined;
-  }
-
   attached() {
     console.log('attached PanelService ');
   }
@@ -42,8 +21,6 @@ export class PanelService {
 
   activate(data) {
     console.log('activate PanelService ' + data);
-
-
   }
 
   savePanel( panel, folderId ){
@@ -52,7 +29,6 @@ export class PanelService {
   }
 
   loadPanels( clientId ){
-
     let url = 'api/panel/all/' + clientId;
     return this.http.get( url );
   }

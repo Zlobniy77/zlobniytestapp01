@@ -1,15 +1,33 @@
 <template>
 
-  <h1 class="m-1">Panel wizard</h1>
+  <div class="panel-wizard-main">
 
-  <div class="panel-header m-1 w-100">
-    <input class="panel-header-row w-25" value.bind="header" />
-  </div>
+    <nav id="nav">
+      <ul class="header-options">
+        <li class="open-block">
+          <a class="icon-columns open-block-click" data-type="selectable" click.delegate="switchOpenColumns($event)" >add column 1</a>
+            <ul if.bind="isOpenedColumns" class="tooltip-list">
 
-  <div class="panel-body m-1 w-100">
+              <li data-type="selectable" click.delegate="addColumn($event, 1)">email</li>
+              <li data-type="selectable" click.delegate="addColumn($event, 2)">standard</li>
+
+            </ul>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="panel-header m-1 w-100">
+      <input class="panel-header-row w-25" value.bind="header" />
+    </div>
+
+    <div class="panel-body m-1 w-100">
     <textarea rows="10" class="panel-body-row w-25" value.bind="body">
 
     </textarea>
+    </div>
+
   </div>
+
+
 
 </template>

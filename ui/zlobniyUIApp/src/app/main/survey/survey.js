@@ -9,14 +9,15 @@ import {EventSources} from "../../services/event-sources";
 import {SurveyModelTransformer} from '../../transformer/survey-model-transformer';
 import {Ui} from "../../ui";
 import {ClientService} from "../../services/client-service";
+import {WizardService} from "../../services/wizard-service";
 import $ from 'jquery';
 
-@inject( SurveyService, ClientService, NavigationService, EventAggregator, SurveyModelTransformer, EventSources, SurveyHelper, Ui )
+@inject( SurveyService, ClientService, NavigationService, EventAggregator, SurveyModelTransformer, EventSources, SurveyHelper, WizardService, Ui )
 export class Survey extends Ui {
 
   surveyModel = {};
 
-  constructor( surveyService, clientService, navigationService, eventAggregator, surveyModelTransformer, eventSource, surveyHelper, ...rest ) {
+  constructor( surveyService, clientService, navigationService, eventAggregator, surveyModelTransformer, eventSource, surveyHelper, wizardService, ...rest ) {
     super( ...rest );
     this.surveyService = surveyService;
     this.clientService = clientService;
@@ -25,6 +26,7 @@ export class Survey extends Ui {
     this.surveyModelTransformer = surveyModelTransformer;
     this.eventSources = eventSource;
     this.surveyHelper = surveyHelper;
+    this.wizardService = wizardService;
 
     this.initSurveyMouseHandler();
   }
@@ -36,8 +38,8 @@ export class Survey extends Ui {
       if ( e.target.dataset.type === 'editable' ) {
         //console.log( that.name + " " + e.target );
       } else {
-        if ( that.surveyService.isEditedModel() ) {
-          that.surveyService.unsetEditedModel();
+        if ( that.wizardService.isEditedModel() ) {
+          that.wizardService.unsetEditedModel();
         } else {
           //console.log( 'nothing to edit' );
         }
