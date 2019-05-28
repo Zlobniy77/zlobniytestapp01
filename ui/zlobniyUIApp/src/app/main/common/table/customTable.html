@@ -1,0 +1,15 @@
+<template>
+  <require from="app/main/common/table/tableCell"></require>
+  <require from="app/main/common/table/tableRow"></require>
+
+    <div class="custom-table">
+
+      <div class="custom-table-row custom-table-header">
+        <table-cell containerless repeat.for="cell of data.headers"></table-cell>
+      </div>
+
+      <table-row containerless repeat.for="row of data.rows"></table-row>
+
+    </div>
+
+</template>

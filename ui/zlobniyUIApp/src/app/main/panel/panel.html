@@ -1,4 +1,6 @@
 <template>
+  <require from="app/main/common/table/customTable"></require>
+
 
   <div class="panel-wizard-main">
 
@@ -15,6 +17,8 @@
         </li>
       </ul>
     </nav>
+
+    <custom-table containerless data.one-way="data"></custom-table>
 
     <div class="panel-header m-1 w-100">
       <input class="panel-header-row w-25" value.bind="header" />

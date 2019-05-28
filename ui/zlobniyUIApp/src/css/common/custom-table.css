@@ -1,0 +1,86 @@
+.custom-table{
+  overflow-x: scroll;
+  min-width: 100%;
+}
+
+.custom-table-header{
+  background-color: #3db2eb;
+}
+
+.custom-table-body{
+
+}
+
+.custom-table-row{
+  display: table-row;
+}
+
+.custom-table-cell{
+  display: table-cell;
+  min-width: 100px;
+  /*width: 100%;*/
+  box-sizing: border-box;
+  border: solid darkgray 1px;
+  padding: 5px;
+  text-align: center;
+}
+
+
+
+
+.Rtable {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 0 3em 0;
+  padding: 0;
+  width: 100%;
+}
+
+.Rtable-cell {
+  box-sizing: border-box;
+  flex-grow: 1;
+  width: 100%;
+
+  padding: 0.8em 1.2em;
+  overflow: hidden;
+
+  list-style: none;
+  border: solid 3px white;
+
+
+}
+
+/* Table column sizing
+================================== */
+.Rtable--2cols > .Rtable-cell {
+  width: 50%;
+}
+
+.Rtable--3cols > .Rtable-cell {
+  width: 33.33%;
+}
+
+.Rtable--4cols > .Rtable-cell {
+  width: 25%;
+}
+
+.Rtable--5cols > .Rtable-cell {
+  width: 20%;
+}
+
+.Rtable--6cols > .Rtable-cell {
+  width: 16.6%;
+}
+
+/* Responsive
+==================================== */
+@media all and (max-width: 700px) {
+  .Rtable--collapse  {
+    display: block;
+  }
+}
+
+
+.no-flexbox .Rtable {
+  display: block;
+}

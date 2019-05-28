@@ -1,7 +1,7 @@
-import 'css/panel.css';
+import "css/panel.css";
 
-import {inject} from 'aurelia-framework';
-import {EventAggregator} from 'aurelia-event-aggregator';
+import {inject} from "aurelia-framework";
+import {EventAggregator} from "aurelia-event-aggregator";
 import {NavigationService} from "../../services/navigation-service";
 import {PanelService} from "../../services/panel-service";
 import {ClientService} from "../../services/client-service";
@@ -26,8 +26,39 @@ export class Panel {
     this.body = '';
 
     this.data = {
-      standardColumn: false,
-    };
+      headers: [
+        {value: 'val 1', index: 0},
+        {value: 'val 2', index: 1},
+        {value: 'val 3', index: 2},
+        {value: 'val 4', index: 3},
+        {value: 'val 5', index: 4},
+      ],
+
+      rows: [
+        {
+          index: 0, cells: [
+          {value: 'cell 1', index: 0},
+          {value: 'cell 2', index: 1},
+          {value: 'cell 3', index: 2},
+          {value: 'cell 4', index: 3},
+          {value: 'cell 5', index: 4},
+        ]
+        },
+        {
+          index: 1, cells: [
+          {value: 'cell 11', index: 0},
+          {value: 'cell 12', index: 1},
+          {value: 'cell 13', index: 2},
+          {value: 'cell 14', index: 3},
+          {value: 'cell 15', index: 4},
+        ]
+        },
+      ],
+
+    }
+
+
+
   }
 
   initPanelMouseHandler(){
@@ -57,6 +88,13 @@ export class Panel {
     //event.stopPropagation();
     console.log( optionNumber );
 
+    let index = this.data.headers.length;
+    let column = {
+      value: 'val ',
+      index: index,
+    };
+    this.data.headers.push( column );
+    this.isOpenedColumns = false;
   }
 
   attached() {
