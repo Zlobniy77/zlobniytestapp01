@@ -13,7 +13,6 @@ export class Panel {
   isOpenedColumns = false;
 
   constructor( eventAggregator, navigationService, panelService, clientService, wizardService ) {
-    console.log('constructor panel ');
     this.eventAggregator = eventAggregator;
     this.navigation = navigationService;
     this.panelService = panelService;
@@ -27,30 +26,30 @@ export class Panel {
 
     this.data = {
       headers: [
-        {value: 'val 1', index: 0},
-        {value: 'val 2', index: 1},
-        {value: 'val 3', index: 2},
-        {value: 'val 4', index: 3},
-        {value: 'val 5', index: 4},
+        {title: 'val 1', index: 0, type: 'headers'},
+        {title: 'val 2', index: 1, type: 'headers'},
+        {title: 'val 3', index: 2, type: 'headers'},
+        {title: 'val 4', index: 3, type: 'headers'},
+        {title: 'val 5', index: 4, type: 'headers'},
       ],
 
       rows: [
         {
           index: 0, cells: [
-          {value: 'cell 1', index: 0},
-          {value: 'cell 2', index: 1},
-          {value: 'cell 3', index: 2},
-          {value: 'cell 4', index: 3},
-          {value: 'cell 5', index: 4},
+          {title: 'cell 1', index: 0, rowIndex: 0, type: 'rows'},
+          {title: 'cell 2', index: 1, rowIndex: 0, type: 'rows'},
+          {title: 'cell 3', index: 2, rowIndex: 0, type: 'rows'},
+          {title: 'cell 4', index: 3, rowIndex: 0, type: 'rows'},
+          {title: 'cell 5', index: 4, rowIndex: 0, type: 'rows'},
         ]
         },
         {
           index: 1, cells: [
-          {value: 'cell 11', index: 0},
-          {value: 'cell 12', index: 1},
-          {value: 'cell 13', index: 2},
-          {value: 'cell 14', index: 3},
-          {value: 'cell 15', index: 4},
+          {title: 'cell 11', index: 0, rowIndex: 1, type: 'rows'},
+          {title: 'cell 12', index: 1, rowIndex: 1, type: 'rows'},
+          {title: 'cell 13', index: 2, rowIndex: 1, type: 'rows'},
+          {title: 'cell 14', index: 3, rowIndex: 1, type: 'rows'},
+          {title: 'cell 15', index: 4, rowIndex: 1, type: 'rows'},
         ]
         },
       ],
@@ -88,32 +87,90 @@ export class Panel {
     //event.stopPropagation();
     console.log( optionNumber );
 
-    let index = this.data.headers.length;
-    let column = {
-      value: 'val ',
-      index: index,
-    };
+    let column = this.createColumn();
+
+
     this.data.headers.push( column );
+    this.fillRowsWithEmptyValues( column.index );
     this.isOpenedColumns = false;
+
+  }
+
+  createColumn(){
+    let index = this.data.headers.length;
+    return {
+      title: 'val ',
+      index: index,
+      type: 'headers',
+      isNew: true,
+    };
+  }
+
+  fillRowsWithEmptyValues( columnIndex ){
+
+    this.data.rows.forEach(function( row ) {
+      row.cells.push( {title: ' ', index: columnIndex, rowIndex: row.index, type: 'rows'}, );
+    });
+
+    this.data.rows
   }
 
   attached() {
     console.log('attached panel ');
     document.addEventListener( 'click', this.panelMouseHandler );
-    this.changeTitleSub = this.eventAggregator.subscribe('change.title', event => {
 
+    this.initEventSource();
+  }
+
+  initEventSource(){
+
+    let that = this;
+
+    // change title in table and panel title
+    this.changeTitle = this.eventAggregator.subscribe('change.title', event => {
+
+      let item = event.item;
       let value = event.value;
-      this.panel.title = value;
 
+      let currentItem = that.find( that.data, item );
+      if( currentItem ){
+        currentItem.title = value;
+      }
+
+      that.wizardService.unsetEditedModel();
     });
 
   }
 
+  find( data, item ){
+    let value;
+    let array = [];
+    if( item.type === 'panel' ){
+      value = item;
+    }else if( item.type === 'headers' ){
+      array = data[item.type];
+    }else{
+      array = data[item.type][item.rowIndex].cells;
+    }
+
+    array.forEach(function( element ) {
+      if( element.index === item.index ){
+        value = element;
+      }
+    });
+    return value;
+  }
+
+  destroyEventSource(){
+    this.changeTitle.dispose();
+  }
+
   detached() {
     document.removeEventListener( 'click', this.panelMouseHandler );
-    this.changeTitleSub.dispose();
     this.navigation.setTitle( {} );
     console.log('detached panel ');
+
+    this.destroyEventSource();
   }
 
   activate(data) {
@@ -147,6 +204,7 @@ export class Panel {
   initPanelModel(){
     this.panel = {};
     this.panel.title = 'new panel';
+    this.panel.type = 'panel';
     this.panel.header = {};
     this.panel.body = {};
   }

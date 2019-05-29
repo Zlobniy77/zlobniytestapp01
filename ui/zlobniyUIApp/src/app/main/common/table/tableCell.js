@@ -9,14 +9,11 @@ export class TableCell {
   constructor( dialogController, element ) {
     this.dialogController = dialogController;
     this.element = element;
-
-    this.value = "test*"
   }
 
   bind(bindingContext, overrideContext) {
     // console.log(bindingContext);
     this.cell = bindingContext.cell;
-    this.value = this.cell.value;
 
   }
 

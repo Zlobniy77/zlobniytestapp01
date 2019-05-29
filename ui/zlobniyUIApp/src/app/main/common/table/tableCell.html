@@ -1,3 +1,7 @@
 <template>
-  <div class="custom-table-cell">${value}</div>
+  <require from="app/main/common/elements/editable-item"></require>
+
+  <div class="custom-table-cell">
+    <editable-item containerless edit-mode.one-way="true" item.one-way="cell"></editable-item>
+  </div>
 </template>
