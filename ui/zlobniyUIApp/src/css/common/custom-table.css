@@ -1,6 +1,11 @@
 .custom-table{
-  overflow-x: scroll;
+  overflow: scroll;
   min-width: 100%;
+}
+
+.custom-table-row{
+  display: table-row;
+  background-color: white;
 }
 
 .custom-table-header{
@@ -9,10 +14,6 @@
 
 .custom-table-body{
 
-}
-
-.custom-table-row{
-  display: table-row;
 }
 
 .custom-table-cell{
@@ -83,4 +84,11 @@
 
 .no-flexbox .Rtable {
   display: block;
+}
+
+.sticky-left-column{
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background-color: inherit;
 }

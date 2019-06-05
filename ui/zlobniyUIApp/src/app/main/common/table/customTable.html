@@ -2,13 +2,16 @@
   <require from="app/main/common/table/tableCell"></require>
   <require from="app/main/common/table/tableRow"></require>
 
-    <div class="custom-table">
+    <div class="custom-table" style="${style}" >
 
-      <div class="custom-table-row custom-table-header">
+      <div class="custom-table-header custom-table-row">
+        <div class="custom-table-cell sticky-left-column" if.bind="settings.checkboxColumn">
+          <input type="checkbox">
+        </div>
         <table-cell containerless repeat.for="cell of data.headers"></table-cell>
       </div>
 
-      <table-row containerless repeat.for="row of data.rows"></table-row>
+      <table-row containerless checkboxColumn.one-way="settings.checkboxColumn" repeat.for="row of data.rows"></table-row>
 
     </div>
 

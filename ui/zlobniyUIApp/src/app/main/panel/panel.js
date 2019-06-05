@@ -21,6 +21,11 @@ export class Panel {
 
     this.initPanelMouseHandler();
 
+    this.tableSettings = {
+      height: 400,
+      checkboxColumn: true,
+    };
+
     this.header = '';
     this.body = '';
 
@@ -36,21 +41,25 @@ export class Panel {
       rows: [
         {
           index: 0, cells: [
-          {title: 'cell 1', index: 0, rowIndex: 0, type: 'rows'},
-          {title: 'cell 2', index: 1, rowIndex: 0, type: 'rows'},
-          {title: 'cell 3', index: 2, rowIndex: 0, type: 'rows'},
-          {title: 'cell 4', index: 3, rowIndex: 0, type: 'rows'},
-          {title: 'cell 5', index: 4, rowIndex: 0, type: 'rows'},
-        ]
+            {title: 'cell 1', index: 0, rowIndex: 0, type: 'rows'},
+            {title: 'cell 2', index: 1, rowIndex: 0, type: 'rows'},
+            {title: 'cell 3', index: 2, rowIndex: 0, type: 'rows'},
+            {title: 'cell 4', index: 3, rowIndex: 0, type: 'rows'},
+            {title: 'cell 5', index: 4, rowIndex: 0, type: 'rows'},
+          ],
+          checkboxColumn: false,
+          checkboxValue: false,
         },
         {
           index: 1, cells: [
-          {title: 'cell 11', index: 0, rowIndex: 1, type: 'rows'},
-          {title: 'cell 12', index: 1, rowIndex: 1, type: 'rows'},
-          {title: 'cell 13', index: 2, rowIndex: 1, type: 'rows'},
-          {title: 'cell 14', index: 3, rowIndex: 1, type: 'rows'},
-          {title: 'cell 15', index: 4, rowIndex: 1, type: 'rows'},
-        ]
+            {title: 'cell 11', index: 0, rowIndex: 1, type: 'rows'},
+            {title: 'cell 12', index: 1, rowIndex: 1, type: 'rows'},
+            {title: 'cell 13', index: 2, rowIndex: 1, type: 'rows'},
+            {title: 'cell 14', index: 3, rowIndex: 1, type: 'rows'},
+            {title: 'cell 15', index: 4, rowIndex: 1, type: 'rows'},
+          ],
+          checkboxColumn: false,
+          checkboxValue: true,
         },
       ],
 
@@ -96,6 +105,10 @@ export class Panel {
 
   }
 
+  addRow(){
+    this.createRow();
+  }
+
   createColumn(){
     let index = this.data.headers.length;
     return {
@@ -106,13 +119,37 @@ export class Panel {
     };
   }
 
+  createRow(){
+    let index = this.data.rows.length;
+    let row = {
+      index: index,
+      cells: [],
+      checkboxColumn: this.tableSettings.checkboxColumn,
+      checkboxValue: false,
+    };
+
+    this.data.headers.forEach(function( column ) {
+      let cell = {
+        title: ' ',
+        index: column.index,
+        rowIndex: row.index,
+        type: 'rows',
+        isNew: false,
+      };
+
+      row.cells.push( cell );
+    });
+
+    row.cells[0].isNew = true;
+    this.data.rows.push( row );
+  }
+
   fillRowsWithEmptyValues( columnIndex ){
 
     this.data.rows.forEach(function( row ) {
       row.cells.push( {title: ' ', index: columnIndex, rowIndex: row.index, type: 'rows'}, );
     });
 
-    this.data.rows
   }
 
   attached() {

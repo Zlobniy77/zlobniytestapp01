@@ -1,12 +1,13 @@
-import 'css/common/custom-table.css';
+import "css/common/custom-table.css";
 
-import {bindable,inject} from 'aurelia-framework';
+import {bindable, inject} from "aurelia-framework";
 import {DialogController} from "aurelia-dialog";
 
 @inject( DialogController, Element )
 export class CustomTable {
 
   @bindable data;
+  @bindable settings;
 
   constructor( dialogController, element ) {
     this.dialogController = dialogController;
@@ -16,9 +17,13 @@ export class CustomTable {
   }
 
   bind(bindingContext, overrideContext) {
-    // console.log(bindingContext);
+    let that = this;
+    this.style = "height: "+ this.settings.height + "px";
 
 
+    this.data.rows.forEach(function( row ) {
+      row.checkboxColumn = that.settings.checkboxColumn;
+    });
   }
 
   attached(argument) {

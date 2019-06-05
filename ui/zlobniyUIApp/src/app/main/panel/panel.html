@@ -2,33 +2,49 @@
   <require from="app/main/common/table/customTable"></require>
 
 
-  <div class="panel-wizard-main">
+  <div class="panel-wizard-main" style="margin: 10px">
 
-    <nav id="nav">
-      <ul class="header-options">
-        <li class="open-block">
-          <a class="icon-columns open-block-click" data-type="selectable" click.delegate="switchOpenColumns($event)" >add column 1</a>
-            <ul if.bind="isOpenedColumns" class="tooltip-list">
 
-              <li data-type="selectable" click.delegate="addColumn($event, 1)">email</li>
-              <li data-type="selectable" click.delegate="addColumn($event, 2)">standard</li>
+    <ul class="control-options navbar-nav w-25">
+      <li class="open-block">
+        <div>
+          <i class="fas fa-plus-circle open-block-click"
+             data-type="selectable"
+             click.delegate="switchOpenColumns($event)">
+            add column
+          </i>
+        </div>
 
-            </ul>
-        </li>
-      </ul>
-    </nav>
+        <ul if.bind="isOpenedColumns" class="tooltip-list">
 
-    <custom-table containerless data.one-way="data"></custom-table>
+          <li data-type="selectable" click.delegate="addColumn($event, 1)">email</li>
+          <li data-type="selectable" click.delegate="addColumn($event, 2)">standard</li>
 
-    <div class="panel-header m-1 w-100">
-      <input class="panel-header-row w-25" value.bind="header" />
-    </div>
+        </ul>
+      </li>
+    </ul>
 
-    <div class="panel-body m-1 w-100">
-    <textarea rows="10" class="panel-body-row w-25" value.bind="body">
+    <custom-table containerless data.one-way="data" settings.one-way="tableSettings"></custom-table>
 
-    </textarea>
-    </div>
+    <ul class="control-options navbar-nav w-25">
+      <li click.trigger="addRow()" class="nav-item">
+        <div>
+          <i class="fas fa-plus-circle" data-type="selectable">
+            add row
+          </i>
+        </div>
+      </li>
+    </ul>
+
+    <!--<div class="panel-header m-1 w-100">-->
+      <!--<input class="panel-header-row w-25" value.bind="header" />-->
+    <!--</div>-->
+
+    <!--<div class="panel-body m-1 w-100">-->
+    <!--<textarea rows="10" class="panel-body-row w-25" value.bind="body">-->
+
+    <!--</textarea>-->
+    <!--</div>-->
 
   </div>
 

@@ -2,6 +2,9 @@
   <require from="app/main/common/table/tableCell"></require>
 
     <div class="custom-table-row">
+      <div class="custom-table-cell sticky-left-column" if.bind="row.checkboxColumn">
+        <input type="checkbox" checked.bind="row.checkboxValue">
+      </div>
       <table-cell containerless repeat.for="cell of row.cells"></table-cell>
     </div>
 

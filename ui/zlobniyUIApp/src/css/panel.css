@@ -117,14 +117,15 @@ nav{
 .tooltip-list{
   list-style: none;
   padding: 0;
-  margin: 10px -20px 10px 10px;
+  margin-top: 10px;
+  /*margin: 10px -20px 10px 10px;*/
   position: absolute;
-  right: 0;
+  /*right: 0;*/
   min-width: 118px;
   background: #fff;
   text-align: left;
   box-shadow: 0 0 21px 0 rgba(39, 82, 122, .4);
-  z-index: 1;
+  z-index: 3;
 }
 .tooltip-list:before{
   content: '';
@@ -166,3 +167,7 @@ nav{
   background: #27537b;
   color: #fff;
 }
+.control-options{
+  margin: 10px;
+}
+
