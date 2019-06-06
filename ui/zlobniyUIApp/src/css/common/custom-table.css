@@ -1,6 +1,6 @@
 .custom-table{
-  overflow: scroll;
-  min-width: 100%;
+  overflow: auto;
+  overflow-x: hidden;
 }
 
 .custom-table-row{
@@ -10,10 +10,13 @@
 
 .custom-table-header{
   background-color: #3db2eb;
+  table-layout: fixed;
+  overflow: hidden;
 }
 
 .custom-table-body{
-
+  overflow-y: auto;
+  overflow-x: auto;
 }
 
 .custom-table-cell{

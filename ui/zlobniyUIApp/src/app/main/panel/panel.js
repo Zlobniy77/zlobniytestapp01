@@ -22,7 +22,8 @@ export class Panel {
     this.initPanelMouseHandler();
 
     this.tableSettings = {
-      height: 400,
+      height: 200,
+      width: 300,
       checkboxColumn: true,
     };
 
@@ -58,6 +59,50 @@ export class Panel {
             {title: 'cell 14', index: 3, rowIndex: 1, type: 'rows'},
             {title: 'cell 15', index: 4, rowIndex: 1, type: 'rows'},
           ],
+          checkboxColumn: false,
+          checkboxValue: true,
+        },
+        {
+          index: 2, cells: [
+          {title: 'cell 11', index: 0, rowIndex: 1, type: 'rows'},
+          {title: 'cell 12', index: 1, rowIndex: 1, type: 'rows'},
+          {title: 'cell 13', index: 2, rowIndex: 1, type: 'rows'},
+          {title: 'cell 14', index: 3, rowIndex: 1, type: 'rows'},
+          {title: 'cell 15', index: 4, rowIndex: 1, type: 'rows'},
+        ],
+          checkboxColumn: false,
+          checkboxValue: true,
+        },
+        {
+          index: 3, cells: [
+          {title: 'cell 11', index: 0, rowIndex: 1, type: 'rows'},
+          {title: 'cell 12', index: 1, rowIndex: 1, type: 'rows'},
+          {title: 'cell 13', index: 2, rowIndex: 1, type: 'rows'},
+          {title: 'cell 14', index: 3, rowIndex: 1, type: 'rows'},
+          {title: 'cell 15', index: 4, rowIndex: 1, type: 'rows'},
+        ],
+          checkboxColumn: false,
+          checkboxValue: true,
+        },
+        {
+          index: 4, cells: [
+          {title: 'cell 11', index: 0, rowIndex: 1, type: 'rows'},
+          {title: 'cell 12', index: 1, rowIndex: 1, type: 'rows'},
+          {title: 'cell 13', index: 2, rowIndex: 1, type: 'rows'},
+          {title: 'cell 14', index: 3, rowIndex: 1, type: 'rows'},
+          {title: 'cell 15', index: 4, rowIndex: 1, type: 'rows'},
+        ],
+          checkboxColumn: false,
+          checkboxValue: true,
+        },
+        {
+          index: 5, cells: [
+          {title: 'cell 11', index: 0, rowIndex: 1, type: 'rows'},
+          {title: 'cell 12', index: 1, rowIndex: 1, type: 'rows'},
+          {title: 'cell 13', index: 2, rowIndex: 1, type: 'rows'},
+          {title: 'cell 14', index: 3, rowIndex: 1, type: 'rows'},
+          {title: 'cell 15', index: 4, rowIndex: 1, type: 'rows'},
+        ],
           checkboxColumn: false,
           checkboxValue: true,
         },
