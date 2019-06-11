@@ -20,8 +20,15 @@ export class CustomTable {
   bind(bindingContext, overrideContext) {
     let that = this;
     this.height = "height: "+ this.settings.height + "px;";
-    this.width  = "width: "+ this.settings.width + "px;";
-    this.headerWidth =  "width: "+ (this.settings.width - 17) + "px;";
+
+    if( this.settings.width ){
+      this.width  = "width: "+ this.settings.width + "px;";
+      this.headerWidth =  "width: "+ (this.settings.width - 17) + "px;";
+    }else{
+      this.width  = "width: 100%;";
+      this.headerWidth =  "width: 99%";
+    }
+    // this.headerWidth =  "width: "+ (this.settings.width - 17) + "px;";
 
 
     this.data.rows.forEach(function( row ) {

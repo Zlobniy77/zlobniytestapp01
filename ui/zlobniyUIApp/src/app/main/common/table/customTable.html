@@ -1,5 +1,6 @@
 <template>
   <require from="app/main/common/table/tableCell"></require>
+  <require from="app/main/common/table/headerTableCell"></require>
   <require from="app/main/common/table/tableRow"></require>
 
     <div class="custom-table" style="${width}" >
@@ -8,7 +9,7 @@
         <div class="custom-table-cell sticky-left-column" if.bind="settings.checkboxColumn">
           <input type="checkbox">
         </div>
-        <table-cell containerless repeat.for="cell of data.headers"></table-cell>
+        <header-table-cell containerless repeat.for="cell of data.headers"></header-table-cell>
       </div>
 
       <div class="custom-table-body" style="${height}">

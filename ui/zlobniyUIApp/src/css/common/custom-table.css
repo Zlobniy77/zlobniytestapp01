@@ -10,7 +10,6 @@
 
 .custom-table-header{
   background-color: #3db2eb;
-  table-layout: fixed;
   overflow: hidden;
 }
 
@@ -27,71 +26,14 @@
   border: solid darkgray 1px;
   padding: 5px;
   text-align: center;
+  vertical-align: middle;
 }
 
-
-
-
-.Rtable {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0 0 3em 0;
-  padding: 0;
-  width: 100%;
-}
-
-.Rtable-cell {
-  box-sizing: border-box;
-  flex-grow: 1;
-  width: 100%;
-
-  padding: 0.8em 1.2em;
-  overflow: hidden;
-
-  list-style: none;
-  border: solid 3px white;
-
-
-}
-
-/* Table column sizing
-================================== */
-.Rtable--2cols > .Rtable-cell {
-  width: 50%;
-}
-
-.Rtable--3cols > .Rtable-cell {
-  width: 33.33%;
-}
-
-.Rtable--4cols > .Rtable-cell {
-  width: 25%;
-}
-
-.Rtable--5cols > .Rtable-cell {
-  width: 20%;
-}
-
-.Rtable--6cols > .Rtable-cell {
-  width: 16.6%;
-}
-
-/* Responsive
-==================================== */
-@media all and (max-width: 700px) {
-  .Rtable--collapse  {
-    display: block;
-  }
-}
-
-
-.no-flexbox .Rtable {
-  display: block;
-}
 
 .sticky-left-column{
   position: sticky;
   left: 0;
   z-index: 2;
   background-color: inherit;
+  vertical-align: middle;
 }

@@ -23,7 +23,7 @@ export class Panel {
 
     this.tableSettings = {
       height: 200,
-      width: 300,
+      // width: 300,
       checkboxColumn: true,
     };
 
@@ -32,76 +32,76 @@ export class Panel {
 
     this.data = {
       headers: [
-        {title: 'val 1', index: 0, type: 'headers'},
-        {title: 'val 2', index: 1, type: 'headers'},
-        {title: 'val 3', index: 2, type: 'headers'},
-        {title: 'val 4', index: 3, type: 'headers'},
-        {title: 'val 5', index: 4, type: 'headers'},
+        {title: 'val 1', index: 0, type: 'headers', valueType: 1},
+        {title: 'val 2', index: 1, type: 'headers', valueType: 0},
+        {title: 'val 3', index: 2, type: 'headers', valueType: 0},
+        {title: 'val 4', index: 3, type: 'headers', valueType: 0},
+        {title: 'val 5', index: 4, type: 'headers', valueType: 0},
       ],
 
       rows: [
         {
           index: 0, cells: [
-            {title: 'cell 1', index: 0, rowIndex: 0, type: 'rows'},
-            {title: 'cell 2', index: 1, rowIndex: 0, type: 'rows'},
-            {title: 'cell 3', index: 2, rowIndex: 0, type: 'rows'},
-            {title: 'cell 4', index: 3, rowIndex: 0, type: 'rows'},
-            {title: 'cell 5', index: 4, rowIndex: 0, type: 'rows'},
+            {title: 'cell 1', index: 0, rowIndex: 0, type: 'rows', valueType: 1},
+            {title: 'cell 2', index: 1, rowIndex: 0, type: 'rows', valueType: 0},
+            {title: 'cell 3', index: 2, rowIndex: 0, type: 'rows', valueType: 0},
+            {title: 'cell 4', index: 3, rowIndex: 0, type: 'rows', valueType: 0},
+            {title: 'cell 5', index: 4, rowIndex: 0, type: 'rows', valueType: 0},
           ],
           checkboxColumn: false,
           checkboxValue: false,
         },
         {
           index: 1, cells: [
-            {title: 'cell 11', index: 0, rowIndex: 1, type: 'rows'},
-            {title: 'cell 12', index: 1, rowIndex: 1, type: 'rows'},
-            {title: 'cell 13', index: 2, rowIndex: 1, type: 'rows'},
-            {title: 'cell 14', index: 3, rowIndex: 1, type: 'rows'},
-            {title: 'cell 15', index: 4, rowIndex: 1, type: 'rows'},
+            {title: 'cell 11', index: 0, rowIndex: 1, type: 'rows', valueType: 1},
+            {title: 'cell 12', index: 1, rowIndex: 1, type: 'rows', valueType: 0},
+            {title: 'cell 13', index: 2, rowIndex: 1, type: 'rows', valueType: 0},
+            {title: 'cell 14', index: 3, rowIndex: 1, type: 'rows', valueType: 0},
+            {title: 'cell 15', index: 4, rowIndex: 1, type: 'rows', valueType: 0},
           ],
           checkboxColumn: false,
           checkboxValue: true,
         },
         {
           index: 2, cells: [
-          {title: 'cell 11', index: 0, rowIndex: 1, type: 'rows'},
-          {title: 'cell 12', index: 1, rowIndex: 1, type: 'rows'},
-          {title: 'cell 13', index: 2, rowIndex: 1, type: 'rows'},
-          {title: 'cell 14', index: 3, rowIndex: 1, type: 'rows'},
-          {title: 'cell 15', index: 4, rowIndex: 1, type: 'rows'},
+          {title: 'cell 11', index: 0, rowIndex: 1, type: 'rows', valueType: 1},
+          {title: 'cell 12', index: 1, rowIndex: 1, type: 'rows', valueType: 0},
+          {title: 'cell 13', index: 2, rowIndex: 1, type: 'rows', valueType: 0},
+          {title: 'cell 14', index: 3, rowIndex: 1, type: 'rows', valueType: 0},
+          {title: 'cell 15', index: 4, rowIndex: 1, type: 'rows', valueType: 0},
         ],
           checkboxColumn: false,
           checkboxValue: true,
         },
         {
           index: 3, cells: [
-          {title: 'cell 11', index: 0, rowIndex: 1, type: 'rows'},
-          {title: 'cell 12', index: 1, rowIndex: 1, type: 'rows'},
-          {title: 'cell 13', index: 2, rowIndex: 1, type: 'rows'},
-          {title: 'cell 14', index: 3, rowIndex: 1, type: 'rows'},
-          {title: 'cell 15', index: 4, rowIndex: 1, type: 'rows'},
+          {title: 'cell 11', index: 0, rowIndex: 1, type: 'rows', valueType: 1},
+          {title: 'cell 12', index: 1, rowIndex: 1, type: 'rows', valueType: 0},
+          {title: 'cell 13', index: 2, rowIndex: 1, type: 'rows', valueType: 0},
+          {title: 'cell 14', index: 3, rowIndex: 1, type: 'rows', valueType: 0},
+          {title: 'cell 15', index: 4, rowIndex: 1, type: 'rows', valueType: 0},
         ],
           checkboxColumn: false,
           checkboxValue: true,
         },
         {
           index: 4, cells: [
-          {title: 'cell 11', index: 0, rowIndex: 1, type: 'rows'},
-          {title: 'cell 12', index: 1, rowIndex: 1, type: 'rows'},
-          {title: 'cell 13', index: 2, rowIndex: 1, type: 'rows'},
-          {title: 'cell 14', index: 3, rowIndex: 1, type: 'rows'},
-          {title: 'cell 15', index: 4, rowIndex: 1, type: 'rows'},
+          {title: 'cell 11', index: 0, rowIndex: 1, type: 'rows', valueType: 1},
+          {title: 'cell 12', index: 1, rowIndex: 1, type: 'rows', valueType: 0},
+          {title: 'cell 13', index: 2, rowIndex: 1, type: 'rows', valueType: 0},
+          {title: 'cell 14', index: 3, rowIndex: 1, type: 'rows', valueType: 0},
+          {title: 'cell 15', index: 4, rowIndex: 1, type: 'rows', valueType: 0},
         ],
           checkboxColumn: false,
           checkboxValue: true,
         },
         {
           index: 5, cells: [
-          {title: 'cell 11', index: 0, rowIndex: 1, type: 'rows'},
-          {title: 'cell 12', index: 1, rowIndex: 1, type: 'rows'},
-          {title: 'cell 13', index: 2, rowIndex: 1, type: 'rows'},
-          {title: 'cell 14', index: 3, rowIndex: 1, type: 'rows'},
-          {title: 'cell 15', index: 4, rowIndex: 1, type: 'rows'},
+          {title: 'cell 11', index: 0, rowIndex: 1, type: 'rows', valueType: 1},
+          {title: 'cell 12', index: 1, rowIndex: 1, type: 'rows', valueType: 0},
+          {title: 'cell 13', index: 2, rowIndex: 1, type: 'rows', valueType: 0},
+          {title: 'cell 14', index: 3, rowIndex: 1, type: 'rows', valueType: 0},
+          {title: 'cell 15', index: 4, rowIndex: 1, type: 'rows', valueType: 0},
         ],
           checkboxColumn: false,
           checkboxValue: true,
@@ -137,15 +137,15 @@ export class Panel {
     this.isOpenedColumns = !this.isOpenedColumns;
   }
 
-  addColumn( event, optionNumber ){
+  addColumn( event, type ){
     //event.stopPropagation();
-    console.log( optionNumber );
+    console.log( type );
 
-    let column = this.createColumn();
+    let column = this.createColumn( type );
 
 
     this.data.headers.push( column );
-    this.fillRowsWithEmptyValues( column.index );
+    this.fillRowsWithEmptyValues( column.index, type );
     this.isOpenedColumns = false;
 
   }
@@ -154,13 +154,14 @@ export class Panel {
     this.createRow();
   }
 
-  createColumn(){
+  createColumn( type ){
     let index = this.data.headers.length;
     return {
       title: 'val ',
       index: index,
       type: 'headers',
       isNew: true,
+      valueType: type,
     };
   }
 
@@ -180,6 +181,7 @@ export class Panel {
         rowIndex: row.index,
         type: 'rows',
         isNew: false,
+        valueType: column.valueType,
       };
 
       row.cells.push( cell );
@@ -189,10 +191,10 @@ export class Panel {
     this.data.rows.push( row );
   }
 
-  fillRowsWithEmptyValues( columnIndex ){
+  fillRowsWithEmptyValues( columnIndex, type ){
 
     this.data.rows.forEach(function( row ) {
-      row.cells.push( {title: ' ', index: columnIndex, rowIndex: row.index, type: 'rows'}, );
+      row.cells.push( {title: ' ', index: columnIndex, rowIndex: row.index, type: 'rows', valueType: type}, );
     });
 
   }

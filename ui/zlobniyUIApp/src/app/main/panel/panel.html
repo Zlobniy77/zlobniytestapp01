@@ -2,7 +2,7 @@
   <require from="app/main/common/table/customTable"></require>
 
 
-  <div class="panel-wizard-main" style="margin: 10px">
+  <div class="panel-wizard-main" style="margin: 10px;">
 
 
     <ul class="control-options navbar-nav w-25">
@@ -18,7 +18,7 @@
         <ul if.bind="isOpenedColumns" class="tooltip-list">
 
           <li data-type="selectable" click.delegate="addColumn($event, 1)">email</li>
-          <li data-type="selectable" click.delegate="addColumn($event, 2)">standard</li>
+          <li data-type="selectable" click.delegate="addColumn($event, 0)">standard</li>
 
         </ul>
       </li>

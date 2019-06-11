@@ -1,0 +1,13 @@
+<template>
+  <require from="app/main/common/elements/editable-item"></require>
+
+  <div class="custom-table-cell">
+    <editable-item containerless edit-mode.one-way="true" item.one-way="cell"></editable-item>
+
+    <select value.bind="cell.valueType" type="dropdown" change.delegate="change( cell.valueType )">
+      <option model.bind="1" > email </option>
+      <option model.bind="0" > Standard </option>
+    </select>
+
+  </div>
+</template>
