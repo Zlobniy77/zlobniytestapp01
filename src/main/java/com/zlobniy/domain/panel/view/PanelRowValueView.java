@@ -23,4 +23,5 @@ public class PanelRowValueView {
     public void setTitle( String title ) {
         this.title = title;
     }
+
 }

@@ -37,4 +37,5 @@ public enum BackgroundType {
     public synchronized static BackgroundType fromInt( Integer type ) {
         return types.get( type );
     }
+
 }

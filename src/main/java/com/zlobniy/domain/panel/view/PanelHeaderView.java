@@ -32,4 +32,5 @@ public class PanelHeaderView {
     public void setType( Integer type ) {
         this.type = type;
     }
+
 }
