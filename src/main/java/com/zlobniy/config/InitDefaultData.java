@@ -5,6 +5,7 @@ import com.zlobniy.domain.client.entity.PhoneProperty;
 import com.zlobniy.domain.client.service.ClientService;
 import com.zlobniy.domain.folder.entity.Folder;
 import com.zlobniy.domain.folder.service.FolderService;
+import com.zlobniy.domain.panel.BackgroundType;
 import com.zlobniy.domain.panel.entity.BgrData;
 import com.zlobniy.domain.panel.entity.BgrDataValue;
 import com.zlobniy.domain.panel.entity.BgrDescription;
@@ -130,15 +131,15 @@ public class InitDefaultData {
         final List<BgrDescription> descriptions = new ArrayList<>(  );
 
         final BgrDescription mail = new BgrDescription();
-        mail.setType( BgrDescription.Type.EMAIL );
+        mail.setType( BackgroundType.EMAIL );
         mail.setValue( "email" );
 
         final BgrDescription name = new BgrDescription();
-        name.setType( BgrDescription.Type.OPEN );
+        name.setType( BackgroundType.STANDARD );
         name.setValue( "name" );
 
         final BgrDescription dep = new BgrDescription();
-        dep.setType( BgrDescription.Type.CLOSED );
+        dep.setType( BackgroundType.STANDARD );
         dep.setValue( "department" );
 
         descriptions.add( mail );

@@ -32,76 +32,76 @@ export class Panel {
 
     this.data = {
       headers: [
-        {title: 'val 1', index: 0, type: 'headers', valueType: 1},
-        {title: 'val 2', index: 1, type: 'headers', valueType: 0},
-        {title: 'val 3', index: 2, type: 'headers', valueType: 0},
-        {title: 'val 4', index: 3, type: 'headers', valueType: 0},
-        {title: 'val 5', index: 4, type: 'headers', valueType: 0},
+        {title: 'val 1', index: 0, subType: 'headers', type: 1},
+        {title: 'val 2', index: 1, subType: 'headers', type: 0},
+        {title: 'val 3', index: 2, subType: 'headers', type: 0},
+        {title: 'val 4', index: 3, subType: 'headers', type: 0},
+        {title: 'val 5', index: 4, subType: 'headers', type: 0},
       ],
 
       rows: [
         {
           index: 0, cells: [
-            {title: 'cell 1', index: 0, rowIndex: 0, type: 'rows', valueType: 1},
-            {title: 'cell 2', index: 1, rowIndex: 0, type: 'rows', valueType: 0},
-            {title: 'cell 3', index: 2, rowIndex: 0, type: 'rows', valueType: 0},
-            {title: 'cell 4', index: 3, rowIndex: 0, type: 'rows', valueType: 0},
-            {title: 'cell 5', index: 4, rowIndex: 0, type: 'rows', valueType: 0},
+            {title: 'cell 1', index: 0, rowIndex: 0, subType: 'rows', valueType: 1},
+            {title: 'cell 2', index: 1, rowIndex: 0, subType: 'rows', valueType: 0},
+            {title: 'cell 3', index: 2, rowIndex: 0, subType: 'rows', valueType: 0},
+            {title: 'cell 4', index: 3, rowIndex: 0, subType: 'rows', valueType: 0},
+            {title: 'cell 5', index: 4, rowIndex: 0, subType: 'rows', valueType: 0},
           ],
           checkboxColumn: false,
           checkboxValue: false,
         },
         {
           index: 1, cells: [
-            {title: 'cell 11', index: 0, rowIndex: 1, type: 'rows', valueType: 1},
-            {title: 'cell 12', index: 1, rowIndex: 1, type: 'rows', valueType: 0},
-            {title: 'cell 13', index: 2, rowIndex: 1, type: 'rows', valueType: 0},
-            {title: 'cell 14', index: 3, rowIndex: 1, type: 'rows', valueType: 0},
-            {title: 'cell 15', index: 4, rowIndex: 1, type: 'rows', valueType: 0},
+            {title: 'cell 11', index: 0, rowIndex: 1, subType: 'rows', valueType: 1},
+            {title: 'cell 12', index: 1, rowIndex: 1, subType: 'rows', valueType: 0},
+            {title: 'cell 13', index: 2, rowIndex: 1, subType: 'rows', valueType: 0},
+            {title: 'cell 14', index: 3, rowIndex: 1, subType: 'rows', valueType: 0},
+            {title: 'cell 15', index: 4, rowIndex: 1, subType: 'rows', valueType: 0},
           ],
           checkboxColumn: false,
           checkboxValue: true,
         },
         {
           index: 2, cells: [
-          {title: 'cell 11', index: 0, rowIndex: 1, type: 'rows', valueType: 1},
-          {title: 'cell 12', index: 1, rowIndex: 1, type: 'rows', valueType: 0},
-          {title: 'cell 13', index: 2, rowIndex: 1, type: 'rows', valueType: 0},
-          {title: 'cell 14', index: 3, rowIndex: 1, type: 'rows', valueType: 0},
-          {title: 'cell 15', index: 4, rowIndex: 1, type: 'rows', valueType: 0},
+          {title: 'cell 11', index: 0, rowIndex: 1, subType: 'rows', valueType: 1},
+          {title: 'cell 12', index: 1, rowIndex: 1, subType: 'rows', valueType: 0},
+          {title: 'cell 13', index: 2, rowIndex: 1, subType: 'rows', valueType: 0},
+          {title: 'cell 14', index: 3, rowIndex: 1, subType: 'rows', valueType: 0},
+          {title: 'cell 15', index: 4, rowIndex: 1, subType: 'rows', valueType: 0},
         ],
           checkboxColumn: false,
           checkboxValue: true,
         },
         {
           index: 3, cells: [
-          {title: 'cell 11', index: 0, rowIndex: 1, type: 'rows', valueType: 1},
-          {title: 'cell 12', index: 1, rowIndex: 1, type: 'rows', valueType: 0},
-          {title: 'cell 13', index: 2, rowIndex: 1, type: 'rows', valueType: 0},
-          {title: 'cell 14', index: 3, rowIndex: 1, type: 'rows', valueType: 0},
-          {title: 'cell 15', index: 4, rowIndex: 1, type: 'rows', valueType: 0},
+          {title: 'cell 11', index: 0, rowIndex: 1, subType: 'rows', valueType: 1},
+          {title: 'cell 12', index: 1, rowIndex: 1, subType: 'rows', valueType: 0},
+          {title: 'cell 13', index: 2, rowIndex: 1, subType: 'rows', valueType: 0},
+          {title: 'cell 14', index: 3, rowIndex: 1, subType: 'rows', valueType: 0},
+          {title: 'cell 15', index: 4, rowIndex: 1, subType: 'rows', valueType: 0},
         ],
           checkboxColumn: false,
           checkboxValue: true,
         },
         {
           index: 4, cells: [
-          {title: 'cell 11', index: 0, rowIndex: 1, type: 'rows', valueType: 1},
-          {title: 'cell 12', index: 1, rowIndex: 1, type: 'rows', valueType: 0},
-          {title: 'cell 13', index: 2, rowIndex: 1, type: 'rows', valueType: 0},
-          {title: 'cell 14', index: 3, rowIndex: 1, type: 'rows', valueType: 0},
-          {title: 'cell 15', index: 4, rowIndex: 1, type: 'rows', valueType: 0},
+          {title: 'cell 11', index: 0, rowIndex: 1, subType: 'rows', valueType: 1},
+          {title: 'cell 12', index: 1, rowIndex: 1, subType: 'rows', valueType: 0},
+          {title: 'cell 13', index: 2, rowIndex: 1, subType: 'rows', valueType: 0},
+          {title: 'cell 14', index: 3, rowIndex: 1, subType: 'rows', valueType: 0},
+          {title: 'cell 15', index: 4, rowIndex: 1, subType: 'rows', valueType: 0},
         ],
           checkboxColumn: false,
           checkboxValue: true,
         },
         {
           index: 5, cells: [
-          {title: 'cell 11', index: 0, rowIndex: 1, type: 'rows', valueType: 1},
-          {title: 'cell 12', index: 1, rowIndex: 1, type: 'rows', valueType: 0},
-          {title: 'cell 13', index: 2, rowIndex: 1, type: 'rows', valueType: 0},
-          {title: 'cell 14', index: 3, rowIndex: 1, type: 'rows', valueType: 0},
-          {title: 'cell 15', index: 4, rowIndex: 1, type: 'rows', valueType: 0},
+          {title: 'cell 11', index: 0, rowIndex: 1, subType: 'rows', valueType: 1},
+          {title: 'cell 12', index: 1, rowIndex: 1, subType: 'rows', valueType: 0},
+          {title: 'cell 13', index: 2, rowIndex: 1, subType: 'rows', valueType: 0},
+          {title: 'cell 14', index: 3, rowIndex: 1, subType: 'rows', valueType: 0},
+          {title: 'cell 15', index: 4, rowIndex: 1, subType: 'rows', valueType: 0},
         ],
           checkboxColumn: false,
           checkboxValue: true,
@@ -159,9 +159,9 @@ export class Panel {
     return {
       title: 'val ',
       index: index,
-      type: 'headers',
+      subType: 'headers',
       isNew: true,
-      valueType: type,
+      type: type,
     };
   }
 
@@ -179,9 +179,9 @@ export class Panel {
         title: ' ',
         index: column.index,
         rowIndex: row.index,
-        type: 'rows',
+        subType: 'rows',
         isNew: false,
-        valueType: column.valueType,
+        type: column.valueType,
       };
 
       row.cells.push( cell );
@@ -194,7 +194,7 @@ export class Panel {
   fillRowsWithEmptyValues( columnIndex, type ){
 
     this.data.rows.forEach(function( row ) {
-      row.cells.push( {title: ' ', index: columnIndex, rowIndex: row.index, type: 'rows', valueType: type}, );
+      row.cells.push( {title: ' ', index: columnIndex, rowIndex: row.index, subType: 'rows', type: type}, );
     });
 
   }
@@ -231,10 +231,10 @@ export class Panel {
     let array = [];
     if( item.type === 'panel' ){
       value = item;
-    }else if( item.type === 'headers' ){
-      array = data[item.type];
+    }else if( item.subType === 'headers' ){
+      array = data[item.subType];
     }else{
-      array = data[item.type][item.rowIndex].cells;
+      array = data[item.subType][item.rowIndex].cells;
     }
 
     array.forEach(function( element ) {
@@ -259,7 +259,7 @@ export class Panel {
 
   activate(data) {
     console.log('activate panel ' + data);
-
+    let that = this;
     this.initPanelModel();
 
     let buttons = [
@@ -271,9 +271,8 @@ export class Panel {
       {
         title: 'Save', action: () => {
 
-          let data = this.parseData();
-          this.panel.header = data.header;
-          this.panel.body = data.body;
+          this.panel.headers = that.data.headers;
+          this.panel.rows = that.data.rows;
 
           this.panelService.savePanel( this.panel, this.clientService.getCurrentFolder() );
         }, css: 'fas fa-save'
@@ -299,8 +298,8 @@ export class Panel {
     let body = this.parseBody();
 
     let data = {
-      header: header,
-      body: body,
+      headers: this.data,
+      rows: body,
     };
 
     return data;

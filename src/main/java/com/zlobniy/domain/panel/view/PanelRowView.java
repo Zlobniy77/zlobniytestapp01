@@ -4,13 +4,22 @@ import java.util.List;
 
 public class PanelRowView {
 
-    private List<String> row;
+    private Integer index;
+    private List<PanelRowValueView> cells;
 
-    public List<String> getRow() {
-        return row;
+    public List<PanelRowValueView> getCells() {
+        return cells;
     }
 
-    public void setRow( List<String> row ) {
-        this.row = row;
+    public void setCells( List<PanelRowValueView> cells ) {
+        this.cells = cells;
+    }
+
+    public Integer getIndex() {
+        return index;
+    }
+
+    public void setIndex( Integer index ) {
+        this.index = index;
     }
 }

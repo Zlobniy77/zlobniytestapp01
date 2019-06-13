@@ -6,8 +6,8 @@ public class PanelView {
 
     private Long id;
     private String title;
-    private List<String> header;
-    private List<PanelRowView> body;
+    private List<PanelHeaderView> headers;
+    private List<PanelRowView> rows;
 
     public Long getId() {
         return id;
@@ -25,19 +25,19 @@ public class PanelView {
         this.title = title;
     }
 
-    public List<String> getHeader() {
-        return header;
+    public List<PanelHeaderView> getHeaders() {
+        return headers;
     }
 
-    public void setHeader( List<String> header ) {
-        this.header = header;
+    public void setHeaders( List<PanelHeaderView> headers ) {
+        this.headers = headers;
     }
 
-    public List<PanelRowView> getBody() {
-        return body;
+    public List<PanelRowView> getRows() {
+        return rows;
     }
 
-    public void setBody( List<PanelRowView> body ) {
-        this.body = body;
+    public void setRows( List<PanelRowView> rows ) {
+        this.rows = rows;
     }
 }

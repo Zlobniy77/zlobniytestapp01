@@ -37,7 +37,7 @@ export class HeaderTableCell {
   }
 
   changeType( event, type ){
-    this.cell.valueType = type;
+    this.cell.type = type;
   }
 
   activate( data ) {

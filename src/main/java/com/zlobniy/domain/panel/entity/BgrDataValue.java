@@ -1,6 +1,13 @@
 package com.zlobniy.domain.panel.entity;
 
-import javax.persistence.*;
+import com.zlobniy.domain.panel.view.PanelRowValueView;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -18,14 +25,18 @@ public class BgrDataValue {
     private BgrData bgrData;
 
     @Column
+    private Integer columnIndex;
+
+    @Column
     private String value;
 
     public BgrDataValue(){
 
     }
 
-    public BgrDataValue( String value, BgrDescription description ){
-        this.value = value;
+    public BgrDataValue( PanelRowValueView value, BgrDescription description ){
+        this.value = value.getTitle();
+        this.columnIndex = value.getIndex();
         this.bgrDescription = description;
     }
 
@@ -59,5 +70,13 @@ public class BgrDataValue {
 
     public void setValue( String value ) {
         this.value = value;
+    }
+
+    public Integer getColumnIndex() {
+        return columnIndex;
+    }
+
+    public void setColumnIndex( Integer columnIndex ) {
+        this.columnIndex = columnIndex;
     }
 }

@@ -1,6 +1,15 @@
 package com.zlobniy.domain.panel.entity;
 
-import javax.persistence.*;
+import com.zlobniy.domain.panel.view.PanelRowValueView;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,6 +24,9 @@ public class BgrData {
     @Column
     private String respondentId;
 
+    @Column
+    private Integer index;
+
     @OneToMany( fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<BgrDataValue> values = new ArrayList<>(  );
 
@@ -25,10 +37,11 @@ public class BgrData {
 
     }
 
-    public BgrData( List<String> rows, String respondentId, List<BgrDescription> descriptions ){
+    public BgrData( List<PanelRowValueView> rows, Integer index, String respondentId, List<BgrDescription> descriptions ){
         this.respondentId = respondentId;
+        this.index = index;
         this.values = rows.stream()
-                .map( s -> new BgrDataValue( s, descriptions.get( rows.indexOf( s ) ) ) )
+                .map( cell -> new BgrDataValue( cell, descriptions.get( rows.indexOf( cell ) ) ) )
                 .collect(Collectors.toList());
     }
 
@@ -62,5 +75,13 @@ public class BgrData {
 
     public void setRespondentId( String respondentId ) {
         this.respondentId = respondentId;
+    }
+
+    public Integer getIndex() {
+        return index;
+    }
+
+    public void setIndex( Integer index ) {
+        this.index = index;
     }
 }

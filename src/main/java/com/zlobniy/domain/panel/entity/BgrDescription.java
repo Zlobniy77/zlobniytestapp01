@@ -1,6 +1,14 @@
 package com.zlobniy.domain.panel.entity;
 
-import javax.persistence.*;
+import com.zlobniy.domain.panel.BackgroundType;
+import com.zlobniy.domain.panel.view.PanelHeaderView;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class BgrDescription {
@@ -10,7 +18,10 @@ public class BgrDescription {
     private Long id;
 
     @Column
-    private Type type;
+    private Integer index;
+
+    @Column
+    private BackgroundType type;
 
     @Column
     private String value;
@@ -22,9 +33,10 @@ public class BgrDescription {
 
     }
 
-    public BgrDescription( String value ){
-        this.value = value;
-        this.type = Type.CLOSED;
+    public BgrDescription( PanelHeaderView value ){
+        this.value = value.getTitle();
+        this.type = BackgroundType.fromInt( value.getType() );
+        this.index = value.getIndex();
     }
 
     public Long getId() {
@@ -35,11 +47,11 @@ public class BgrDescription {
         this.id = id;
     }
 
-    public Type getType() {
+    public BackgroundType getType() {
         return type;
     }
 
-    public void setType( Type type ) {
+    public void setType( BackgroundType type ) {
         this.type = type;
     }
 
@@ -59,10 +71,11 @@ public class BgrDescription {
         this.panel = panel;
     }
 
-    public enum Type{
-        EMAIL,
-        PHONE,
-        CLOSED,
-        OPEN
+    public Integer getIndex() {
+        return index;
+    }
+
+    public void setIndex( Integer index ) {
+        this.index = index;
     }
 }
