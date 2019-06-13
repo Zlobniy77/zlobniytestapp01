@@ -1,12 +1,12 @@
-import 'css/dashboard.css';
+import "css/dashboard.css";
 
-import {inject} from 'aurelia-framework';
+import {inject} from "aurelia-framework";
 import {SurveyService} from "../../services/survey-service";
 import {NavigationService} from "../../services/navigation-service";
 import {ContextMenu} from "../common/context-menu";
 import {Popup} from "../common/popup";
 import {DialogService} from "aurelia-dialog";
-import {EventAggregator} from 'aurelia-event-aggregator';
+import {EventAggregator} from "aurelia-event-aggregator";
 import {ClientService} from "../../services/client-service";
 import {Ui} from "../../ui";
 
@@ -92,6 +92,17 @@ export class Overview extends Ui {
         ]};
 
       return contextMenu;
+    }else if( type === 'Panel' ){
+      // get mouse position
+      let position = {x:(event.clientX-30)+"px", y:(event.clientY-30)+"px"};
+
+      let edit = this.editPanelItem( id );
+
+      let contextMenu = {id:'contextMenu', position: position, elements:[
+        edit
+      ]};
+
+      return contextMenu;
     }
 
   }
@@ -100,6 +111,13 @@ export class Overview extends Ui {
     let that = this;
     return {index:0, title:'edit', action: function () {
       that.navigationService.goTo( that.navigationService.NAV_SURVEY + "/" + id )
+    } };
+  }
+
+  editPanelItem( id ){
+    let that = this;
+    return {index:0, title:'edit', action: function () {
+      that.navigationService.goTo( that.navigationService.NAV_PANEL + "/" + id )
     } };
   }
 

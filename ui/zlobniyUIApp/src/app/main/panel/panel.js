@@ -6,6 +6,7 @@ import {NavigationService} from "../../services/navigation-service";
 import {PanelService} from "../../services/panel-service";
 import {ClientService} from "../../services/client-service";
 import {WizardService} from "../../services/wizard-service";
+import $ from "jquery";
 
 @inject( EventAggregator, NavigationService, PanelService, ClientService, WizardService )
 export class Panel {
@@ -27,88 +28,94 @@ export class Panel {
       checkboxColumn: true,
     };
 
-    this.header = '';
-    this.body = '';
+    // this.header = '';
+    // this.body = '';
 
     this.data = {
-      headers: [
-        {title: 'val 1', index: 0, subType: 'headers', type: 1},
-        {title: 'val 2', index: 1, subType: 'headers', type: 0},
-        {title: 'val 3', index: 2, subType: 'headers', type: 0},
-        {title: 'val 4', index: 3, subType: 'headers', type: 0},
-        {title: 'val 5', index: 4, subType: 'headers', type: 0},
-      ],
+      headers: [],
+      rows:[],
+    };
 
-      rows: [
-        {
-          index: 0, cells: [
-            {title: 'cell 1', index: 0, rowIndex: 0, subType: 'rows', valueType: 1},
-            {title: 'cell 2', index: 1, rowIndex: 0, subType: 'rows', valueType: 0},
-            {title: 'cell 3', index: 2, rowIndex: 0, subType: 'rows', valueType: 0},
-            {title: 'cell 4', index: 3, rowIndex: 0, subType: 'rows', valueType: 0},
-            {title: 'cell 5', index: 4, rowIndex: 0, subType: 'rows', valueType: 0},
-          ],
-          checkboxColumn: false,
-          checkboxValue: false,
-        },
-        {
-          index: 1, cells: [
-            {title: 'cell 11', index: 0, rowIndex: 1, subType: 'rows', valueType: 1},
-            {title: 'cell 12', index: 1, rowIndex: 1, subType: 'rows', valueType: 0},
-            {title: 'cell 13', index: 2, rowIndex: 1, subType: 'rows', valueType: 0},
-            {title: 'cell 14', index: 3, rowIndex: 1, subType: 'rows', valueType: 0},
-            {title: 'cell 15', index: 4, rowIndex: 1, subType: 'rows', valueType: 0},
-          ],
-          checkboxColumn: false,
-          checkboxValue: true,
-        },
-        {
-          index: 2, cells: [
-          {title: 'cell 11', index: 0, rowIndex: 1, subType: 'rows', valueType: 1},
-          {title: 'cell 12', index: 1, rowIndex: 1, subType: 'rows', valueType: 0},
-          {title: 'cell 13', index: 2, rowIndex: 1, subType: 'rows', valueType: 0},
-          {title: 'cell 14', index: 3, rowIndex: 1, subType: 'rows', valueType: 0},
-          {title: 'cell 15', index: 4, rowIndex: 1, subType: 'rows', valueType: 0},
-        ],
-          checkboxColumn: false,
-          checkboxValue: true,
-        },
-        {
-          index: 3, cells: [
-          {title: 'cell 11', index: 0, rowIndex: 1, subType: 'rows', valueType: 1},
-          {title: 'cell 12', index: 1, rowIndex: 1, subType: 'rows', valueType: 0},
-          {title: 'cell 13', index: 2, rowIndex: 1, subType: 'rows', valueType: 0},
-          {title: 'cell 14', index: 3, rowIndex: 1, subType: 'rows', valueType: 0},
-          {title: 'cell 15', index: 4, rowIndex: 1, subType: 'rows', valueType: 0},
-        ],
-          checkboxColumn: false,
-          checkboxValue: true,
-        },
-        {
-          index: 4, cells: [
-          {title: 'cell 11', index: 0, rowIndex: 1, subType: 'rows', valueType: 1},
-          {title: 'cell 12', index: 1, rowIndex: 1, subType: 'rows', valueType: 0},
-          {title: 'cell 13', index: 2, rowIndex: 1, subType: 'rows', valueType: 0},
-          {title: 'cell 14', index: 3, rowIndex: 1, subType: 'rows', valueType: 0},
-          {title: 'cell 15', index: 4, rowIndex: 1, subType: 'rows', valueType: 0},
-        ],
-          checkboxColumn: false,
-          checkboxValue: true,
-        },
-        {
-          index: 5, cells: [
-          {title: 'cell 11', index: 0, rowIndex: 1, subType: 'rows', valueType: 1},
-          {title: 'cell 12', index: 1, rowIndex: 1, subType: 'rows', valueType: 0},
-          {title: 'cell 13', index: 2, rowIndex: 1, subType: 'rows', valueType: 0},
-          {title: 'cell 14', index: 3, rowIndex: 1, subType: 'rows', valueType: 0},
-          {title: 'cell 15', index: 4, rowIndex: 1, subType: 'rows', valueType: 0},
-        ],
-          checkboxColumn: false,
-          checkboxValue: true,
-        },
-      ],
 
-    }
+    // this.data = {
+    //   headers: [
+    //     {title: 'val 1', index: 0, subType: 'headers', type: 1},
+    //     {title: 'val 2', index: 1, subType: 'headers', type: 0},
+    //     {title: 'val 3', index: 2, subType: 'headers', type: 0},
+    //     {title: 'val 4', index: 3, subType: 'headers', type: 0},
+    //     {title: 'val 5', index: 4, subType: 'headers', type: 0},
+    //   ],
+    //
+    //   rows: [
+    //     {
+    //       index: 0, cells: [
+    //         {title: 'cell 1', index: 0, rowIndex: 0, subType: 'rows', valueType: 1},
+    //         {title: 'cell 2', index: 1, rowIndex: 0, subType: 'rows', valueType: 0},
+    //         {title: 'cell 3', index: 2, rowIndex: 0, subType: 'rows', valueType: 0},
+    //         {title: 'cell 4', index: 3, rowIndex: 0, subType: 'rows', valueType: 0},
+    //         {title: 'cell 5', index: 4, rowIndex: 0, subType: 'rows', valueType: 0},
+    //       ],
+    //       checkboxColumn: false,
+    //       checkboxValue: false,
+    //     },
+    //     {
+    //       index: 1, cells: [
+    //         {title: 'cell 11', index: 0, rowIndex: 1, subType: 'rows', valueType: 1},
+    //         {title: 'cell 12', index: 1, rowIndex: 1, subType: 'rows', valueType: 0},
+    //         {title: 'cell 13', index: 2, rowIndex: 1, subType: 'rows', valueType: 0},
+    //         {title: 'cell 14', index: 3, rowIndex: 1, subType: 'rows', valueType: 0},
+    //         {title: 'cell 15', index: 4, rowIndex: 1, subType: 'rows', valueType: 0},
+    //       ],
+    //       checkboxColumn: false,
+    //       checkboxValue: true,
+    //     },
+    //     {
+    //       index: 2, cells: [
+    //       {title: 'cell 11', index: 0, rowIndex: 1, subType: 'rows', valueType: 1},
+    //       {title: 'cell 12', index: 1, rowIndex: 1, subType: 'rows', valueType: 0},
+    //       {title: 'cell 13', index: 2, rowIndex: 1, subType: 'rows', valueType: 0},
+    //       {title: 'cell 14', index: 3, rowIndex: 1, subType: 'rows', valueType: 0},
+    //       {title: 'cell 15', index: 4, rowIndex: 1, subType: 'rows', valueType: 0},
+    //     ],
+    //       checkboxColumn: false,
+    //       checkboxValue: true,
+    //     },
+    //     {
+    //       index: 3, cells: [
+    //       {title: 'cell 11', index: 0, rowIndex: 1, subType: 'rows', valueType: 1},
+    //       {title: 'cell 12', index: 1, rowIndex: 1, subType: 'rows', valueType: 0},
+    //       {title: 'cell 13', index: 2, rowIndex: 1, subType: 'rows', valueType: 0},
+    //       {title: 'cell 14', index: 3, rowIndex: 1, subType: 'rows', valueType: 0},
+    //       {title: 'cell 15', index: 4, rowIndex: 1, subType: 'rows', valueType: 0},
+    //     ],
+    //       checkboxColumn: false,
+    //       checkboxValue: true,
+    //     },
+    //     {
+    //       index: 4, cells: [
+    //       {title: 'cell 11', index: 0, rowIndex: 1, subType: 'rows', valueType: 1},
+    //       {title: 'cell 12', index: 1, rowIndex: 1, subType: 'rows', valueType: 0},
+    //       {title: 'cell 13', index: 2, rowIndex: 1, subType: 'rows', valueType: 0},
+    //       {title: 'cell 14', index: 3, rowIndex: 1, subType: 'rows', valueType: 0},
+    //       {title: 'cell 15', index: 4, rowIndex: 1, subType: 'rows', valueType: 0},
+    //     ],
+    //       checkboxColumn: false,
+    //       checkboxValue: true,
+    //     },
+    //     {
+    //       index: 5, cells: [
+    //       {title: 'cell 11', index: 0, rowIndex: 1, subType: 'rows', valueType: 1},
+    //       {title: 'cell 12', index: 1, rowIndex: 1, subType: 'rows', valueType: 0},
+    //       {title: 'cell 13', index: 2, rowIndex: 1, subType: 'rows', valueType: 0},
+    //       {title: 'cell 14', index: 3, rowIndex: 1, subType: 'rows', valueType: 0},
+    //       {title: 'cell 15', index: 4, rowIndex: 1, subType: 'rows', valueType: 0},
+    //     ],
+    //       checkboxColumn: false,
+    //       checkboxValue: true,
+    //     },
+    //   ],
+    //
+    // }
 
 
 
@@ -260,7 +267,13 @@ export class Panel {
   activate(data) {
     console.log('activate panel ' + data);
     let that = this;
-    this.initPanelModel();
+
+    if( data && data.id ){
+      this.fetchPanel( data.id );
+    }else{
+      this.initPanelModel();
+    }
+
 
     let buttons = [
       {
@@ -281,6 +294,25 @@ export class Panel {
 
     this.navigation.setButtons(buttons);
     this.navigation.setTitle( this.panel, true );
+
+  }
+
+  fetchPanel( id ){
+    this.panel = {};
+    let that = this;
+
+    this.panelService.loadPanel( id )
+      .then( function ( response ) {
+        return response.json()
+      } ).then( function ( panelModel ) {
+      console.log( 'parsed json', panelModel );
+      that.panel = $.extend(true, {}, panelModel);
+      that.data.headers = that.panel.headers;
+      that.data.rows = that.panel.rows;
+      that.navigation.setTitle( that.panel, true );
+    } ).catch( function ( ex ) {
+      console.log( 'parsing failed', ex )
+    } );
 
   }
 

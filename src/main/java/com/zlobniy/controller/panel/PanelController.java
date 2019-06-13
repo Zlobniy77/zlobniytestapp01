@@ -11,7 +11,11 @@ import com.zlobniy.domain.panel.view.PanelInfoView;
 import com.zlobniy.domain.panel.view.PanelView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,7 +35,9 @@ public class PanelController {
     @RequestMapping( value = "/api/panel/{id}", method = RequestMethod.GET )
     public PanelView find( @PathVariable Long id ){
 
-        return new PanelView();
+        Panel panel = panelService.findFull( id );
+
+        return new PanelView( panel );
     }
 
     @RequestMapping( value = "/api/panel/save/{folderId}", method = RequestMethod.POST )

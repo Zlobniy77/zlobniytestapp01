@@ -1,6 +1,9 @@
 package com.zlobniy.domain.panel.view;
 
+import com.zlobniy.domain.panel.entity.Panel;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PanelView {
 
@@ -8,6 +11,18 @@ public class PanelView {
     private String title;
     private List<PanelHeaderView> headers;
     private List<PanelRowView> rows;
+
+
+    public PanelView( Panel panel ){
+        this.id = panel.getId();
+        this.title = panel.getTitle();
+        this.headers = panel.getDescriptions().stream().map( PanelHeaderView::new ).collect( Collectors.toList() );
+        this.rows = panel.getData().stream().map( PanelRowView::new ).collect( Collectors.toList() );
+    }
+
+    public PanelView(){
+
+    }
 
     public Long getId() {
         return id;

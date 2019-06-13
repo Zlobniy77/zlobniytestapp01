@@ -1,6 +1,6 @@
-import 'css/main.css';
+import "css/main.css";
 
-import {inject} from 'aurelia-framework';
+import {inject} from "aurelia-framework";
 import {HttpService} from "./http-service";
 
 @inject( HttpService )
@@ -30,6 +30,11 @@ export class PanelService {
 
   loadPanels( clientId ){
     let url = 'api/panel/all/' + clientId;
+    return this.http.get( url );
+  }
+
+  loadPanel( id ){
+    let url = 'api/panel/' + id;
     return this.http.get( url );
   }
 

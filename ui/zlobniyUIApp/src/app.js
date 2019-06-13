@@ -1,5 +1,5 @@
-import 'css/main.css';
-import {inject} from 'aurelia-framework';
+import "css/main.css";
+import {inject} from "aurelia-framework";
 import {HttpService} from "./app/services/http-service";
 
 @inject( HttpService )
@@ -36,6 +36,7 @@ export class App {
       {route: '/dashboard', name: 'loginForm', moduleId: PLATFORM.moduleName( "./app/main/dashboard" ), nav: false, title: 'Dashboard'},
       {route: '/survey', name: 'survey', moduleId: PLATFORM.moduleName( "./app/main/survey/survey" ), nav: false, title: 'Survey'},
       {route: '/panel', name: 'panel', moduleId: PLATFORM.moduleName( "./app/main/panel/panel" ), nav: false, title: 'Panel'},
+      {route: '/panel/:id', name: 'panel', moduleId: PLATFORM.moduleName( "./app/main/panel/panel" ), nav: false, title: 'Panel'},
       {route: '/survey/:id', name: 'survey', moduleId: PLATFORM.moduleName( "./app/main/survey/survey" ), nav: false, title: 'Edit survey'},
       {route: '/survey-viewer/:checksum', name: 'survey-viewer', moduleId: PLATFORM.moduleName( "./app/main/respondent/survey-viewer" ), nav: false, title: 'Open survey'},
     ] );
