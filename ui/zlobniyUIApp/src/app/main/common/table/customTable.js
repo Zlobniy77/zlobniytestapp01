@@ -30,12 +30,6 @@ export class CustomTable {
     }
     // this.headerWidth =  "width: "+ (this.settings.width - 17) + "px;";
 
-
-    this.data.rows.forEach(function( row ) {
-      row.checkboxColumn = that.settings.checkboxColumn;
-    });
-
-
   }
 
 

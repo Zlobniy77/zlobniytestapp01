@@ -177,8 +177,6 @@ export class Panel {
     let row = {
       index: index,
       cells: [],
-      checkboxColumn: this.tableSettings.checkboxColumn,
-      checkboxValue: false,
     };
 
     this.data.headers.forEach(function( column ) {
@@ -188,7 +186,7 @@ export class Panel {
         rowIndex: row.index,
         subType: 'rows',
         isNew: false,
-        type: column.valueType,
+        type: column.type,
       };
 
       row.cells.push( cell );
@@ -308,7 +306,19 @@ export class Panel {
       console.log( 'parsed json', panelModel );
       that.panel = $.extend(true, {}, panelModel);
       that.data.headers = that.panel.headers;
+
+      that.data.headers.forEach(function( header ) {
+        header.subType = 'headers';
+      });
+
       that.data.rows = that.panel.rows;
+      that.data.rows.forEach(function( row ) {
+        row.cells.forEach(function( cell ) {
+          cell.subType = 'rows';
+          cell.rowIndex = row.index;
+        });
+      });
+
       that.navigation.setTitle( that.panel, true );
     } ).catch( function ( ex ) {
       console.log( 'parsing failed', ex )

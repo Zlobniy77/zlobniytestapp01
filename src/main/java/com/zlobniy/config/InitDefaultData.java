@@ -132,15 +132,18 @@ public class InitDefaultData {
 
         final BgrDescription mail = new BgrDescription();
         mail.setType( BackgroundType.EMAIL );
+        mail.setIndex( 0 );
         mail.setValue( "email" );
 
         final BgrDescription name = new BgrDescription();
         name.setType( BackgroundType.STANDARD );
         name.setValue( "name" );
+        name.setIndex( 1 );
 
         final BgrDescription dep = new BgrDescription();
         dep.setType( BackgroundType.STANDARD );
         dep.setValue( "department" );
+        dep.setIndex( 2 );
 
         descriptions.add( mail );
         descriptions.add( name );
@@ -151,7 +154,7 @@ public class InitDefaultData {
 
     private List<BgrData> getData( List<BgrDescription> descriptions ){
         List<BgrData> data = new ArrayList<>(  );
-
+        int index = 0;
         for( int i = 1; i < 11 ; i++ ){
             String mail = "mail" + i + "@mail.ru";
             String name = "name " + i;
@@ -161,8 +164,10 @@ public class InitDefaultData {
             BgrData bgrData = new BgrData();
             bgrData.setValues( bgrDataValues );
             bgrData.setRespondentId( "respondent " + i );
+            bgrData.setIndex( index );
 
             data.add( bgrData );
+            index++;
         }
 
 
@@ -179,14 +184,17 @@ public class InitDefaultData {
         BgrDataValue mail = new BgrDataValue();
         mail.setValue( emailStr );
         mail.setBgrDescription( descriptions.get( 0 ) );
+        mail.setColumnIndex( 0 );
 
         BgrDataValue name = new BgrDataValue();
         name.setValue( nameStr );
         name.setBgrDescription( descriptions.get( 1 ) );
+        name.setColumnIndex( 1 );
 
         BgrDataValue dep = new BgrDataValue();
         dep.setValue( depStr );
         dep.setBgrDescription( descriptions.get( 2 ) );
+        dep.setColumnIndex( 2 );
 
         bgrDataValues.add( mail );
         bgrDataValues.add( name );

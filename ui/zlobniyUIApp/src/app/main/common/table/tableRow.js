@@ -1,10 +1,12 @@
-import 'css/common/custom-table.css';
+import "css/common/custom-table.css";
 
-import {bindable,inject} from 'aurelia-framework';
+import {bindable, inject} from "aurelia-framework";
 import {DialogController} from "aurelia-dialog";
 
 @inject( DialogController, Element )
 export class TableRow {
+
+  @bindable checkboxColumn;
 
   constructor( dialogController, element ) {
     this.dialogController = dialogController;
