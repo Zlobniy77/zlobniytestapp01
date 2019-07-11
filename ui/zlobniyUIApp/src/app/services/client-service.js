@@ -2,6 +2,7 @@ import {BindingEngine, inject} from 'aurelia-framework';
 import {NavigationService} from "./navigation-service";
 import {HttpService} from "./http-service";
 import {EventAggregator} from 'aurelia-event-aggregator';
+import environment from './../../environment';
 
 @inject( NavigationService, HttpService, BindingEngine, EventAggregator )
 export class ClientService {
@@ -99,11 +100,12 @@ export class ClientService {
   }
 
   loginAction( clientData ) {
+
     if( clientData === undefined ){
       clientData = {};
     }
 
-    if( this.ifTest( clientData ) ) return;
+    if( this.ifTest() ) return;
 
     let that = this;
 
@@ -166,17 +168,13 @@ export class ClientService {
     });
   }
 
-  ifTest( clientData ){
-    let hasLoggedAsTest = window.localStorage.getItem( 'isTest' );
-    if( hasLoggedAsTest === 'test' ){
+  ifTest(){
+
+    let inv_test = environment.testing;
+
+    if( inv_test ){
       this.clientInfo = { id:'0', username:'test', hasLogged: true, name: 'Test'};
       this.hasLogged = true;
-      return true;
-    } else if ( clientData.username === 'test' ){
-      window.localStorage.setItem( 'isTest', 'test' );
-      this.clientInfo = { id:'0', username:'test', hasLogged: true, name: 'Test'};
-      this.hasLogged = true;
-      this.navigationService.goTo( this.navigationService.NAV_DASHBOARD );
       return true;
     }
     return false;

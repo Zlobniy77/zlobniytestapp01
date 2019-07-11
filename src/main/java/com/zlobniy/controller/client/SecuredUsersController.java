@@ -30,11 +30,12 @@ final class SecuredUsersController {
     @RequestMapping( value = "/logout", method = RequestMethod.POST )
     SimpleResponse logout( @RequestBody ClientView clientView ) {
 
-        clientService.logout( clientView.getId() );
         SimpleResponse response = new SimpleResponse();
         response.setMessage( "logout" );
 
-        System.out.println("test changes 2");
+        if( clientView.getId() <= 0 ) return response;
+
+        clientService.logout( clientView.getId() );
 
         return response;
     }
