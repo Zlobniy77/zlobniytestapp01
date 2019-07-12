@@ -1,6 +1,6 @@
 import "css/common/custom-table.css";
 
-import {inject} from "aurelia-framework";
+import {computedFrom, inject} from "aurelia-framework";
 import {DialogController} from "aurelia-dialog";
 
 @inject( DialogController, Element )
@@ -12,6 +12,7 @@ export class HeaderTableCell {
   constructor( dialogController, element ) {
     this.dialogController = dialogController;
     this.element = element;
+
   }
 
   bind(bindingContext, overrideContext) {
@@ -24,6 +25,20 @@ export class HeaderTableCell {
     }else{
       this.icon = 'as fa-align-justify';
       this.description = 'standard';
+    }
+
+    this.styleObject = {
+      width: "width:" + this.cell.width + "px",
+    }
+
+  }
+
+  @computedFrom( 'cell.width' )
+  get style(){
+    if( this.cell ){
+      return "width: " + this.cell.width + "px";
+    }else{
+      return "";
     }
 
   }

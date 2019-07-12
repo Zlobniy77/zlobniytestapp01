@@ -1,6 +1,6 @@
 import 'css/common/custom-table.css';
 
-import {bindable,inject} from 'aurelia-framework';
+import {computedFrom, inject} from 'aurelia-framework';
 import {DialogController} from "aurelia-dialog";
 
 @inject( DialogController, Element )
@@ -18,6 +18,16 @@ export class TableCell {
   }
 
   attached(argument) {
+
+  }
+
+  @computedFrom( 'cell.width' )
+  get style(){
+    if( this.cell ){
+      return "width: " + this.cell.width + "px";
+    }else{
+      return "";
+    }
 
   }
 

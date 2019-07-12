@@ -28,9 +28,6 @@ export class Panel {
       checkboxColumn: true,
     };
 
-    // this.header = '';
-    // this.body = '';
-
     this.data = {
       headers: [],
       rows:[],
@@ -169,6 +166,7 @@ export class Panel {
       subType: 'headers',
       isNew: true,
       type: type,
+      width: 150,
     };
   }
 
@@ -187,6 +185,7 @@ export class Panel {
         subType: 'rows',
         isNew: false,
         type: column.type,
+        width: column.width,
       };
 
       row.cells.push( cell );
@@ -332,41 +331,6 @@ export class Panel {
     this.panel.type = 'panel';
     this.panel.header = {};
     this.panel.body = {};
-  }
-
-  parseData(){
-
-    let header = this.parseHeader();
-    let body = this.parseBody();
-
-    let data = {
-      headers: this.data,
-      rows: body,
-    };
-
-    return data;
-  }
-
-  parseHeader(){
-
-    let data = this.header.split(';');
-
-    return data;
-
-  }
-
-  parseBody(){
-
-    let data = [];
-
-    let body = this.body.split('\n');
-
-    for (const rowElement of body) {
-      let row = rowElement.split(';');
-      data.push( {row} );
-    }
-
-    return data;
   }
 
 }

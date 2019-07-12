@@ -1,8 +1,9 @@
 <template>
   <require from="app/main/common/elements/editable-item"></require>
   <require from="resources/attributes/tooltip"></require>
+  <require from="resources/attributes/resizer"></require>
 
-  <div class="custom-table-cell" title="${cell.title}">
+  <div resizer="cell.bind: cell;" style="${style}" class="custom-table-cell" title="${cell.title}">
     <editable-item containerless edit-mode.one-way="true" item.one-way="cell"></editable-item>
 
     <select value.bind="cell.type" type="dropdown" change.delegate="change( cell.type )">

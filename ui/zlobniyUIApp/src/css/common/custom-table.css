@@ -21,16 +21,14 @@
 .custom-table-cell{
   display: table-cell;
   min-width: 100px;
-  max-width: 100px;
-  /*width: 100%;*/
   box-sizing: border-box;
   border: solid darkgray 1px;
   padding: 5px;
   text-align: center;
   vertical-align: middle;
   white-space: nowrap;
+  position: relative;
 }
-
 
 .sticky-left-column{
   position: sticky;
@@ -38,4 +36,21 @@
   z-index: 2;
   background-color: inherit;
   vertical-align: middle;
+}
+
+.resizer{
+  top: 0;
+  right: 0;
+  bottom: 0;
+  height: inherit;
+  width: 6px;
+  position: absolute;
+  cursor: col-resize;
+  float: left;
+  /*background-color: #527b38;*/
+}
+
+div.columnDragging {
+  border-right: 2px solid grey;
+  height: 10000px;
 }
