@@ -196,9 +196,18 @@ export class Panel {
   }
 
   fillRowsWithEmptyValues( columnIndex, type ){
+    let head = this.data.headers;
 
     this.data.rows.forEach(function( row ) {
-      row.cells.push( {title: ' ', index: columnIndex, rowIndex: row.index, subType: 'rows', type: type}, );
+      row.cells.push(
+        {title: ' ',
+          index: columnIndex,
+          rowIndex: row.index,
+          subType: 'rows',
+          type: type,
+          headerLink: head[columnIndex],
+        },
+      );
     });
 
   }

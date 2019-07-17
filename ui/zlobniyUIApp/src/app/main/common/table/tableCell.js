@@ -21,10 +21,10 @@ export class TableCell {
 
   }
 
-  @computedFrom( 'cell.width' )
+  @computedFrom( 'cell.headerLink.width' )
   get style(){
     if( this.cell ){
-      return "width: " + this.cell.width + "px";
+      return "max-width:" + this.cell.headerLink.width + "px; width:"+ this.cell.headerLink.width +"px;";
     }else{
       return "";
     }

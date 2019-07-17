@@ -27,16 +27,16 @@ export class HeaderTableCell {
       this.description = 'standard';
     }
 
-    this.styleObject = {
-      width: "width:" + this.cell.width + "px",
-    }
+    // this.styleObject = {
+    //   width: "max-width:" + this.cell.width + "px",
+    // }
 
   }
 
   @computedFrom( 'cell.width' )
   get style(){
     if( this.cell ){
-      return "width: " + this.cell.width + "px";
+      return "max-width: " + this.cell.width + "px; width:"+ this.cell.width +"px;";
     }else{
       return "";
     }
