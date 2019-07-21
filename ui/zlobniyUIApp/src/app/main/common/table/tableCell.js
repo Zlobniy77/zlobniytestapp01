@@ -21,10 +21,30 @@ export class TableCell {
 
   }
 
-  @computedFrom( 'cell.headerLink.width' )
+  @computedFrom( 'cell.headerLink.width', 'cell.valid' )
   get style(){
     if( this.cell ){
-      return "max-width:" + this.cell.headerLink.width + "px; width:"+ this.cell.headerLink.width +"px;";
+      let style = "max-width:" + this.cell.headerLink.width + "px; width:"+ this.cell.headerLink.width +"px;";
+      if( this.cell.valid === false ){
+        style = style + " border-color: red;";
+      }
+      return style;
+    }else{
+      return "";
+    }
+
+  }
+
+  @computedFrom( 'cell.title' )
+  get title(){
+
+    if( this.cell ){
+
+      if( this.cell.title.trim().length > 0 ){
+        this.cell.valid = true;
+      }
+
+      return this.cell.title;
     }else{
       return "";
     }

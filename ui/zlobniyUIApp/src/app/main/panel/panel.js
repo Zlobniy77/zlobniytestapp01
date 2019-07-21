@@ -1,6 +1,6 @@
 import "css/panel.css";
 
-import {inject} from "aurelia-framework";
+import {BindingEngine, computedFrom, inject} from "aurelia-framework";
 import {EventAggregator} from "aurelia-event-aggregator";
 import {NavigationService} from "../../services/navigation-service";
 import {PanelService} from "../../services/panel-service";
@@ -8,17 +8,27 @@ import {ClientService} from "../../services/client-service";
 import {WizardService} from "../../services/wizard-service";
 import $ from "jquery";
 
-@inject( EventAggregator, NavigationService, PanelService, ClientService, WizardService )
+@inject( EventAggregator, NavigationService, PanelService, ClientService, WizardService, BindingEngine )
 export class Panel {
 
   isOpenedColumns = false;
 
-  constructor( eventAggregator, navigationService, panelService, clientService, wizardService ) {
+  constructor( eventAggregator, navigationService, panelService, clientService, wizardService, bindingEngine ) {
     this.eventAggregator = eventAggregator;
     this.navigation = navigationService;
     this.panelService = panelService;
     this.clientService = clientService;
     this.wizardService = wizardService;
+    this.bindingEngine = bindingEngine;
+
+    this.data = {
+      headers: [],
+      rows:[],
+      selectedRows: [],
+    };
+
+    let subscription = this.bindingEngine.collectionObserver( this.data.rows )
+      .subscribe( this.collectionChanged.bind(this) );
 
     this.initPanelMouseHandler();
 
@@ -26,11 +36,6 @@ export class Panel {
       height: 200,
       // width: 300,
       checkboxColumn: true,
-    };
-
-    this.data = {
-      headers: [],
-      rows:[],
     };
 
 
@@ -118,6 +123,11 @@ export class Panel {
 
   }
 
+  collectionChanged(splices) {
+    console.log('rows changed');
+    // This will fire any time the collection is modified.
+  }
+
   initPanelMouseHandler(){
     let that = this;
     this.panelMouseHandler = e => {
@@ -155,7 +165,32 @@ export class Panel {
   }
 
   addRow(){
-    this.createRow();
+
+    let lastRow = this.data.rows[this.data.rows.length - 1];
+    let valid = this.data.rows.length > 0 ? this.validateRow( lastRow ) : true;
+    if( valid ){
+      this.createRow();
+    }else{
+      lastRow.cells.forEach(function( cell ) {
+        cell.valid = false;
+      });
+    }
+  }
+
+  /**
+   * Check that row contains data (not empty)
+   * */
+  validateRow( row ){
+    let hasNotEmptyCell = false;
+    row.cells.forEach(function( cell ) {
+      if( !hasNotEmptyCell && ( cell.title.trim().length > 0 ) ){
+        hasNotEmptyCell = true;
+      }
+      if( cell.valid === false ){
+        cell.valid = true;
+      }
+    });
+    return hasNotEmptyCell;
   }
 
   createColumn( type ){
@@ -340,6 +375,23 @@ export class Panel {
     this.panel.type = 'panel';
     this.panel.header = {};
     this.panel.body = {};
+  }
+
+  @computedFrom( 'rows.checkboxValue' )
+  get hasDataSelected(){
+
+    let rowsSelected = [];
+    this.data.rows.forEach(function( row ) {
+      if( row.checkboxValue ){
+        rowsSelected.push( row );
+      }
+    });
+
+    return rowsSelected.length > 0;
+  }
+
+  deleteSelectedRow(event){
+    console.log('delete rows');
   }
 
 }

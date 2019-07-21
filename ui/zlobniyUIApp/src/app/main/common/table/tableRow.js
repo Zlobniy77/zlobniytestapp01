@@ -1,6 +1,6 @@
 import "css/common/custom-table.css";
 
-import {bindable, inject} from "aurelia-framework";
+import {bindable, computedFrom, inject} from "aurelia-framework";
 import {DialogController} from "aurelia-dialog";
 
 @inject( DialogController, Element )
@@ -8,6 +8,7 @@ export class TableRow {
 
   @bindable checkboxColumn;
   @bindable headers;
+  @bindable selectedRows;
 
   constructor( dialogController, element ) {
     this.dialogController = dialogController;
@@ -30,6 +31,22 @@ export class TableRow {
     //   _row.cells[index].width
     // });
 
+  }
+
+  checkboxChanged( value ){
+    console.log('changed' + value);
+  }
+
+  @computedFrom( 'row.checkboxValue' )
+  get rowStyle(){
+    let style = this.row.checkboxValue ? "background-color: aliceblue;" : " ";
+
+
+    return style;
+  }
+
+  selectedChanged( newValue, oldValue ){
+    console.log('selected changed');
   }
 
   attached(argument) {

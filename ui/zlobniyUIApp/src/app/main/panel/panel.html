@@ -5,15 +5,15 @@
   <div class="panel-wizard-main" style="margin: 10px;">
 
 
-    <ul class="control-options navbar-nav w-25">
+    <ul class="control-options w-25" style="padding-left: 0px;">
       <li class="open-block">
-        <div>
+
           <i class="fas fa-plus-circle open-block-click"
              data-type="selectable"
              click.delegate="switchOpenColumns($event)">
             add column
           </i>
-        </div>
+
 
         <ul if.bind="isOpenedColumns" class="tooltip-list">
 
@@ -22,6 +22,18 @@
 
         </ul>
       </li>
+
+      <li class="open-block">
+
+          <i class="far fa-trash-alt open-block-click"
+             data-type="selectable"
+             disabled.bind="hasDataSelected"
+             click.delegate="deleteSelectedRow($event)">
+            delete rows
+          </i>
+
+      </li>
+
     </ul>
 
     <custom-table containerless data.one-way="data" settings.one-way="tableSettings"></custom-table>

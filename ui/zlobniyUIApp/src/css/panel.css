@@ -65,6 +65,7 @@ nav{
 
 .open-block{
   position: relative;
+  margin-right: 10px;
 }
 .open-block-click{
   cursor: pointer;
@@ -169,5 +170,7 @@ nav{
 }
 .control-options{
   margin: 10px;
+  display: flex;
+  list-style: none;
 }
 
